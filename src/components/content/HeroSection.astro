@@ -1,0 +1,81 @@
+---
+import Button from '../ui/Button.astro';
+
+interface CTAItem {
+  label: string;
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  external?: boolean;
+}
+
+interface Props {
+  image?: string;
+  imageAlt?: string;
+  imageClass?: string;
+  tag?: string;
+  headline: string;
+  subheadline?: string;
+  ctas?: CTAItem[];
+  align?: 'left' | 'center';
+  height?: string;
+  overlay?: string;
+}
+
+const {
+  image,
+  imageAlt = '',
+  imageClass = '',
+  tag,
+  headline,
+  subheadline,
+  ctas = [],
+  align = 'left',
+  height = '90vh',
+  overlay = 'rgba(0,0,0,0.35)',
+} = Astro.props;
+
+const alignClass = align === 'center' ? 'text-center items-center' : 'text-left items-start';
+const contentAlign = align === 'center' ? 'mx-auto text-center' : '';
+---
+
+<div
+  data-hero
+  class={`relative flex items-center overflow-hidden bg-[#2a2a2a]`}
+  style={`min-height: ${height};`}
+>
+  {image && (
+    <img
+      src={image}
+      alt={imageAlt}
+      class={`absolute inset-0 w-full h-full object-cover ${imageClass}`}
+      loading="eager"
+    />
+  )}
+  <div class="absolute inset-0" style={`background: ${overlay};`}></div>
+
+  <div class={`relative container-default py-24 flex flex-col ${alignClass}`}>
+    <div class={`max-w-[800px] ${contentAlign}`}>
+      {tag && (
+        <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/80 mb-4 font-sans">{tag}</p>
+      )}
+      <h1
+        class="font-serif text-display-mobile md:text-display text-white leading-tight mb-6"
+        set:html={headline.replace(/\n/g, '<br/>')}
+      />
+      {subheadline && (
+        <p class="text-white/85 text-[16px] leading-[1.6] mb-10 max-w-lg" set:html={subheadline} />
+      )}
+      {ctas.length > 0 && (
+        <div class={`flex flex-wrap gap-4 ${align === 'center' ? 'justify-center' : ''}`}>
+          {ctas.map(({ label, href, variant = 'primary', external = false }) => {
+            const isExternal = external || href.startsWith('http');
+            const btnVariant: 'primary' | 'secondary' = variant === 'primary' ? 'primary' : 'secondary';
+            return (
+              <Button variant={btnVariant} href={href} external={isExternal}>{label}</Button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </div>
+</div>

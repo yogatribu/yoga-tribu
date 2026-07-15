@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Heading from '../components/ui/Heading.astro';
+import LinkApple from '../components/ui/LinkApple.astro';
+---
+
+<BaseLayout
+  title="Cookie Policy · Yoga Tribù"
+  description="Informativa sull'uso dei cookie su yogatribu.it."
+  noindex={true}
+>
+  <Section background="default" size="large">
+    <Container size="narrow" class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-6">Legale</p>
+      <Heading level={1} class="mb-8">Cookie Policy</Heading>
+
+      <p class="text-base text-[#6b6b6b] leading-relaxed max-w-[600px] mx-auto mb-6">La nostra Cookie Policy è redatta e ospitata su Iubenda, un servizio certificato per la conformità al GDPR. Puoi leggerla integralmente al link qui sotto.</p>
+      <LinkApple href="https://www.iubenda.com/privacy-policy/76220455/cookie-policy" external tone="ocra">Leggi la Cookie Policy</LinkApple>
+      <script type="text/javascript">{`(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);`}</script>
+    </Container>
+  </Section>
+</BaseLayout>

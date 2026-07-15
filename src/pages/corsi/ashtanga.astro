@@ -1,0 +1,374 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/content/HeroSection.astro';
+import { altFor } from '../../config/imageAlt.js';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import Button from '../../components/ui/Button.astro';
+import ManifestoSection from '../../components/content/ManifestoSection.astro';
+import TeacherCard from '../../components/content/TeacherCard.astro';
+import FAQAccordion from '../../components/content/FAQAccordion.astro';
+import TestimonialCarousel from '../../components/content/TestimonialCarousel.astro';
+import { testimonials } from '../../data/testimonials';
+import ExploreOtherCourses from '../../components/content/ExploreOtherCourses.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import HowItWorksSteps from '../../components/content/HowItWorksSteps.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import StickyCTA from '../../components/layout/StickyCTA.astro';
+import FeatureCard from '../../components/content/FeatureCard.astro';
+
+const WA_BASE = 'https://wa.me/393287675966?text=';
+const COLOR = '#7a6b5f';
+
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Ashtanga Vinyasa Yoga",
+  "description": "Pratica yoga sequenziale tradizionale — lezioni Guidate e Mysore. Per chi cerca disciplina, forza e silenzio interiore.",
+  "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
+  "courseMode": "in-person",
+  "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
+};
+---
+
+<BaseLayout
+  title="Ashtanga Yoga a Bassano del Grappa · Yoga Tribù"
+  description="Ashtanga Vinyasa Yoga, Guidata e Mysore. Pratica costante per disciplina, forza e silenzio interiore."
+  schemaJsonLd={courseSchema}
+>
+  <HeroSection
+    image="/images/ashtanga.webp"
+    imageAlt={altFor('/images/ashtanga.webp')}
+    imageClass="object-[50%_78%]"
+    overlay="rgba(0,0,0,0.4)"
+    tag="Ashtanga Yoga"
+    headline={"Per chi cerca un posto\na cui tornare ogni giorno."}
+    subheadline="Una pratica antica che restituisce silenzio interiore, crescita fisica e mentale. Non si pratica per provare, si pratica per esserci."
+    ctas={[
+      {
+        label: 'Prenota la prima lezione',
+        href: WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Ashtanga.'),
+        variant: 'primary',
+        external: true,
+      },
+      {
+        label: 'Vedi gli orari',
+        href: '/orari',
+        variant: 'ghost',
+      },
+    ]}
+    height="90vh"
+  />
+
+  <!-- A chi è dedicato -->
+  <Section background="alt">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">A chi è dedicato</p>
+      <Heading level={2} class="mb-16">Ashtanga è per te se...</Heading>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto">
+        <FeatureCard
+          icon="Sunrise"
+          title="Cerchi disciplina e costanza"
+          body="L'Ashtanga è una pratica che si costruisce ogni giorno. Non c'è 'ho fatto la mia lezione', c'è 'sono qui ancora una volta'."
+        />
+        <FeatureCard
+          icon="TrendingUp"
+          title="Vuoi una progressione chiara"
+          body="Una sequenza fissa, una serie di asana che si imparano e si approfondiscono nel tempo. Sai sempre dove stai andando."
+        />
+        <FeatureCard
+          icon="Users"
+          title="Cerchi una comunità"
+          body="La tribù della pratica del mattino, gli stessi volti che si ritrovano, un senso di appartenenza che non si trova altrove."
+        />
+      </div>
+    </Container>
+  </Section>
+
+  <section class="bg-background py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4 text-center">Cosa otterrai</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-0 text-center" style="font-family:'New York',serif;">Quello che cambia, nel tempo.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 mese</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">La mattina diventa il tuo momento.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 6 mesi</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Disciplina, forza, silenzio interiore. Senza sforzo.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 anno</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Una pratica. Una vita diversa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- I 2 stili tab -->
+  <Section background="default">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">I due stili</p>
+      <Heading level={2} class="mb-4">Due modi di praticare la stessa serie.</Heading>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12">
+        L'Ashtanga si insegna in due forme diverse: ognuna ha il suo valore, e si possono alternare.
+      </p>
+
+      <div class="mb-10">
+        <div class="ash-seg-container" style="position: relative; display: inline-flex; background: #e8e4df; border-radius: 9999px; padding: 4px; gap: 2px;" role="tablist">
+          <div id="ash-indicator" style="position: absolute; top: 4px; bottom: 4px; background: #7a6b5f; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65,0,0.35,1), width 300ms cubic-bezier(0.65,0,0.35,1); pointer-events: none;"></div>
+          {[
+            { id: 'guidata', label: 'Guidata' },
+            { id: 'mysore', label: 'Mysore' },
+          ].map(({ id, label }, i) => (
+            <button
+              class="tab-btn"
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              data-tab={id}
+              style={`position: relative; z-index: 1; padding: 10px 24px; border-radius: 9999px; font-size: 14px; font-family: Inter, sans-serif; font-weight: 500; border: none; background: transparent; cursor: pointer; white-space: nowrap; transition: color 300ms ease; color: ${i === 0 ? 'white' : '#6b6b6b'};`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="tab-panel" data-panel="guidata">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
+          <div class="order-2 lg:order-1">
+            <h3 class="font-serif text-3xl text-text-main mb-5">Ashtanga Guidata</h3>
+            <p class="text-base text-text-secondary leading-relaxed mb-6">L'insegnante chiama le posizioni e i passaggi con la voce. Tutto il gruppo pratica insieme, allo stesso ritmo.</p>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Adatto a:</p>
+            <ul class="flex flex-col gap-1.5 mb-6">
+              {['Chi inizia con l\'Ashtanga', 'Chi vuole imparare la sequenza', 'Chi cerca una pratica condotta dal vivo', 'Chi pratica saltuariamente'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
+            </ul>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede in lezione:</p>
+            <p class="text-sm text-text-secondary leading-relaxed">Si segue la prima serie (Yoga Chikitsa) o parti di essa, sotto la guida dell'insegnante. Il ritmo è dato dal respiro contato in sanscrito (vinyasa).</p>
+          </div>
+          <aside class="order-1 lg:order-2 lg:sticky" style="top: 100px; background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+            <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #7a6b5f; margin-bottom: 16px;">Guidata</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Orario</span>
+              <span style="font-size: 14px; color: #2a2a2a; text-align: right;">Martedì 19:00 · Giovedì 19:00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Durata</span>
+              <span style="font-size: 14px; color: #2a2a2a;">~90 min</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
+              <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">Chi inizia o vuole imparare la sequenza</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0;">
+              <span style="font-size: 14px; color: #6b6b6b;">Insegnante</span>
+              <span style="font-size: 14px; color: #2a2a2a;">Victor</span>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 24px;">
+              <Button
+                variant="primary"
+                size="md"
+                href={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una lezione di Ashtanga Guidata.')}
+                external={true}
+              >
+                Prenota una lezione
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="tab-panel" data-panel="mysore" style="display:none;">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
+          <div class="order-2 lg:order-1">
+            <h3 class="font-serif text-3xl text-text-main mb-5">Ashtanga Mysore</h3>
+            <p class="text-base text-text-secondary leading-relaxed mb-6">Tu conosci la sequenza a memoria e la pratichi da solo, al tuo ritmo. L'insegnante passa tra gli allievi e ti aggiusta singolarmente.</p>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Adatto a:</p>
+            <ul class="flex flex-col gap-1.5 mb-6">
+              {['Chi conosce già la pratica e vuole approfondire', 'Chi cerca un\'esperienza più meditativa', 'Chi vuole sviluppare autonomia nella pratica', 'Chi pratica regolarmente (4-6x/settimana)'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
+            </ul>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede in lezione:</p>
+            <p class="text-sm text-text-secondary leading-relaxed mb-4">Arrivi quando vuoi nell'arco dell'orario stabilito, inizi la tua pratica. Niente musica, niente istruzione collettiva.</p>
+            <p class="text-sm text-error bg-error/5 border border-error/20 rounded-sm px-4 py-3">
+              ⚠ Per chi è alla prima esperienza, consigliamo di iniziare con la Guidata per imparare la sequenza.
+            </p>
+          </div>
+          <aside class="order-1 lg:order-2 lg:sticky" style="top: 100px; background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+            <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #7a6b5f; margin-bottom: 16px;">Mysore</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Orario</span>
+              <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">Mar 17:30 · Gio 17:30 · Ven 7:00 · Sab 8:30</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Durata</span>
+              <span style="font-size: 14px; color: #2a2a2a;">60–90 min</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
+              <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">Praticanti regolari con sequenza memorizzata</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0;">
+              <span style="font-size: 14px; color: #6b6b6b;">Insegnante</span>
+              <span style="font-size: 14px; color: #2a2a2a;">Victor</span>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 24px;">
+              <Button
+                variant="primary"
+                size="md"
+                href={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una lezione di Ashtanga Mysore.')}
+                external={true}
+              >
+                Prenota una lezione
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Insegnanti -->
+  <Section background="alt">
+    <Container class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Gli insegnanti</p>
+      <Heading level={2} class="mb-4">Le persone che ti guideranno.</Heading>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12 mx-auto">
+        Insegnanti certificati, formati in anni di studio.
+      </p>
+      <div class="flex justify-center mb-8">
+        <TeacherCard nome="Victor" stili="Ashtanga Yoga" link="/insegnanti/victor" foto="/images/insegnanti/victor.webp" />
+      </div>
+      <LinkApple href="/chi-siamo">Conosci tutti gli insegnanti</LinkApple>
+    </Container>
+  </Section>
+
+  <section class="bg-background py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">La tua prima volta</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">Cosa aspettarti in studio.</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">01</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Arrivi 10 min prima</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Ti diamo il tempo di cambiarti e ambientarti prima che la lezione inizi.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">02</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Ti accogliamo</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Parliamo del tuo livello, della tua familiarità con la sequenza. Ti diciamo cosa aspettarti.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">03</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Pratica intensa</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Sequenza completa guidata dal respiro. Ritmo costante, movimenti che si concatenano.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">04</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Rilassamento finale</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Savasana, rilassamento profondo, chiusura della pratica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FAQAccordion
+    background="alt"
+    items={[
+      { question: 'Devo conoscere la sequenza per iniziare?', answer: 'No. Si inizia dalla Guidata, dove l\'insegnante chiama ogni posizione. Imparerai la sequenza naturalmente, lezione dopo lezione.' },
+      { question: 'Quanto è impegnativo fisicamente?', answer: 'È una pratica intensa. Ma si entra gradualmente: nessuno fa la prima serie completa al primo giorno. Si parte da una versione ridotta e si cresce nel tempo.' },
+      { question: "Cos'è la Mysore? Posso iniziare da lì?", answer: 'La Mysore è la pratica autonoma. Sconsigliamo di iniziare dalla Mysore: prima impari con la Guidata.' },
+      { question: 'Ashtanga fa per chi ha più di 50 anni?', answer: 'Sì, ma con adattamenti. La sequenza è la stessa, ma le varianti permettono di praticare a qualsiasi età.' },
+      { question: 'Devo essere flessibile?', answer: 'No. La flessibilità arriva con la pratica. Ciò che serve è costanza, respiro lungo, e voglia di tornare.' },
+      { question: 'Ashtanga è uno sport o una pratica spirituale?', answer: 'Entrambe le cose. La parte fisica è chiarissima. Ma c\'è anche una dimensione meditativa. Decidi tu quanto approfondire.' },
+    ]}
+  />
+
+  <TestimonialCarousel
+    testimonials={testimonials}
+  />
+
+  <!-- Orari -->
+  <Section background="alt">
+    <Container class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Orari</p>
+      <Heading level={2} class="mb-16">Quando praticare Ashtanga.</Heading>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[800px] mx-auto text-left">
+        {[
+          { tag: 'GUIDATA', orario: 'Martedì 19:00' },
+          { tag: 'GUIDATA', orario: 'Giovedì 19:00' },
+          { tag: 'MYSORE', orario: 'Martedì 17:30' },
+          { tag: 'MYSORE', orario: 'Giovedì 17:30' },
+          { tag: 'MYSORE', orario: 'Venerdì 7:00' },
+          { tag: 'MYSORE', orario: 'Sabato 8:30' },
+        ].map(({ tag, orario }) => (
+          <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+            <p class="text-tiny uppercase tracking-widest" style={`color: ${COLOR};`}>{tag}</p>
+            <p class="font-serif text-xl text-text-main">{orario}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-16">
+        <LinkApple href="/orari">Vedi tutti gli orari</LinkApple>
+      </div>
+    </Container>
+  </Section>
+
+  <ExploreOtherCourses excludeStile="ashtanga" />
+
+  <CTAFinal
+    headline="Inizia da una sola lezione."
+    ctaHref={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Ashtanga.')}
+    linkLabel="Vedi gli orari"
+    linkHref="/orari"
+  />
+
+  <StickyCTA messaggioWhatsapp="Ciao! Vorrei prenotare una prima lezione di Ashtanga." />
+</BaseLayout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLElement>('.tab-btn');
+  const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
+  const indicator = document.getElementById('ash-indicator') as HTMLElement | null;
+  const segContainer = document.querySelector<HTMLElement>('.ash-seg-container');
+
+  function positionIndicator(activeBtn: HTMLElement) {
+    if (!indicator || !segContainer) return;
+    const cRect = segContainer.getBoundingClientRect();
+    const bRect = activeBtn.getBoundingClientRect();
+    indicator.style.width = bRect.width + 'px';
+    indicator.style.transform = `translateX(${bRect.left - cRect.left - 4}px)`;
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.tab;
+      tabs.forEach(t => {
+        const active = t.dataset.tab === id;
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+        t.style.color = active ? 'white' : '#6b6b6b';
+        if (active) positionIndicator(t);
+      });
+      panels.forEach(p => { p.style.display = p.dataset.panel === id ? '' : 'none'; });
+    });
+  });
+
+  requestAnimationFrame(() => {
+    const first = document.querySelector<HTMLElement>('.tab-btn[data-tab="guidata"]');
+    if (first) positionIndicator(first);
+  });
+</script>

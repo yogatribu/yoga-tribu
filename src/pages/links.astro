@@ -1,0 +1,423 @@
+---
+// Pagina standalone Linktree — NO header/footer del sito
+---
+
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Yoga Tribù · Link</title>
+  <meta name="description" content="Yoga Tribù — Iyengar, Ashtanga e Salute Femminile a Bassano del Grappa." />
+  <meta property="og:title" content="Yoga Tribù" />
+  <meta property="og:description" content="Studio di Yoga a Bassano del Grappa" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/fonts/NewYork.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <style>
+    @font-face {
+      font-family: 'New York';
+      src: url('/fonts/NewYork.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('/fonts/Inter-latin.woff2') format('woff2');
+      font-weight: 100 900;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f9f5f0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: #2a2a2a;
+    }
+
+    .page {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+
+    /* ─────────────────────────────────────
+       HEADER
+    ───────────────────────────────────── */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    /* TODO: Sostituire con logo Yoga Tribù reale quando disponibile */
+    .logo-placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 9999px;
+      background: #9c9a66;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .logo-placeholder-letter {
+      font-family: 'New York', Georgia, serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: white;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-name {
+      font-family: 'New York', 'Cormorant Garamond', 'Playfair Display', 'EB Garamond', Georgia, serif;
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: normal;
+      color: #2a2a2a;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .brand-name:hover { opacity: 0.8; }
+
+    .brand-tagline {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6b6b6b;
+      margin-bottom: 4px;
+    }
+
+    .brand-location {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #6b6b6b;
+    }
+
+    /* ─────────────────────────────────────
+       CARD IN EVIDENZA
+    ───────────────────────────────────── */
+    /* Per cambiare l'evento in evidenza (es. quando arriva un ritiro), modifica solo questa sezione.
+       La card può ospitare anche promozioni ritiri, workshop speciali, eventi una tantum. */
+    .card-evidenza {
+      background: white;
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 16px;
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .card-evidenza:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-tag {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9c9a66;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-family: 'New York', Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #2a2a2a;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 14px;
+      color: #6b6b6b;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .card-cta {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #9c9a66;
+      text-decoration: none;
+      transition: opacity 150ms ease;
+    }
+    .card-cta::after { content: ' ›'; }
+    .card-cta:hover { opacity: 0.7; }
+
+    /* ─────────────────────────────────────
+       LINKS LIST
+    ───────────────────────────────────── */
+    /* I 4 link sono ottimizzati CRO. Ogni link ha uno scopo distinto:
+       1) conversione diretta, 2) auto-segmentazione, 3) esplorazione, 4) cross-sell eventi ricorrenti.
+       Non aggiungere link senza valutare l'impatto sulla conversione totale. */
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    /* Link base condiviso */
+    .link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 18px;
+      padding: 20px 22px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .link-item:active {
+      transform: translateY(0) scale(0.99) !important;
+    }
+
+    /* ── Link 1: PILLOLA OCRA PIENA (peso visivo massimo) ── */
+    .link-primary {
+      background: #9c9a66;
+      border: 1.5px solid #9c9a66;
+      box-shadow: 0 4px 16px rgba(156, 154, 102, 0.2);
+    }
+    .link-primary:hover {
+      background: #8c8a5c;
+      border-color: #8c8a5c;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+    .link-primary .link-label {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+    }
+    .link-primary .link-arrow {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      flex-shrink: 0;
+      margin-left: 12px;
+      line-height: 1;
+    }
+
+    /* ── Links 2–4: BIANCHI PULITI ── */
+    .link-secondary {
+      background: white;
+      border: 1px solid rgba(156, 154, 102, 0.25);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .link-secondary:hover {
+      background: #faf6f0;
+      border-color: rgba(156, 154, 102, 0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+    .link-secondary .link-label {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #2a2a2a;
+    }
+    .link-secondary .link-arrow {
+      font-size: 18px;
+      color: #9c9a66;
+      flex-shrink: 0;
+      margin-left: 12px;
+      line-height: 1;
+    }
+
+    /* ─────────────────────────────────────
+       SOCIAL FOOTER
+    ───────────────────────────────────── */
+    .social-footer {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid #e8e4df;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 24px;
+    }
+
+    .social-link {
+      color: #9c9a66;
+      transition: opacity 200ms ease;
+      line-height: 0;
+      display: block;
+    }
+    .social-link:hover { opacity: 0.7; }
+
+    .copyright {
+      text-align: center;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: #9b9b9b;
+    }
+
+    /* ─────────────────────────────────────
+       MOBILE
+    ───────────────────────────────────── */
+    @media (max-width: 480px) {
+      .brand-name { font-size: 24px; }
+    }
+
+    /* Scroll reveal — stesso pattern di globals.css ([data-reveal]) */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms ease-out, transform 600ms ease-out;
+    }
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- ── HEADER ── -->
+    <header class="header">
+      <img src="/logo/icona-ocra.svg" alt="Yoga Tribù" style="height: 80px; width: auto; display: block; margin: 0 auto 24px;" />
+
+      <a href="/" class="brand-name">YOGA TRIBÙ</a>
+      <p class="brand-tagline">Studio di yoga professionale a Bassano del Grappa</p>
+      <p class="brand-location" style="font-style: italic;">Esci diverso da come sei entrato.</p>
+    </header>
+
+    <!-- ── CARD IN EVIDENZA ── -->
+    <a href="/eventi/estate-in-villa" class="card-evidenza" data-reveal>
+      <p class="card-tag">In evidenza</p>
+      <p class="card-title">Estate in Villa 2026</p>
+      <p class="card-desc">Yoga all'aperto, sotto il porticato di una villa veneta. Tutta l'estate.</p>
+    </a>
+
+    <!-- ── 4 LINK PRINCIPALI ── -->
+    <div class="links-list">
+
+      <!-- Link 1: CTA primaria ocra piena -->
+      <a
+        href="https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20la%20prima%20lezione%20di%20prova%20a%2010%E2%82%AC."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link-item link-primary"
+        data-reveal
+        data-reveal-delay="80"
+      >
+        <span class="link-label">Prenota la prima lezione</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- Link 2 -->
+      <a href="/trova-la-tua-pratica" class="link-item link-secondary" data-reveal data-reveal-delay="160">
+        <span class="link-label">Trova la tua pratica</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- Link 3 -->
+      <a href="/corsi" class="link-item link-secondary" data-reveal data-reveal-delay="240">
+        <span class="link-label">Scopri pratiche e orari</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+      <!-- Link 4 -->
+      <a href="/eventi" class="link-item link-secondary" data-reveal data-reveal-delay="320">
+        <span class="link-label">Eventi in programma</span>
+        <span class="link-arrow">›</span>
+      </a>
+
+    </div>
+
+    <!-- ── SOCIAL FOOTER ── -->
+    <div class="social-footer">
+      <a
+        href="https://instagram.com/yoga__tribu"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social-link"
+        aria-label="Instagram Yoga Tribù"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+        </svg>
+      </a>
+
+      <a
+        href="https://wa.me/393287675966"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social-link"
+        aria-label="Scrivici su WhatsApp"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </a>
+
+      <a
+        href="https://www.facebook.com/people/Yoga-Trib%C3%B9/100028284085474/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social-link"
+        aria-label="Facebook Yoga Tribù"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- ── MICROCOPY ── -->
+    <p class="copyright">© YOGA TRIBÙ · Bassano del Grappa</p>
+
+  </div>
+
+  <script>
+    // Scroll reveal — stesso meccanismo di BaseLayout.astro (pagina standalone, niente layout condiviso)
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = el.dataset.revealDelay ?? '0';
+            el.style.transitionDelay = delay + 'ms';
+            el.classList.add('revealed');
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+    }
+
+    initScrollReveal();
+  </script>
+</body>
+</html>

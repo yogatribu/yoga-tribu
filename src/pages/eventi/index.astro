@@ -1,0 +1,264 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Divider from '../../components/ui/Divider.astro';
+import { getCollection } from 'astro:content';
+
+const ritiri = await getCollection('ritiri');
+const workshops = await getCollection('workshops', ({ data }) => data.draft !== true);
+
+// Sort by date
+const ritiriOrdinati = ritiri.sort((a, b) =>
+  new Date(a.data.date_inizio).getTime() - new Date(b.data.date_inizio).getTime()
+);
+const workshopsOrdinati = workshops.sort((a, b) =>
+  new Date(a.data.data).getTime() - new Date(b.data.data).getTime()
+);
+
+function formatData(dataStr: string) {
+  const d = new Date(dataStr);
+  return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function formatDataBreve(dataStr: string) {
+  const d = new Date(dataStr);
+  return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' });
+}
+
+const ritiriConStato = ritiriOrdinati.map((r) => ({
+  entry: r,
+  slug: r.slug,
+  postiRimasti: r.data.posti_disponibili,
+  esaurito: r.data.posti_disponibili === 0,
+  scarsita: r.data.posti_disponibili > 0 && r.data.posti_disponibili <= 3,
+}));
+
+const workshopsConStato = workshopsOrdinati.map((ws) => ({
+  entry: ws,
+  slug: ws.slug,
+  postiRimasti: ws.data.posti_disponibili,
+  esaurito: ws.data.posti_disponibili === 0,
+  scarsita: ws.data.posti_disponibili > 0 && ws.data.posti_disponibili <= 3,
+}));
+---
+
+<BaseLayout
+  title="Eventi · Yoga Tribù"
+  description="Workshop, ritiri e l'estate in villa. Approfondisci la tua pratica con gli insegnanti di Yoga Tribù."
+>
+  <!-- Hero -->
+  <div
+    data-hero
+    class="relative flex items-center overflow-hidden bg-[#2a2a2a]"
+    style="min-height: 80vh;"
+  >
+    <img
+      src="/images/estate_in_villa.webp"
+      alt="Eventi, ritiri e workshop di Yoga Tribù"
+      class="absolute inset-0 w-full h-full object-cover opacity-50"
+      loading="eager" fetchpriority="high"
+    />
+    <div class="absolute inset-0" style="background: rgba(0,0,0,0.45);"></div>
+    <div class="relative container-default py-24">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/80 mb-4 font-sans">Eventi</p>
+      <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight max-w-2xl">
+        Oltre la lezione settimanale.
+      </h1>
+      <p class="text-white/80 text-lg max-w-lg mt-6 leading-relaxed">
+        Workshop di approfondimento, ritiri immersi nella natura, e l'estate in villa. Momenti per andare più a fondo nella pratica e nella tribù.
+      </p>
+    </div>
+  </div>
+
+  <!-- Estate in Villa — featured -->
+  <Section background="default" size="large">
+    <Container>
+      <a href="/eventi/estate-in-villa" class="block group cursor-pointer transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="aspect-[4/3] rounded-[22px] overflow-hidden">
+            <img
+              src="/images/estate_in_villa.webp"
+              alt="Estate in Villa — Yoga Tribù"
+              class="w-full h-full object-cover group-hover:scale-[1.01] transition duration-[400ms]"
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <Tag class="mb-5" color="iyengar">In evidenza · Estate 2026</Tag>
+            <Heading level={2} class="mb-4">Estate in Villa</Heading>
+            <p class="text-text-secondary text-base leading-relaxed mb-6">
+              Da giugno a settembre, quattro sere a settimana la pratica si sposta in una villa a Rosà. Stessi insegnanti, stessa qualità, aria aperta sotto il portico.
+            </p>
+            <div class="flex flex-wrap gap-6 text-sm">
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Periodo</p>
+                <p class="text-text-main font-medium">Giugno – Settembre 2026</p>
+              </div>
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Durata</p>
+                <p class="text-text-main font-medium">Lun – Gio · 4 lezioni a settimana</p>
+              </div>
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Posti</p>
+                <p class="text-text-main font-medium">75€ / 5 lezioni · 20€ a lezione</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </Container>
+  </Section>
+
+  <!-- Ritiri -->
+  {ritiriConStato.length > 0 && (
+    <Section background="alt" id="ritiri">
+      <Container>
+        <Tag class="mb-5">Ritiri</Tag>
+        <Heading level={2} class="mb-4">Pratiche immersive.</Heading>
+        <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
+          Più giorni insieme, lontano dalla routine. I ritiri sono il modo più efficace per fare un salto di qualità nella pratica.
+        </p>
+        <div class="space-y-6">
+          {ritiriConStato.map(({ entry: ritiro, slug, postiRimasti, esaurito, scarsita }) => (
+            <a
+              href={`/eventi/ritiri/${slug}`}
+              class="block group"
+            >
+              <div class="bg-background rounded-[22px] overflow-hidden border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200">
+                <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-0">
+                  <div class="h-[280px] overflow-hidden">
+                    <img
+                      src={ritiro.data.foto_hero || 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80'}
+                      alt={ritiro.data.title}
+                      class="w-full h-[280px] object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="p-8 flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-start justify-between gap-4 mb-3">
+                        <h3 class="font-serif text-[26px] text-text-main leading-tight">{ritiro.data.title}</h3>
+                        {esaurito && (
+                          <span class="bg-[#2a2a2a] text-white text-[11px] font-semibold uppercase tracking-[0.1em] px-3 py-1 rounded-full whitespace-nowrap">Sold out</span>
+                        )}
+                        {scarsita && (
+                          <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white bg-[#c95a4a] px-3 py-1 rounded-full whitespace-nowrap">Ultimi {postiRimasti} posti</span>
+                        )}
+                      </div>
+                      <p class="text-text-secondary text-sm leading-relaxed mb-6">{ritiro.data.descrizione_breve}</p>
+                    </div>
+                    <div class="flex flex-wrap gap-6 text-sm">
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Date</p>
+                        <p class="text-text-main">{formatDataBreve(ritiro.data.date_inizio)} – {formatData(ritiro.data.date_fine)}</p>
+                      </div>
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Luogo</p>
+                        <p class="text-text-main">{ritiro.data.location}</p>
+                      </div>
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Quota</p>
+                        <p class="text-text-main font-medium">€{ritiro.data.prezzo}</p>
+                      </div>
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Insegnanti</p>
+                        <p class="text-text-main">{ritiro.data.insegnanti.join(' · ')}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  )}
+
+  <!-- Workshop -->
+  <Section background="default" id="workshop">
+    <Container>
+      <Tag class="mb-5">Workshop</Tag>
+      <Heading level={2} class="mb-4">Approfondimenti tematici.</Heading>
+      <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
+        3 ore con un insegnante su un tema specifico: una categoria di asana, il pranayama, un aspetto della pratica che vuoi capire meglio.
+      </p>
+      {workshopsConStato.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {workshopsConStato.map(({ entry: ws, slug, postiRimasti, esaurito, scarsita }) => (
+            <a
+              href={`/eventi/workshop/${slug}`}
+              class="group block bg-background-alt border border-border rounded-[22px] overflow-hidden hover:border-primary/30 hover:shadow-md transition-all duration-200"
+            >
+              <div class="p-6">
+                <div class="flex items-start justify-between gap-3 mb-3">
+                  <h3 class="font-serif text-[22px] text-text-main leading-tight">{ws.data.title}</h3>
+                  {esaurito && (
+                    <span class="text-tiny uppercase text-[#9c9a66] border border-border px-2 py-0.5 rounded-full whitespace-nowrap">Esaurito</span>
+                  )}
+                  {scarsita && (
+                    <span class="text-tiny uppercase text-[#c95a4a] border border-[#c95a4a]/30 px-2 py-0.5 rounded-full whitespace-nowrap">{postiRimasti} posti</span>
+                  )}
+                </div>
+                  <p class="text-text-secondary text-sm leading-relaxed mb-6">{ws.data.descrizione_breve}</p>
+                  <Divider class="mb-5" />
+                  <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Data</p>
+                      <p class="text-text-main">{formatData(ws.data.data)}</p>
+                    </div>
+                    <div>
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Orario</p>
+                      <p class="text-text-main">{ws.data.orario}</p>
+                    </div>
+                    <div>
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Insegnante</p>
+                      <p class="text-text-main">{ws.data.insegnante}</p>
+                    </div>
+                    <div>
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Quota</p>
+                      <p class="text-text-main font-medium">€{ws.data.prezzo_iscritti ?? ws.data.prezzo} iscritti</p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+          ))}
+        </div>
+      ) : (
+        <div class="py-4">
+          <p class="text-text-secondary text-base mb-8">Nessun workshop in programma al momento. Scrivici su WhatsApp per essere tra i primi a sapere quando ne organizziamo uno.</p>
+          <Button variant="primary" href="https://wa.me/393287675966?text=Ciao!%20Voglio%20essere%20avvisato%20quando%20escono%20nuovi%20workshop%20e%20ritiri." external={true}>
+            Scrivici su WhatsApp
+          </Button>
+        </div>
+      )}
+    </Container>
+  </Section>
+
+  <!-- Newsletter / avviso -->
+  <Section background="alt">
+    <Container size="narrow" class="text-center">
+      <Tag class="mb-5">Vuoi essere avvisato?</Tag>
+      <Heading level={3} class="mb-4">I nuovi eventi vengono comunicati prima sulla tribù.</Heading>
+      <p class="text-text-secondary text-base leading-relaxed mb-8">
+        Workshop e ritiri si esauriscono in fretta, spesso prima di essere pubblicati sul sito. Scrivici su WhatsApp per essere tra i primi a sapere.
+      </p>
+      <Button variant="primary" href="https://wa.me/393287675966?text=Ciao!%20Voglio%20essere%20avvisato%20quando%20escono%20nuovi%20workshop%20e%20ritiri." external={true}>
+        Scrivici su WhatsApp
+      </Button>
+    </Container>
+  </Section>
+
+  <!-- CTA -->
+  <CTAFinal
+    headline="Vuoi sapere quando apre il prossimo ritiro?"
+    subtitle="Scrivici, ti mettiamo in lista e ti avvisiamo prima di pubblicare i posti."
+    linkLabel="Scrivici su WhatsApp"
+    linkHref="https://wa.me/393287675966?text=Ciao!%20Sono%20interessato%20ai%20prossimi%20eventi%20di%20Yoga%20Trib%C3%B9."
+  />
+</BaseLayout>

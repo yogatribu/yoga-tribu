@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import PricingCard from '../components/content/PricingCard.astro';
+import FAQAccordion from '../components/content/FAQAccordion.astro';
+import CTAFinal from '../components/content/CTAFinal.astro';
+import PlanToggle from '../components/interactive/PlanToggle.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Tag from '../components/ui/Tag.astro';
+import Heading from '../components/ui/Heading.astro';
+import { PRATICHE_ATTIVE } from '../config/visibilita.js';
+
+const teenAttivo = PRATICHE_ATTIVE.includes('teen-yoga');
+// Alternanza sfondi derivata: Teen occupa una posizione (alt) tra "Come funziona" e FAQ.
+// Se Teen è nascosto, FAQ e WhatsApp scalano di una posizione nell'alternanza.
+const faqBg  = teenAttivo ? 'default' : 'alt';
+const waBg   = teenAttivo ? 'alt'     : 'default';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Posso provare prima di abbonarmi?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Puoi iniziare con una lezione singola a 20€ e poi scegliere il pacchetto che preferisci." } },
+    { "@type": "Question", "name": "Devo per forza comprare un pacchetto?", "acceptedAnswer": { "@type": "Answer", "text": "No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti." } },
+    { "@type": "Question", "name": "Cosa succede se non finisco le lezioni in tempo?", "acceptedAnswer": { "@type": "Answer", "text": "I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione." } },
+    { "@type": "Question", "name": "I workshop sono inclusi nell'abbonamento?", "acceptedAnswer": { "@type": "Answer", "text": "No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€." } },
+    { "@type": "Question", "name": "Come pago?", "acceptedAnswer": { "@type": "Answer", "text": "Con bonifico o in contanti in studio. Nessun rinnovo automatico, nessun addebito a sorpresa." } }
+  ]
+};
+---
+
+<BaseLayout
+  title="Abbonamenti · Yoga Tribù"
+  description="Lezione singola 20€, pacchetti da 10, 20 e 25 lezioni, lezioni private. Tutti gli stili, nessun vincolo annuale."
+  schemaJsonLd={faqSchema}
+>
+  <!-- Hero compatto: toggle deve restare above the fold -->
+  <Section background="default" size="compact">
+    <Container size="narrow" class="text-center">
+      <Tag class="mb-3">Abbonamenti</Tag>
+      <Heading level={1} class="mb-3">
+        Trova il piano che funziona davvero per te.
+      </Heading>
+      <p class="text-text-secondary text-base leading-relaxed">
+        Niente vincoli annuali. Cambi quando cambi tu.
+      </p>
+    </Container>
+  </Section>
+
+  <!-- Toggle In Studio / Private -->
+  <PlanToggle />
+
+  <!-- Piani STUDIO -->
+  <div id="piani-studio">
+    <Section background="alt" id="studio">
+      <Container>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <PricingCard
+            tag="Singola"
+            nome="Lezione singola"
+            prezzo="20€"
+            descrizione="Per chi pratica saltuariamente."
+            bullets={['Tutti gli stili', 'Nessuna scadenza', 'Prenotazione libera']}
+            ctaLabel="Acquista"
+            messaggioWa="Ciao! Vorrei acquistare una lezione singola a 20€."
+          />
+          <PricingCard
+            tag="Pacchetto"
+            nome="10 lezioni"
+            prezzo="150€"
+            costoLezione="15€ a lezione"
+            validita="Validità 3 mesi"
+            descrizione="Per chi pratica con regolarità."
+            bullets={['Tutti gli stili', 'Validità 3 mesi', 'Workshop scontati']}
+            ctaLabel="Acquista"
+            messaggioWa="Ciao! Vorrei acquistare il pacchetto da 10 lezioni."
+          />
+          <PricingCard
+            tag="Pacchetto"
+            nome="20 lezioni"
+            prezzo="240€"
+            costoLezione="12€ a lezione"
+            validita="Validità 4 mesi"
+            descrizione="Per chi pratica con continuità."
+            bullets={['Tutti gli stili', 'Validità 4 mesi', 'Workshop scontati', 'Più scelto']}
+            featured={true}
+            ctaLabel="Acquista"
+            messaggioWa="Ciao! Vorrei acquistare il pacchetto da 20 lezioni."
+          />
+          <PricingCard
+            tag="Pacchetto"
+            nome="25 lezioni"
+            prezzo="250€"
+            costoLezione="10€ a lezione"
+            validita="Validità 2 mesi"
+            descrizione="Per chi pratica intensamente."
+            bullets={['Tutti gli stili', 'Validità 2 mesi', 'Workshop scontati']}
+            ctaLabel="Acquista"
+            messaggioWa="Ciao! Vorrei acquistare il pacchetto da 25 lezioni."
+          />
+        </div>
+      </Container>
+    </Section>
+
+    <!-- Come funzionano -->
+    <Section background="default">
+      <Container>
+        <Tag class="mb-5">Come funziona</Tag>
+        <Heading level={2} class="mb-12">Trasparenza prima di tutto.</Heading>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { title: 'Tutti gli stili, una sola tariffa', body: 'I tuoi pacchetti valgono per Iyengar, Ashtanga e Salute Femminile. Cambi quando vuoi.' },
+            { title: 'Nessun vincolo annuale', body: 'Nessun rinnovo automatico, nessuna penale di uscita. Decidi tu quando smettere.' },
+            { title: 'Sospendibile in qualsiasi momento', body: 'Hai un imprevisto? Sospendi il pacchetto fino a 30 giorni. Le lezioni rimanenti restano valide.' },
+            { title: 'Workshop sempre scontati', body: 'I workshop mensili Deep Dive sono scontati per chi ha un abbonamento attivo.' },
+          ].map(({ title, body }) => (
+            <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+              <div class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center mb-5">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9c9a66" stroke-width="1.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{title}</p>
+              <p class="text-sm text-text-secondary leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  </div>
+
+  <!-- Piani PRIVATE -->
+  <div id="piani-private" style="display: none;">
+    <Section background="alt" id="private">
+      <Container>
+        <div class="container-narrow mx-auto mb-12">
+          <p class="text-base italic text-text-secondary leading-relaxed">
+            Le lezioni private sono pensate per chi cerca un percorso personalizzato: recupero da infortuni,
+            bisogni specifici, principianti che vogliono sicurezza.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <PricingCard
+            tag="1 persona"
+            nome="Privata individuale"
+            prezzo="45€"
+            descrizione="Lezione personalizzata."
+            bullets={['Stile a scelta (Iyengar, Ashtanga, Salute Femminile)', '~60 minuti', 'Adattata alle tue necessità']}
+            ctaLabel="Richiedi"
+            messaggioWa="Ciao! Vorrei richiedere una lezione privata individuale."
+          />
+          <PricingCard
+            tag="2 persone"
+            nome="Privata duo"
+            prezzo="80€"
+            costoLezione="40€/persona"
+            descrizione="Lezione a due, esperienza intima."
+            bullets={['Stile a scelta', '~60 minuti', 'Ideale per coppie, amiche']}
+            featured={true}
+            ctaLabel="Richiedi"
+            messaggioWa="Ciao! Vorrei richiedere una lezione privata duo (2 persone)."
+          />
+          <PricingCard
+            tag="3 persone"
+            nome="Privata trio"
+            prezzo="105€"
+            costoLezione="35€/persona"
+            descrizione="Lezione a tre persone."
+            bullets={['Stile a scelta', '~60 minuti']}
+            ctaLabel="Richiedi"
+            messaggioWa="Ciao! Vorrei richiedere una lezione privata trio (3 persone)."
+          />
+          <PricingCard
+            tag="4 persone"
+            nome="Privata di gruppo"
+            prezzo="120€"
+            costoLezione="30€/persona"
+            descrizione="Piccolo gruppo personalizzato."
+            bullets={['Stile a scelta', '~60 minuti', 'Ideale per gruppi di amici, famiglie']}
+            ctaLabel="Richiedi"
+            messaggioWa="Ciao! Vorrei richiedere una lezione privata di gruppo (4 persone)."
+          />
+        </div>
+        <p class="text-small text-text-secondary text-center mt-10 max-w-[700px] mx-auto">
+          Le sessioni durano circa 60 minuti. Lo stile (Iyengar, Ashtanga, Salute Femminile) si concorda con l'insegnante.
+        </p>
+      </Container>
+    </Section>
+  </div>
+
+  <!-- SEZIONE TEEN — visibile solo se 'teen-yoga' è in PRATICHE_ATTIVE -->
+  {teenAttivo && (
+  <div class="bg-background-alt py-24">
+    <div style="max-width: 800px; margin: 0 auto; padding: 0 24px; text-align: center;">
+      <p style="font-size: 11px; font-family: Inter, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #d4b5a0; margin-bottom: 16px;">
+        TEEN · UN PIANO DEDICATO
+      </p>
+      <Heading level={2} class="mb-5">Avvicinare i giovani allo yoga,<br/>in modo accessibile.</Heading>
+      <p style="font-size: 16px; font-family: Inter, sans-serif; line-height: 1.6; color: #6b6b6b; max-width: 600px; margin: 0 auto 48px;">
+        Crediamo che lo yoga per i più giovani non debba essere un costo, ma un'opportunità. Per questo abbiamo creato un piano dedicato.
+      </p>
+
+      <!-- Card Teen -->
+      <div class="transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]" style="max-width: 480px; margin: 0 auto; background: white; border-radius: 22px; border: 1px solid #e8e4df; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: left;">
+        <p style="font-size: 11px; font-family: Inter, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #d4b5a0; margin-bottom: 12px;">
+          TEEN · 13-20 ANNI
+        </p>
+
+        <h3 class="font-serif" style="font-size: 28px; color: #2a2a2a; margin-bottom: 8px;">
+          Mensile Teen
+        </h3>
+
+        <div style="margin-bottom: 24px;">
+          <span style="font-size: 36px; font-family: Inter, sans-serif; font-weight: 600; color: #2a2a2a; line-height: 1;">20€/mese</span>
+          <p style="font-size: 14px; font-family: Inter, sans-serif; color: #6b6b6b; margin-top: 4px;">5€ a lezione</p>
+        </div>
+
+        <p style="font-size: 15px; font-family: Inter, sans-serif; line-height: 1.5; color: #6b6b6b; margin-bottom: 24px;">
+          Una lezione a settimana, ogni venerdì alle 17:00.
+          Pensato per ragazzi e ragazze che vogliono scoprire lo yoga in un ambiente protetto e adatto a loro.
+        </p>
+
+        <div style="margin-bottom: 32px; display: flex; flex-direction: column; gap: 10px;">
+          {[
+            '4 lezioni mensili (1 a settimana)',
+            'Venerdì alle 17:00 con Asia',
+            'Età 13-20 anni',
+            'Pagamento mensile, sospendibile',
+          ].map(b => (
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <span style="color: #d4b5a0; font-size: 14px; flex-shrink: 0; margin-top: 1px;">✓</span>
+              <span style="font-size: 14px; font-family: Inter, sans-serif; color: #2a2a2a; line-height: 1.6;">{b}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style="text-align: center;">
+          <Button variant="primary" size="md" href={`https://wa.me/393287675966?text=${encodeURIComponent('Ciao! Vorrei iscrivere [nome ragazzo/a, età] al Teen Yoga mensile a 20€.')}`} external={true}>
+            Iscrivi tuo figlio/a
+          </Button>
+        </div>
+
+        <p style="font-size: 13px; font-family: Inter, sans-serif; color: #6b6b6b; text-align: center; margin-top: 16px;">
+          Hai più di un figlio? Scrivici, troviamo una soluzione insieme.
+        </p>
+      </div>
+    </div>
+  </div>
+  )}
+
+  <!-- FAQ -->
+  <FAQAccordion
+    title="Domande frequenti."
+    background={faqBg}
+    items={[
+      { question: 'Posso provare prima di abbonarmi?', answer: 'Sì. Puoi iniziare con una lezione singola a 20€ e poi scegliere il pacchetto che preferisci.' },
+      { question: 'Devo per forza comprare un pacchetto?', answer: 'No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti.' },
+      { question: 'Cosa succede se non finisco le lezioni in tempo?', answer: 'I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione.' },
+      { question: 'I workshop sono inclusi nell\'abbonamento?', answer: 'No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€.' },
+      { question: 'Come pago?', answer: 'Con bonifico o in contanti in studio. Nessun rinnovo automatico, nessun addebito a sorpresa.' },
+    ]}
+  />
+
+  <!-- WhatsApp fallback -->
+  <Section background={waBg}>
+    <Container size="narrow" class="text-center">
+      <Heading level={2} class="mb-5">Non sai quale piano fa per te?</Heading>
+      <p class="text-text-secondary text-base leading-relaxed mb-10">
+        Scrivici su WhatsApp. Ti aiutiamo a scegliere senza pressioni in meno di 10 minuti.
+      </p>
+      <Button variant="primary" size="md" href="https://wa.me/393287675966?text=Ciao!%20Mi%20aiutate%20a%20scegliere%20il%20piano%20abbonamento%20giusto%3F" external={true}>
+        Scrivici su WhatsApp
+      </Button>
+    </Container>
+  </Section>
+
+  <CTAFinal headline="Inizia quando vuoi." />
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+---
+
+<section class="bg-background py-12">
+  <div class="container-default text-center">
+    <p class="text-sm text-text-secondary mb-5 font-sans">Per chi stai leggendo?</p>
+    <div class="inline-flex bg-border rounded-full p-1 gap-1">
+      <button
+        class="teen-toggle-btn px-6 py-3 rounded-full text-sm font-sans transition-all duration-250"
+        data-audience="genitore"
+        aria-pressed="true"
+      >
+        Sono un genitore
+      </button>
+      <button
+        class="teen-toggle-btn px-6 py-3 rounded-full text-sm font-sans transition-all duration-250"
+        data-audience="teen"
+        aria-pressed="false"
+      >
+        Sono un ragazzo / una ragazza
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btns = document.querySelectorAll<HTMLElement>('.teen-toggle-btn');
+  const genitoreEls = document.querySelectorAll<HTMLElement>('[data-content="genitore"]');
+  const teenEls = document.querySelectorAll<HTMLElement>('[data-content="teen"]');
+
+  function setAudience(audience: string) {
+    btns.forEach(b => {
+      const active = b.dataset.audience === audience;
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      b.style.background = active ? '#d4b5a0' : 'transparent';
+      b.style.color = active ? '#2a2a2a' : '#6b6b6b';
+      b.style.fontWeight = active ? '500' : '400';
+    });
+    genitoreEls.forEach(el => { el.style.display = audience === 'genitore' ? '' : 'none'; });
+    teenEls.forEach(el => { el.style.display = audience === 'teen' ? '' : 'none'; });
+  }
+
+  btns.forEach(b => b.addEventListener('click', () => setAudience(b.dataset.audience!)));
+  setAudience('genitore');
+</script>

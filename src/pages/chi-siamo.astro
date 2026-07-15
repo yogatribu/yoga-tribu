@@ -1,0 +1,358 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TestimonialCarousel from '../components/content/TestimonialCarousel.astro';
+import CTAFinal from '../components/content/CTAFinal.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Tag from '../components/ui/Tag.astro';
+import Heading from '../components/ui/Heading.astro';
+import Divider from '../components/ui/Divider.astro';
+import LinkApple from '../components/ui/LinkApple.astro';
+import { testimonials } from '../data/testimonials';
+import { INSEGNANTI_ATTIVI } from '../config/visibilita.js';
+import { altFor } from '../config/imageAlt.js';
+
+const tuttiInsegnanti = [
+  {
+    slug: 'glenda',
+    nome: 'Glenda',
+    tag: 'IYENGAR YOGA',
+    foto: '/images/insegnanti/glenda.webp',
+    alt: 'Glenda — Fondatrice e insegnante Iyengar',
+    href: '/insegnanti/glenda',
+    badge: 'FONDATRICE',
+  },
+  {
+    slug: 'mattia',
+    nome: 'Mattia',
+    tag: 'RITIRI',
+    foto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80',
+    alt: 'Mattia — Ritiri',
+    href: '/insegnanti/mattia',
+  },
+  {
+    slug: 'giulia',
+    nome: 'Giulia',
+    tag: 'VINYASA YOGA',
+    foto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80',
+    alt: 'Giulia — Vinyasa Yoga',
+    href: '/insegnanti/giulia',
+  },
+  {
+    slug: 'victor',
+    nome: 'Victor',
+    tag: 'ASHTANGA YOGA',
+    foto: '/images/insegnanti/victor.webp',
+    alt: 'Victor — Ashtanga Yoga',
+    href: '/insegnanti/victor',
+  },
+  {
+    slug: 'asia',
+    nome: 'Asia',
+    tag: 'TEEN YOGA',
+    foto: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
+    alt: 'Asia — Teen Yoga',
+    href: '/insegnanti/asia',
+  },
+  {
+    slug: 'sara',
+    nome: 'Sara',
+    tag: 'SALUTE FEMMINILE',
+    foto: '/images/insegnanti/sara.webp',
+    alt: 'Sara Zampierin — Salute Femminile',
+    href: '/insegnanti/sara',
+  },
+];
+
+const insegnantiAttivi = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug));
+const nI = insegnantiAttivi.length;
+// Tailwind static strings rilevate da purge: 'md:grid-cols-1' 'md:grid-cols-2' 'md:grid-cols-3'
+const gridColsClass = nI === 1 ? 'md:grid-cols-1' : nI === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+---
+
+<BaseLayout
+  title="Chi Siamo · Yoga Tribù"
+  description="Yoga Tribù è uno studio di yoga professionale a Bassano del Grappa. Iyengar, Ashtanga e Salute Femminile insegnati da specialisti certificati."
+>
+  <!-- Hero -->
+  <div
+    data-hero
+    class="relative flex items-center overflow-hidden bg-[#2a2a2a]"
+    style="min-height: 80vh;"
+  >
+    <div class="relative container-default py-24">
+      <div class="max-w-2xl">
+        <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/80 mb-4 font-sans">Chi Siamo</p>
+        <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight">
+          Siamo uno studio.<br/>Siamo una tribù.
+        </h1>
+        <p class="text-white/80 text-lg max-w-lg mt-6 leading-relaxed">
+          Una tribù di insegnanti e allievi che condividono una pratica seria, fatta di rigore, autenticità e amicizia vera.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- La storia -->
+  <Section background="default" id="modo">
+    <Container>
+      <div class="max-w-3xl">
+        <Tag class="mb-5">Il nostro modo</Tag>
+        <Heading level={2} class="mb-8">Una pratica vera, in un luogo umano.</Heading>
+        <div class="space-y-5 text-base text-text-secondary leading-relaxed">
+          <p>
+            Yoga Tribù è uno studio in cui lo yoga si pratica con calma e consapevolezza, guidati da
+            insegnanti preparati che hanno studiato la propria disciplina per anni. Crediamo che la
+            vita di ogni persona sia unica e la strada che ognuno di noi percorre è personale. Allo
+            stesso modo, lo yoga è per ognuno un viaggio personale.
+          </p>
+          <p>
+            Per questo nel nostro studio puoi trovare diverse pratiche, ognuna pensata per il
+            periodo della vita in cui ti trovi: Iyengar, Ashtanga e Salute Femminile.
+          </p>
+          <p>
+            Si lavora con impegno, ma ognuno parte da dove si trova: chi si porta dietro un dolore,
+            chi ha cominciato ieri, chi è sul tappetino da anni. L'insegnante c'è per tutti. Nessuno
+            resta indietro.
+          </p>
+          <p>
+            Ciò che conta di più però non è la pratica ma le persone, con cui ogni settimana
+            condividi il tuo percorso, le chiacchiere prima e dopo le lezioni e l'amicizia che nasce
+            sui tappetini. D'altronde siamo una tribù.
+          </p>
+        </div>
+      </div>
+      <!-- Foto pratica — nascosta, pronta per essere riattivata (rimuovi display:none) -->
+      <div class="aspect-[3/4] rounded-[22px] overflow-hidden mt-12" style="display: none;">
+        <img
+          src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&q=80"
+          alt="Lo studio Yoga Tribù"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    </Container>
+  </Section>
+
+  <!-- TODO: Sostituire placeholder con foto reali insegnanti, formato 4:5 verticale, busto in su, sfondo uniforme, maglia branded Yoga Tribù -->
+  <section class="teachers-section" id="insegnanti">
+    <div class="teachers-container">
+      <div class="teachers-header">
+        <span class="teachers-section-tag">I NOSTRI INSEGNANTI</span>
+        <h2 class="teachers-section-title">Le persone che ti guideranno.</h2>
+      </div>
+
+      <div class={`teachers-grid ${gridColsClass}`}>
+        {insegnantiAttivi.map((ins) => (
+          <a href={ins.href} class="teacher-card" aria-label={`Scopri ${ins.nome}`}>
+            <div class="teacher-photo">
+              {ins.badge && <span class="teacher-badge">{ins.badge}</span>}
+              <img src={ins.foto} alt={altFor(ins.foto, ins.alt)} loading="lazy" />
+            </div>
+            <div class="teacher-info">
+              <span class="tag-category">{ins.tag}</span>
+              <h3 class="teacher-name">{ins.nome}</h3>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Lo studio (luogo fisico) -->
+  <Section background="default" id="studio">
+    <Container>
+      <Tag class="mb-5">Lo studio</Tag>
+      <Heading level={2} class="mb-12">Un luogo costruito per la pratica.</Heading>
+      <div class="aspect-video rounded-[22px] overflow-hidden mb-12">
+        <img
+          src="/images/studio.webp"
+          alt="Sala di pratica con corde Iyengar — Yoga Tribù"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <p class="text-base text-text-secondary leading-relaxed max-w-[700px] mx-auto text-center mb-12">
+        Uno spazio luminoso, con tappetini di qualità e tutti gli attrezzi a disposizione. Progettato per praticare con calma e con cura.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { src: '/images/spogliatoio.webp', alt: 'Angolo spogliatoio con panche di legno chiaro e bolster — Yoga Tribù' },
+          { src: '/images/props.webp', alt: 'Mattoncini di sughero da yoga sullo scaffale dello studio — Yoga Tribù' },
+          { src: '/images/cactus.webp', alt: 'Dettaglio dello studio — segnalibri illustrati, cactus e candela su mensola di legno' },
+          { src: '/images/tappetino.webp', alt: 'Tappetini Yoga Tribù nello studio' },
+        ].map(({ src, alt }) => (
+          <div class="aspect-square rounded-[18px] overflow-hidden">
+            <img src={src} alt={alt} class="w-full h-full object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <LinkApple href="/contatti" tone="ocra">Vieni a vedere lo studio</LinkApple>
+      </div>
+    </Container>
+  </Section>
+
+  <TestimonialCarousel testimonials={testimonials} backgroundColor="#faf8f5" />
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline="Vuoi conoscerci di persona?"
+  />
+</BaseLayout>
+
+<style>
+  /* ─── Teachers Section ─────────────────────────────── */
+  .teachers-section {
+    padding: 96px 0;
+    background: #faf8f5;
+  }
+
+  .teachers-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .teachers-header {
+    margin-bottom: 64px;
+  }
+
+  .teachers-section-tag {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .teachers-section-title {
+    font-family: 'New York', Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: #2a2a2a;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* ─── Grid ─────────────────────────────────────────── */
+  .teachers-grid {
+    display: grid;
+    gap: 24px;
+    /* grid-template-columns gestito da Tailwind (md:grid-cols-N) */
+  }
+
+  /* ─── Card ─────────────────────────────────────────── */
+  .teacher-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e8e4df;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .teacher-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .teacher-card:focus-visible {
+    outline: 2px solid #9c9a66;
+    outline-offset: 4px;
+  }
+
+  /* ─── Photo ─────────────────────────────────────────── */
+  .teacher-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: #e8e4df;
+    position: relative;
+  }
+
+  .teacher-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+  }
+
+
+  /* Badge in overlay sulla foto (solo Glenda) */
+  .teacher-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    background: #9c9a66;
+    color: white;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+  }
+
+  /* ─── Info ───────────────────────────────────────────── */
+  .teacher-info {
+    padding: 20px 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .tag-category {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .teacher-name {
+    font-family: 'New York', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #2a2a2a;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* ─── Responsive ────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .teachers-section { padding: 64px 0; }
+    .teachers-section-title { font-size: 28px; }
+    .teachers-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .teacher-name { font-size: 22px; }
+    .teacher-info { padding: 16px 16px 20px; }
+    .teacher-badge { font-size: 9px; padding: 5px 10px; top: 10px; left: 10px; }
+  }
+
+  @media (max-width: 480px) {
+    .teachers-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .teacher-card,
+    .teacher-photo img { transition: none; }
+    .teacher-card:hover { transform: none; }
+    .teacher-card:hover .teacher-photo img { transform: none; }
+  }
+</style>

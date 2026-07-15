@@ -1,0 +1,34 @@
+---
+interface Props {
+  background?: 'default' | 'alt' | 'dark' | 'accent';
+  size?: 'compact' | 'standard' | 'large';
+  class?: string;
+  id?: string;
+}
+
+const {
+  background = 'default',
+  size = 'standard',
+  class: className = '',
+  id,
+} = Astro.props;
+
+const bgClasses = {
+  default: 'bg-background',
+  alt:     'bg-background-alt',
+  dark:    'bg-[#1a1a1a] text-white',
+  accent:  'bg-primary text-white',
+};
+
+const sizeClasses = {
+  compact:  'py-12 md:py-16',
+  standard: 'py-16 md:py-24',
+  large:    'py-24 md:py-40',
+};
+
+const classes = `${bgClasses[background]} ${sizeClasses[size]} ${className}`;
+---
+
+<section class={classes} id={id} data-reveal>
+  <slot />
+</section>

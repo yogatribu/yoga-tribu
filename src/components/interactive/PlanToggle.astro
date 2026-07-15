@@ -1,0 +1,64 @@
+---
+import SegmentedControl from '../ui/SegmentedControl.astro';
+
+const planOptions = [
+  { value: 'studio',  label: 'In Studio' },
+  { value: 'private', label: 'Private'   },
+];
+---
+
+<div class="flex justify-center py-8 sticky top-16 bg-background z-10 border-b border-border/50">
+  <SegmentedControl
+    scId="plan-toggle"
+    options={planOptions}
+    defaultValue="studio"
+    background="#e8e4df"
+  />
+</div>
+
+<script>
+  function initPlanToggle() {
+    const studioSection = document.getElementById('piani-studio');
+    const privateSection = document.getElementById('piani-private');
+
+    function switchPlan(plan: string) {
+      if (!studioSection || !privateSection) return;
+
+      const outgoing = plan === 'studio' ? privateSection : studioSection;
+      const incoming = plan === 'studio' ? studioSection   : privateSection;
+
+      outgoing.style.transition = 'opacity 200ms ease-out';
+      outgoing.style.opacity = '0';
+
+      setTimeout(() => {
+        outgoing.style.display = 'none';
+        incoming.style.display = '';
+        requestAnimationFrame(() => {
+          incoming.style.transition = 'opacity 250ms ease-out';
+          incoming.style.opacity = '1';
+        });
+      }, 200);
+    }
+
+    document.addEventListener('sc-change', (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail.scId !== 'plan-toggle') return;
+      switchPlan(detail.value);
+    });
+
+    // Init from URL param — simulate click on the correct button
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get('tipo');
+    if (tipo === 'private') {
+      const btn = document.querySelector<HTMLElement>('.sc-btn[data-sc-id="plan-toggle"][data-sc-value="private"]');
+      btn?.click();
+    } else {
+      // Ensure correct initial visibility without animation
+      if (studioSection)  { studioSection.style.opacity  = '1'; studioSection.style.display  = ''; }
+      if (privateSection) { privateSection.style.opacity = '1'; privateSection.style.display = 'none'; }
+    }
+  }
+
+  initPlanToggle();
+  document.addEventListener('astro:page-load', initPlanToggle);
+</script>

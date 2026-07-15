@@ -1,0 +1,70 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+const lezioni = [
+  { giorno: 'Mercoledì', ora: '7:30',  tipo: 'Vinyasa', durata: '~60 min' },
+  { giorno: 'Sabato',    ora: '10:30', tipo: 'Vinyasa', durata: '~60 min' },
+  { giorno: 'Domenica',  ora: '17:30', tipo: 'Vinyasa', durata: '~60 min' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Giulia",
+  "jobTitle": "Vinyasa Yoga Teacher",
+  "worksFor": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "knowsAbout": ["Vinyasa Yoga"],
+};
+---
+
+<TeacherLayout
+  title="Giulia · Insegnante Vinyasa · Yoga Tribù"
+  description="Giulia insegna Vinyasa a Yoga Tribù. Pratica fluida, consapevole, adatta a chi vuole movimento e respiro senza rigidità."
+  schema={schema}
+  noindex={!INSEGNANTI_ATTIVI.includes('giulia')}
+  nome="Giulia"
+  ruolo="Insegnante"
+  pratica="Vinyasa Yoga"
+  coloreAccento="#b8a68e"
+  fotoHero="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80"
+  fotoSidebar="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80"
+  citazioneBio="Go with the flow."
+  formazione={[
+    '300 ore di formazione in Vinyasa - Bali Yoga, Milano',
+    'Formazione avanzata - Yoga Weeks, Barcellona',
+    'In pratica dal 2019',
+  ]}
+  sezioniStoria={[
+    {
+      titolo: 'Come ho incontrato lo yoga',
+      paragrafi: ["Pratico yoga dal 2019, e quello che è iniziato quasi per caso è diventato, anno dopo anno, molto più di una pratica. All'inizio era semplicemente un modo per stare bene, per ritagliarmi uno spazio per me. Poi, lezione dopo lezione, ho sentito crescere il desiderio di passare dall'altra parte del tappetino, di non vivere più la pratica soltanto per me, ma di condividerla e di accompagnare altre persone in quello stesso viaggio che aveva fatto bene a me."],
+    },
+    {
+      titolo: 'La formazione',
+      paragrafi: ["Mi sono formata in Vinyasa con un percorso di 300 ore, diviso tra due scuole e due città: Baliyoga a Milano e Yoga Weeks a Barcellona. Due luoghi diversi, due energie diverse, che mi hanno dato basi solide e mi hanno fatto conoscere modi differenti di intendere il movimento e il respiro. È stato un percorso che mi ha formata non solo come insegnante, ma anche come praticante, insegnandomi quanto ci sia sempre da imparare."],
+    },
+    {
+      titolo: 'Perché il Vinyasa',
+      paragrafi: ["Il Vinyasa mi rappresenta, perché è come la vita. Quando segui il flow non sai mai davvero cosa aspettarti, né dove finirai: ti lasci portare dal respiro e dal movimento, e a volte arrivi in posti che non avresti immaginato. Ma è proprio questo il bello: il viaggio, non la destinazione. Ogni lezione è diversa dalla precedente, ogni sequenza è un piccolo percorso a sé, e quello che cerco di trasmettere è proprio questo: la libertà di muoversi senza sapere esattamente dove si arriverà, e di godersi comunque la strada."],
+    },
+    {
+      titolo: 'Il mio approccio',
+      paragrafi: ["Mi trovo dall'altra parte del tappetino da poco, e lo dico con sincerità, perché è anche la cosa che mi tiene curiosa e attenta a ogni lezione. Quello che mi rende più felice è quando, finita la pratica, le persone hanno voglia di fermarsi a parlare: per me è il segno che si sono sentite davvero a loro agio, libere di essere se stesse. Mi piace quando mi raccontano che sono state bene, che hanno sentito il proprio corpo, che sono uscite più leggere di come erano entrate. È in quei momenti che capisco perché ho scelto di insegnare."],
+    },
+  ]}
+  lezioni={lezioni}
+>
+  <div slot="lezioni-content" class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[780px] mx-auto text-left">
+    {[
+      { tag: 'FLOW', orario: 'Mercoledì 7:30' },
+      { tag: 'FLOW', orario: 'Sabato 10:30' },
+      { tag: 'FLOW', orario: 'Domenica 17:30' },
+    ].map(({ tag, orario }) => (
+      <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+        <p class="text-tiny uppercase tracking-widest" style="color: #b8a68e;">{tag}</p>
+        <p class="font-serif text-xl text-text-main">{orario}</p>
+      </div>
+    ))}
+  </div>
+</TeacherLayout>

@@ -1,0 +1,62 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+const lezioni = [
+  { giorno: 'Venerdì', ora: '17:00', tipo: 'Teen Yoga · 12–17 anni', durata: '~60 min' },
+];
+
+const sezioniStoria = [
+  { titolo: 'Come ho incontrato lo yoga', paragrafi: ["Lo yoga è entrato nella mia vita due anni fa, e nel giro di poco è diventato una parte importante di me. Non l'avevo cercato come una vocazione: è arrivato, mi ha presa, e non l'ho più lasciato. Più lo praticavo, più sentivo che volevo condividerlo, far provare anche agli altri quello che stava cambiando in me."] },
+  { titolo: 'La formazione', paragrafi: ["Mi sono diplomata in Portogallo a dicembre. Il mio percorso come insegnante è appena iniziato, e lo dico senza timore: porto nella pratica l'energia e la curiosità di chi è ancora all'inizio della propria strada, e che la percorre con dedizione."] },
+];
+
+const filosofiaSinistra = [
+  "Il Teen Yoga è una pratica dinamica, pensata per rendere consapevoli del proprio corpo. Si apre con il pranayama, il lavoro sul respiro, e si chiude con una meditazione, per imparare a stare nel momento presente.",
+];
+
+const filosofiaDestra = [
+  "Per me lo spazio della pratica deve essere prima di tutto sicuro: un luogo dove esplorare il proprio corpo, ascoltarlo e sondare i propri limiti senza paura di sbagliare. Chi pratica con me, alla fine della lezione, si sente più rilassato e leggero.",
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Asia",
+  "jobTitle": "Teen Yoga Teacher",
+  "worksFor": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "knowsAbout": ["Teen Yoga", "Yoga per Adolescenti"],
+};
+---
+
+<TeacherLayout
+  title="Asia · Insegnante Teen Yoga · Yoga Tribù"
+  description="Asia è l'insegnante di Teen Yoga a Yoga Tribù. Classi dedicate agli adolescenti tra i 12 e i 17 anni, progettate per corpo e mente in crescita."
+  schema={schema}
+  noindex={!INSEGNANTI_ATTIVI.includes('asia')}
+  nome="Asia"
+  ruolo="Insegnante"
+  pratica="Teen Yoga"
+  coloreAccento="#d4b5a0"
+  fotoHero="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=80"
+  fotoSidebar="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80"
+  labelFormazione="Certificazioni"
+  formazione={[
+    'Diploma di insegnante Yoga - Portogallo',
+    'Specializzata in Teen Yoga',
+  ]}
+  sezioniStoria={sezioniStoria}
+  citazioneBio="La pratica è uno spazio sicuro, dove esplorare il proprio corpo, ascoltarlo e scoprire fin dove può arrivare."
+  filosofiaSinistra={filosofiaSinistra}
+  filosofiaDestra={filosofiaDestra}
+  titoloFilosofia="Il mio approccio"
+  introLezioni="Ogni venerdì pomeriggio, per ragazzi dai 13 ai 20 anni. I genitori possono parlare con me prima della prima lezione."
+  lezioni={lezioni}
+>
+  <div slot="lezioni-content" class="flex justify-center">
+    <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="width: 248px; min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+      <p class="text-tiny uppercase tracking-widest" style="color: #d4b5a0;">TEEN YOGA</p>
+      <p class="font-serif text-xl text-text-main">Venerdì 17:00</p>
+    </div>
+  </div>
+</TeacherLayout>

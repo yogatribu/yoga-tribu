@@ -1,0 +1,78 @@
+---
+interface Props {
+  address?: string;
+  class?: string;
+  variant?: 'footer';
+}
+const {
+  address = "Yoga Tribù, Via Giuseppe Mazzini 1, 36022 San Giuseppe (VI)",
+  class: className = '',
+  variant,
+} = Astro.props;
+
+const lat = "45.7659897";
+const lng = "11.7545503";
+const addressEncoded = encodeURIComponent(address);
+const googleMapsUrl = "https://www.google.com/maps/place/Yoga+Tribu/@45.7659897,11.7545503,17z/data=!4m6!3m5!1s0x4778db0001426767:0xec60bef26f4574a7!8m2!3d45.7659897!4d11.7545503!16s%2Fg%2F11wx_xb9hg";
+---
+
+{variant === 'footer' ? (
+  <a
+    href={googleMapsUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`text-sm text-[#f9f5f0]/70 hover:text-[#f9f5f0] transition-colors underline-offset-2 hover:underline ${className}`}
+    data-lat={lat}
+    data-lng={lng}
+    data-address={addressEncoded}
+  >
+    <slot />
+  </a>
+) : (
+  <a
+    href={googleMapsUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`map-link-apple ${className}`}
+    data-lat={lat}
+    data-lng={lng}
+    data-address={addressEncoded}
+  >
+    <span class="map-link-text"><slot /></span>
+    <span class="map-link-arrow" aria-hidden="true">›</span>
+  </a>
+)}
+
+<style>
+  .map-link-apple {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #9c9a66;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .map-link-apple:hover .map-link-text {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .map-link-apple .map-link-arrow {
+    text-decoration: none !important;
+    display: inline-block;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-lat][data-lng]').forEach(link => {
+    const lat = link.dataset.lat;
+    const lng = link.dataset.lng;
+    const address = link.dataset.address;
+    const ua = navigator.userAgent;
+    const isApple = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 0);
+    if (isApple) {
+      link.href = `maps://?q=${address}&ll=${lat},${lng}`;
+    }
+  });
+</script>

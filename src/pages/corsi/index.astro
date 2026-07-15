@@ -1,0 +1,202 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
+import { altFor } from '../../config/imageAlt.js';
+
+const tuttiCorsi = [
+  {
+    slug: 'iyengar',
+    stile: 'Iyengar',
+    headline: 'Per il corpo che ha bisogno di precisione.',
+    sub: 'Una pratica tradizionale che risolve dolori reali con tecniche precise.',
+    link: '/corsi/iyengar',
+    foto: '/images/iyengar.webp',
+    overlay: 'rgba(0,0,0,0.30)',
+    posizione: '20% center',
+  },
+  {
+    slug: 'ashtanga',
+    stile: 'Ashtanga',
+    headline: 'Per chi cerca un posto a cui tornare ogni giorno.',
+    sub: 'Una pratica costante che restituisce silenzio interiore e crescita mentale.',
+    link: '/corsi/ashtanga',
+    foto: '/images/ashtanga.webp',
+    overlay: 'rgba(0,0,0,0.38)',
+    posizione: '35% center',
+  },
+  {
+    slug: 'vinyasa',
+    stile: 'Vinyasa',
+    headline: "Un'ora in cui smetti di pensare.",
+    sub: 'Pratica fresca, sempre diversa. Movimento e respiro.',
+    link: '/corsi/vinyasa',
+    foto: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80',
+    overlay: 'rgba(0,0,0,0.28)',
+  },
+  {
+    slug: 'teen-yoga',
+    stile: 'Teen Yoga',
+    headline: 'Per chi sta diventando se stesso.',
+    sub: 'Yoga per ragazzi tra i 12 e i 20 anni.',
+    link: '/corsi/teen-yoga',
+    foto: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80',
+    overlay: 'rgba(0,0,0,0.32)',
+  },
+  {
+    slug: 'salute-femminile',
+    stile: 'Salute Femminile',
+    headline: 'Percorsi per la donna. In ogni fase.',
+    sub: 'Ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita.',
+    link: '/corsi/salute-femminile',
+    foto: '/images/salute_femminile.webp',
+    overlay: 'rgba(0,0,0,0.30)',
+  },
+];
+
+const corsiAttivi = tuttiCorsi.filter(c => PRATICHE_ATTIVE.includes(c.slug));
+const n = corsiAttivi.length;
+
+// Layout: ≤3 → una riga; 4 → 2+2; ≥5 → 2+resto
+const singleRowClass = n === 1 ? 'md:grid-cols-1' : n === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+const secondRowClass = n === 4 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+---
+
+<BaseLayout
+  title="Le Pratiche · Yoga Tribù"
+  description="Iyengar, Ashtanga e Salute Femminile a Bassano del Grappa. Tre pratiche insegnate da specialisti certificati. Trova quella giusta per te."
+>
+  <!-- Hero -->
+  <section class="bg-background py-24 md:py-32">
+    <div class="container-default text-center">
+      <Tag class="mb-5">Le Pratiche</Tag>
+      <h1 class="font-serif text-h1-mobile md:text-[56px] text-text-main leading-tight mb-6 max-w-3xl mx-auto">
+        Dove comincia la tua pratica.
+      </h1>
+      <p class="text-text-secondary text-lg max-w-[700px] mx-auto leading-relaxed">
+        Iyengar, Ashtanga e Salute Femminile, ciascuno insegnato
+        da chi lo ha studiato per anni. Trova quello giusto per la fase di vita in cui sei.
+      </p>
+    </div>
+  </section>
+
+  <!-- Griglia pratiche adattiva -->
+  <Section background="alt" class="pt-0">
+    <Container>
+      {n <= 3 ? (
+        <!-- Una riga sola, n colonne uguali -->
+        <div class={`grid grid-cols-1 ${singleRowClass} gap-8`}>
+          {corsiAttivi.map((corso) => (
+            <a
+              href={corso.link}
+              class="course-card-large relative overflow-hidden rounded-[22px]"
+              style="height: 480px; display: block;"
+            >
+              <img src={corso.foto} alt={altFor(corso.foto, `Corso di ${corso.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={corso.posizione ? `object-position: ${corso.posizione};` : undefined} loading="lazy" />
+              <div class="absolute inset-0" style={`background: ${corso.overlay};`}></div>
+              <div class="absolute inset-0 flex flex-col justify-end p-10">
+                <h2 class="font-serif text-[36px] text-white leading-tight mb-3">{corso.stile}</h2>
+                <p class="text-white/80 text-[15px] leading-relaxed mb-6 max-w-[200px]">{corso.sub}</p>
+                <span class="inline-flex items-center justify-center bg-primary text-white text-[14px] font-medium px-6 py-2.5 rounded-full w-fit transition-colors hover:bg-[#8a885a]">
+                  Scopri
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <>
+          <!-- Prima riga: prime 2 card grandi -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+            {corsiAttivi.slice(0, 2).map((corso) => (
+              <a
+                href={corso.link}
+                class="course-card-large relative overflow-hidden rounded-[22px]"
+                style="height: 480px; display: block;"
+              >
+                <img src={corso.foto} alt={altFor(corso.foto, `Corso di ${corso.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={corso.posizione ? `object-position: ${corso.posizione};` : undefined} loading="lazy" />
+                <div class="absolute inset-0" style={`background: ${corso.overlay};`}></div>
+                <div class="absolute inset-0 flex flex-col justify-end p-10">
+                  <h2 class="font-serif text-[36px] text-white leading-tight mb-3">{corso.stile}</h2>
+                  <p class="text-white/80 text-[15px] leading-relaxed mb-6 max-w-[200px]">{corso.sub}</p>
+                  <span class="inline-flex items-center justify-center bg-primary text-white text-[14px] font-medium px-6 py-2.5 rounded-full w-fit transition-colors hover:bg-[#8a885a]">
+                    Scopri
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+          <!-- Seconda riga: card medie -->
+          <div class={`grid grid-cols-1 ${secondRowClass} gap-6`}>
+            {corsiAttivi.slice(2).map((corso) => (
+              <a
+                href={corso.link}
+                class="course-card-medium relative overflow-hidden rounded-[22px]"
+                style="height: 360px; display: block;"
+              >
+                <img src={corso.foto} alt={altFor(corso.foto, `Corso di ${corso.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={corso.posizione ? `object-position: ${corso.posizione};` : undefined} loading="lazy" />
+                <div class="absolute inset-0" style={`background: ${corso.overlay};`}></div>
+                <div class="absolute inset-0 flex flex-col justify-end p-8">
+                  <h2 class="font-serif text-[36px] text-white leading-tight mb-2">{corso.stile}</h2>
+                  <p class="text-white/80 text-[14px] leading-relaxed mb-5 max-w-[180px]">{corso.sub}</p>
+                  <span class="inline-flex items-center justify-center bg-primary text-white text-[14px] font-medium px-6 py-2.5 rounded-full w-fit transition-colors hover:bg-[#8a885a]">
+                    Scopri
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+    </Container>
+  </Section>
+
+  <!-- Non sai ancora? -->
+  <Section background="default">
+    <Container size="narrow" class="text-center">
+      <Heading level={2} class="mb-5">Ancora non sai quale fa per te?</Heading>
+      <p class="text-text-secondary text-base leading-relaxed mb-10">
+        Cinque domande, sessanta secondi.<br/>Ti diciamo da dove iniziare.
+      </p>
+      <Button variant="primary" size="md" href="/trova-la-tua-pratica">Trova la tua pratica</Button>
+      <p class="text-sm mt-5" style="color: #9b9b9b;">
+        Oppure{' '}
+        <LinkApple href="https://wa.me/393287675966" external={true}>scrivici su WhatsApp</LinkApple>
+      </p>
+    </Container>
+  </Section>
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline="Inizia da una sola lezione."
+    linkLabel="Vedi gli orari"
+    linkHref="/orari"
+  />
+</BaseLayout>
+
+<style>
+  .course-card-large {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transition: box-shadow 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .course-card-large:hover {
+    box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+    transform: scale(1.01);
+  }
+  .course-card-medium {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: box-shadow 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .course-card-medium:hover {
+    box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+    transform: scale(1.01);
+  }
+</style>

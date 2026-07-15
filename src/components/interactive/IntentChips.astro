@@ -1,0 +1,68 @@
+---
+---
+
+<div class="text-center py-8 md:py-12">
+  <p class="text-sm text-text-secondary mb-5 font-sans">Cosa cerchi?</p>
+  <div class="flex flex-wrap justify-center gap-3">
+    {[
+      { label: 'Risolvere dolori fisici', target: 'iyengar' },
+      { label: 'Costanza e disciplina', target: 'ashtanga' },
+      { label: 'Muovermi senza pensare', target: 'flow' },
+      { label: 'Non lo so ancora', target: 'trova' },
+    ].map(({ label, target }) => (
+      <button
+        class="intent-chip px-6 py-3 rounded-full border border-border text-sm font-sans transition-all duration-250 hover:border-primary hover:bg-background-alt"
+        data-target={target}
+        aria-pressed="false"
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  const chips = document.querySelectorAll<HTMLElement>('.intent-chip');
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const target = chip.dataset.target;
+
+      if (target === 'trova') {
+        window.location.href = '/trova-la-tua-pratica';
+        return;
+      }
+
+      const isActive = chip.getAttribute('aria-pressed') === 'true';
+
+      // Reset all
+      chips.forEach(c => {
+        c.setAttribute('aria-pressed', 'false');
+        c.style.background = 'transparent';
+        c.style.color = '';
+        c.style.borderColor = '#e8e4df';
+      });
+
+      const cards = document.querySelectorAll<HTMLElement>('.course-card-wrapper');
+      cards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      });
+
+      if (!isActive) {
+        chip.setAttribute('aria-pressed', 'true');
+        chip.style.background = '#9c9a66';
+        chip.style.color = 'white';
+        chip.style.borderColor = '#9c9a66';
+
+        cards.forEach(card => {
+          if (card.dataset.stile !== target) {
+            card.style.opacity = '0.5';
+          } else {
+            card.style.transform = 'scale(1.01)';
+          }
+        });
+      }
+    });
+  });
+</script>

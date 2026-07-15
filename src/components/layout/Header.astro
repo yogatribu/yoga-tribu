@@ -1,0 +1,240 @@
+---
+import MegaMenu from './MegaMenu.astro';
+import MobileMenu from './MobileMenu.astro';
+import Button from '../ui/Button.astro';
+
+const WA_URL = 'https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20la%20prima%20lezione%20di%20prova%20a%2010%E2%82%AC.';
+
+const navItems = [
+  { label: 'Pratiche', voce: 'corsi', href: '/corsi' },
+  { label: 'Chi Siamo', voce: 'chi-siamo', href: '/chi-siamo' },
+  { label: 'Abbonamenti', voce: 'abbonamenti', href: '/abbonamenti' },
+  { label: 'Eventi', voce: 'eventi', href: '/eventi' },
+] as const;
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-[60]"
+  style="background: rgba(249,245,240,0.85); backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%); border-bottom: 1px solid rgba(232,228,223,0.5); transition: background 250ms ease-out, backdrop-filter 250ms ease-out, box-shadow 250ms ease-out, border-color 250ms ease-out;"
+>
+  <div class="container-default flex items-center justify-between" id="header-inner" style="height: 88px; transition: height 250ms ease-out;">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 font-serif text-3xl text-text-main">
+      <img src="/logo/icona-ocra.svg" alt="" aria-hidden="true" class="h-14 w-auto" />
+      YOGA TRIBÙ
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden lg:flex items-center gap-8" aria-label="Navigazione principale">
+      {navItems.map(({ label, voce, href }) => (
+        <div class="mega-trigger" data-voce={voce}>
+          <a
+            href={href}
+            class="header-nav-link font-serif text-[17px] font-normal text-text-main transition-opacity duration-200 hover:opacity-70"
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            {label}
+          </a>
+        </div>
+      ))}
+      <a
+        href="/orari"
+        class="header-nav-link font-serif text-[17px] font-normal text-text-main transition-opacity duration-200 hover:opacity-70"
+      >
+        Orari
+      </a>
+    </nav>
+
+    <!-- CTA desktop -->
+    <div class="hidden lg:block">
+      <Button variant="primary" size="sm" href={WA_URL} external={true}>Prenota la prima lezione</Button>
+    </div>
+
+    <!-- Hamburger mobile -->
+    <button
+      id="mobile-menu-open"
+      aria-label="Apri menu"
+      class="lg:hidden w-10 h-10 flex items-center justify-center text-text-main"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <div id="mega-container" aria-hidden="true" style="position: absolute; top: 100%; left: 0; right: 0;">
+    <div id="mega-corsi" class="mega-section">
+      <MegaMenu voce="corsi" />
+    </div>
+    <div id="mega-chi-siamo" class="mega-section">
+      <MegaMenu voce="chi-siamo" />
+    </div>
+    <div id="mega-abbonamenti" class="mega-section">
+      <MegaMenu voce="abbonamenti" />
+    </div>
+    <div id="mega-eventi" class="mega-section">
+      <MegaMenu voce="eventi" />
+    </div>
+  </div>
+
+</header>
+
+<div
+  id="mega-backdrop"
+  style="position: fixed; inset: 0; z-index: 40; background: rgba(255,255,255,0.4); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity 200ms ease;"
+></div>
+
+<MobileMenu />
+
+<script>
+  let megaMenuAbortController: AbortController | undefined;
+
+  function initMegaMenu() {
+    // Chiude qualsiasi pannello aperto prima del re-init (importante con View Transitions
+    // perché l'header persiste tra le pagine e i class 'is-open' restano nel DOM)
+    document.querySelectorAll<HTMLElement>('.mega-section.is-open').forEach(el => {
+      el.classList.remove('is-open');
+    });
+    const mc = document.getElementById('mega-container');
+    if (mc) mc.setAttribute('aria-hidden', 'true');
+    const bd = document.getElementById('mega-backdrop') as HTMLElement | null;
+    if (bd) { bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+
+    // Rimuove tutti i listener del ciclo precedente in un colpo solo
+    if (megaMenuAbortController) megaMenuAbortController.abort();
+    megaMenuAbortController = new AbortController();
+    const { signal } = megaMenuAbortController;
+
+    const header = document.getElementById('site-header') as HTMLElement | null;
+    const headerInner = document.getElementById('header-inner') as HTMLElement | null;
+    const hamburger = document.getElementById('mobile-menu-open');
+    const backdrop = document.getElementById('mega-backdrop') as HTMLElement | null;
+    const megaContainer = document.getElementById('mega-container') as HTMLElement | null;
+
+    if (!header || !headerInner || !backdrop || !megaContainer) return;
+
+    // Stato locale a questo ciclo di vita — pulito ad ogni re-init
+    let currentVoce: string | null = null;
+    let openTimer: ReturnType<typeof setTimeout> | null = null;
+    let closeTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function openPanel(voce: string) {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      if (currentVoce === voce) return;
+      if (currentVoce) {
+        document.getElementById(`mega-${currentVoce}`)?.classList.remove('is-open');
+      }
+      currentVoce = voce;
+      document.getElementById(`mega-${voce}`)?.classList.add('is-open');
+      megaContainer.setAttribute('aria-hidden', 'false');
+      backdrop.style.opacity = '1';
+      backdrop.style.pointerEvents = 'auto';
+      document.querySelectorAll<HTMLElement>('.mega-trigger a').forEach(a => {
+        a.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelector<HTMLElement>(`.mega-trigger[data-voce="${voce}"] a`)
+        ?.setAttribute('aria-expanded', 'true');
+    }
+
+    function closePanel() {
+      if (!currentVoce) return;
+      document.getElementById(`mega-${currentVoce}`)?.classList.remove('is-open');
+      megaContainer.setAttribute('aria-hidden', 'true');
+      backdrop.style.opacity = '0';
+      backdrop.style.pointerEvents = 'none';
+      document.querySelectorAll<HTMLElement>('.mega-trigger a').forEach(a => {
+        a.setAttribute('aria-expanded', 'false');
+      });
+      currentVoce = null;
+    }
+
+    document.querySelectorAll<HTMLElement>('.mega-trigger').forEach((trigger) => {
+      const voce = trigger.dataset.voce!;
+      trigger.addEventListener('mouseenter', () => {
+        if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        if (currentVoce) {
+          openPanel(voce);
+        } else {
+          openTimer = setTimeout(() => openPanel(voce), 100);
+        }
+      }, { signal });
+      trigger.addEventListener('mouseleave', () => {
+        if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+        closeTimer = setTimeout(closePanel, 200);
+      }, { signal });
+    });
+
+    megaContainer.addEventListener('mouseenter', () => {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    }, { signal });
+    megaContainer.addEventListener('mouseleave', () => {
+      closeTimer = setTimeout(closePanel, 200);
+    }, { signal });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePanel();
+    }, { signal });
+
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target as Node)) closePanel();
+    }, { signal });
+
+    function setScrolled(scrolled: boolean) {
+      if (!header || !headerInner) return;
+      if (scrolled) {
+        header.style.background = 'rgba(249,245,240,0.95)';
+        header.style.backdropFilter = 'blur(20px) saturate(180%)';
+        (header.style as any).webkitBackdropFilter = 'blur(20px) saturate(180%)';
+        header.style.borderBottomColor = '#e8e4df';
+        header.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)';
+        headerInner.style.height = '64px';
+      } else {
+        header.style.background = 'rgba(249,245,240,0.85)';
+        header.style.backdropFilter = 'blur(12px) saturate(180%)';
+        (header.style as any).webkitBackdropFilter = 'blur(12px) saturate(180%)';
+        header.style.borderBottomColor = 'rgba(232,228,223,0.5)';
+        header.style.boxShadow = 'none';
+        headerInner.style.height = '88px';
+      }
+    }
+
+    window.addEventListener('scroll', () => setScrolled(window.scrollY > 40), { passive: true, signal });
+    // Applica subito lo stato corretto (la pagina potrebbe essere arrivata già scrollata)
+    setScrolled(window.scrollY > 40);
+
+    hamburger?.addEventListener('click', () => {
+      (window as any).openMobileMenu?.();
+    }, { signal });
+  }
+
+  document.addEventListener('DOMContentLoaded', initMegaMenu);
+  document.addEventListener('astro:page-load', initMegaMenu);
+</script>
+
+<style>
+  .mega-section {
+    display: none;
+  }
+  .mega-section.is-open {
+    display: block;
+    animation: megaFadeIn 250ms ease-out both;
+  }
+
+  @keyframes megaFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

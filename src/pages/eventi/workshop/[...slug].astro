@@ -1,0 +1,349 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Button from '../../../components/ui/Button.astro';
+import CTAFinal from '../../../components/content/CTAFinal.astro';
+import Section from '../../../components/ui/Section.astro';
+import Container from '../../../components/ui/Container.astro';
+import Tag from '../../../components/ui/Tag.astro';
+import Heading from '../../../components/ui/Heading.astro';
+import Divider from '../../../components/ui/Divider.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const workshops = await getCollection('workshops', ({ data }) => data.draft !== true);
+  return workshops.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const ws = entry.data;
+
+const postiRimasti = ws.posti_disponibili;
+const esaurito = postiRimasti === 0;
+const scarsita = postiRimasti <= 3 && postiRimasti > 0;
+
+function formatData(dataStr: string) {
+  return new Date(dataStr).toLocaleDateString('it-IT', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+function formatDataBreve(dataStr: string) {
+  return new Date(dataStr).toLocaleDateString('it-IT', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+function durataLabel(min: number) {
+  if (min < 60) return `${min} minuti`;
+  const ore = Math.floor(min / 60);
+  const rimasti = min % 60;
+  if (rimasti === 0) return `${ore} ${ore === 1 ? 'ora' : 'ore'}`;
+  return `${ore}h ${rimasti}min`;
+}
+
+const eventSchema = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": ws.title,
+  "description": ws.descrizione_breve,
+  "startDate": ws.data,
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Yoga Tribù",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via Giuseppe Mazzini 1",
+      "addressLocality": "San Giuseppe",
+      "postalCode": "36022",
+      "addressCountry": "IT"
+    }
+  },
+  "organizer": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "offers": {
+    "@type": "Offer",
+    "price": String(ws.prezzo),
+    "priceCurrency": "EUR",
+    "availability": esaurito ? "https://schema.org/SoldOut" : "https://schema.org/InStock"
+  }
+};
+---
+
+<BaseLayout
+  title={`${ws.title} · Yoga Tribù`}
+  description={ws.descrizione_breve}
+  schemaJsonLd={eventSchema}
+>
+  <!-- Hero -->
+  <div
+    data-hero
+    class="relative flex items-end overflow-hidden bg-[#2a2a2a]"
+    style="min-height: 80vh;"
+  >
+    <img
+      src="https://images.unsplash.com/photo-1601925228008-6f0a7effc3d7?w=1600&q=80"
+      alt={ws.title}
+      class="absolute inset-0 w-full h-full object-cover opacity-40"
+      loading="eager"
+    />
+    <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%);"></div>
+    <div class="relative container-default pb-16 pt-32">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/70 mb-4">Workshop · Yoga Tribù</p>
+      <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight max-w-3xl mb-4">
+        {ws.title}
+      </h1>
+      <p class="text-white/80 text-base max-w-xl leading-relaxed mb-8">
+        {ws.descrizione_breve}
+      </p>
+      <div class="flex flex-wrap gap-6 mb-8">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Data</p>
+          <p class="text-white text-sm">{formatDataBreve(ws.data)}</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Orario</p>
+          <p class="text-white text-sm">{ws.orario}</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Durata</p>
+          <p class="text-white text-sm">{durataLabel(ws.durata)}</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Luogo</p>
+          <p class="text-white text-sm">Studio Yoga Tribù, Bassano del Grappa</p>
+        </div>
+      </div>
+      {esaurito ? (
+        <Button
+          variant="secondary-dark" size="lg" external={true}
+          href={`https://wa.me/393287675966?text=Ciao!%20Il%20workshop%20%22${encodeURIComponent(ws.title)}%22%20%C3%A8%20esaurito%20%E2%80%94%20posso%20essere%20avvisato%20se%20si%20libera%20un%20posto%3F`}
+        >
+          Lista d'attesa
+        </Button>
+      ) : (
+        <Button
+          variant="secondary-dark" size="lg" external={true}
+          href={`https://wa.me/393287675966?text=Ciao!%20Vorrei%20iscrivermi%20al%20workshop%20%22${encodeURIComponent(ws.title)}%22.%20Sono%20%5Biscritto%20%2F%20non%20iscritto%5D%20a%20Yoga%20Trib%C3%B9.`}
+        >
+          Iscriviti su WhatsApp
+        </Button>
+      )}
+    </div>
+  </div>
+
+  <!-- Dettagli rapidi -->
+  <Section background="alt" size="compact">
+    <Container>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Insegnanti</p>
+          <p class="text-text-main text-sm font-medium">{ws.insegnante}</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Posti totali</p>
+          <p class="text-text-main text-sm font-medium">{ws.posti_totali} persone</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Posti disponibili</p>
+          <p class={`text-sm font-medium ${esaurito ? 'text-text-secondary' : scarsita ? 'text-[#c95a4a]' : 'text-text-main'}`}>
+            {esaurito ? 'Esauriti' : `${postiRimasti} / ${ws.posti_totali}`}
+          </p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Quota</p>
+          <p class="text-text-main text-sm font-medium">30€ iscritti · 40€ non iscritti</p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Contenuto principale + sidebar -->
+  <Section background="default">
+    <Container>
+      <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16 items-start">
+        <!-- Colonna sinistra -->
+        <div>
+          <!-- Contenuto markdown: Cosa vedremo + A chi è dedicato -->
+          <article class="prose-workshop">
+            <Content />
+          </article>
+
+          <!-- Programma: fuori dal prose-workshop per non perdere gli stili card -->
+          <div class="mt-12">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Come si svolge</p>
+            <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Programma</h2>
+            <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6">3 ore di pratica intensiva, suddivise in:</p>
+            <div class="space-y-3">
+              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">45 min</p>
+                <p class="text-sm text-[#2a2a2a]">Riscaldamento e preparazione del corpo</p>
+              </div>
+              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">90 min</p>
+                <p class="text-sm text-[#2a2a2a]">Asana principali con varianti</p>
+              </div>
+              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">45 min</p>
+                <p class="text-sm text-[#2a2a2a]">Approfondimento e riposo</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar prenotazione -->
+        <div class="sticky top-24 space-y-4">
+          <!-- Card quota -->
+          <div class="bg-background-alt border border-border rounded-[18px] p-6">
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Iscritti</p>
+                <p class="font-serif text-[32px] text-text-main leading-none">30€</p>
+              </div>
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Non iscritti</p>
+                <p class="font-serif text-[32px] text-text-main leading-none">40€</p>
+              </div>
+            </div>
+            {scarsita && (
+              <span class="inline-block text-[11px] font-semibold uppercase tracking-[0.1em] text-white bg-[#c95a4a] px-3 py-1 rounded-full mb-3">
+                Ultimi {postiRimasti}!
+              </span>
+            )}
+            {esaurito && (
+              <span class="inline-block text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] border border-border px-3 py-1 rounded-full mb-3">
+                Esaurito
+              </span>
+            )}
+            <Divider class="mb-5" />
+            <div class="space-y-3 text-sm mb-6">
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Data</span>
+                <span class="text-text-main text-right">{formatDataBreve(ws.data)}</span>
+              </div>
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Orario</span>
+                <span class="text-text-main">{ws.orario}</span>
+              </div>
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Durata</span>
+                <span class="text-text-main">{durataLabel(ws.durata)}</span>
+              </div>
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Luogo</span>
+                <span class="text-text-main text-right">Studio Yoga Tribù,<br/>Bassano del Grappa</span>
+              </div>
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Insegnante</span>
+                <span class="text-text-main">{ws.insegnante}</span>
+              </div>
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Posti rimasti</span>
+                <span class={`font-medium ${esaurito ? 'text-text-secondary' : scarsita ? 'text-[#c95a4a]' : 'text-text-main'}`}>
+                  {esaurito ? '—' : `${postiRimasti} / ${ws.posti_totali}`}
+                </span>
+              </div>
+            </div>
+            {esaurito ? (
+              <div class="text-center">
+                <Button
+                  variant="secondary" size="md" external={true}
+                  href={`https://wa.me/393287675966?text=Ciao!%20Il%20workshop%20%22${encodeURIComponent(ws.title)}%22%20%C3%A8%20esaurito%20%E2%80%94%20posso%20essere%20avvisato%20se%20si%20libera%20un%20posto%3F`}
+                >
+                  Lista d'attesa
+                </Button>
+              </div>
+            ) : (
+              <div class="text-center">
+                <Button
+                  variant="primary" size="md" external={true}
+                  href={`https://wa.me/393287675966?text=Ciao!%20Vorrei%20iscrivermi%20al%20workshop%20%22${encodeURIComponent(ws.title)}%22.%20Sono%20%5Biscritto%20%2F%20non%20iscritto%5D%20a%20Yoga%20Trib%C3%B9.`}
+                >
+                  Iscriviti su WhatsApp
+                </Button>
+              </div>
+            )}
+          </div>
+
+
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline={esaurito ? `"${ws.title}" è al completo.` : `Prenota il tuo posto al workshop.`}
+    subtitle={esaurito
+      ? 'Scrivici su WhatsApp per la lista d\'attesa o per sapere quando organizziamo il prossimo.'
+      : 'La prenotazione si fa su WhatsApp in meno di un minuto.'}
+    ctaLabel={esaurito ? 'Lista d\'attesa su WhatsApp' : 'Iscriviti su WhatsApp'}
+    ctaHref={`https://wa.me/393287675966?text=Ciao!%20${esaurito ? 'Lista%20d%27attesa%20per%20il%20workshop%20%22' + encodeURIComponent(ws.title) + '%22' : 'Voglio%20iscrivermi%20al%20workshop%20%22' + encodeURIComponent(ws.title) + '%22.'}`}
+    linkLabel="Vedi tutti gli eventi"
+    linkHref="/eventi"
+  />
+</BaseLayout>
+
+<style is:global>
+  .prose-workshop h2 {
+    font-family: 'New York', serif;
+    font-size: 36px;
+    color: #2a2a2a;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  .prose-workshop h2::before {
+    display: block;
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    margin-bottom: 8px;
+  }
+  .prose-workshop h2:nth-of-type(1)::before { content: 'Il workshop'; }
+  .prose-workshop h2:nth-of-type(2)::before { content: 'Per chi'; }
+  .prose-workshop h3 {
+    font-family: var(--font-serif, Georgia, serif);
+    font-size: 20px;
+    color: #2a2a2a;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-workshop p {
+    color: #2a2a2a;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 620px;
+  }
+  .prose-workshop ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.25rem;
+  }
+  .prose-workshop ul li {
+    color: #6b6b6b;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e8e4df;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .prose-workshop ul li::before {
+    content: '·';
+    color: #9c9a66;
+    flex-shrink: 0;
+  }
+  .prose-workshop strong {
+    color: #2a2a2a;
+    font-weight: 500;
+  }
+</style>

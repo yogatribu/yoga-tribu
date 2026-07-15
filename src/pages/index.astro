@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import LinkApple from '../components/ui/LinkApple.astro';
+import TestimonialCarousel from '../components/content/TestimonialCarousel.astro';
+import CTAFinal from '../components/content/CTAFinal.astro';
+import { testimonials } from '../data/testimonials';
+import { PRATICHE_ATTIVE } from '../config/visibilita.js';
+import { altFor } from '../config/imageAlt.js';
+
+interface TileCorso {
+  slug: string;
+  tag: string;
+  nome: string;
+  subheadline: string;
+  sub: string;
+  link: string;
+  cta: string;
+  waMsg: string;
+  foto: string;
+  overlay: string;
+}
+
+const tilesCorsi: TileCorso[] = [
+  {
+    slug: 'iyengar',
+    tag: '',
+    nome: 'Iyengar',
+    subheadline: 'Per il corpo che ha bisogno di precisione.',
+    sub: 'Una pratica tradizionale che risolve dolori reali (schiena, spalle, ginocchia) con tecniche precise.',
+    link: '/corsi/iyengar',
+    cta: 'Scopri Iyengar',
+    waMsg: 'https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20una%20prima%20lezione%20di%20Iyengar.',
+    foto: '/images/iyengar.webp',
+    overlay: 'rgba(0,0,0,0.28)',
+  },
+  {
+    slug: 'ashtanga',
+    tag: '',
+    nome: 'Ashtanga',
+    subheadline: 'Per chi cerca un posto a cui tornare ogni giorno.',
+    sub: 'Una pratica antica che restituisce silenzio interiore, crescita fisica e mentale.',
+    link: '/corsi/ashtanga',
+    cta: 'Scopri Ashtanga',
+    waMsg: 'https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20una%20prima%20lezione%20di%20Ashtanga.',
+    foto: '/images/ashtanga.webp',
+    overlay: 'rgba(0,0,0,0.45)',
+  },
+  {
+    slug: 'vinyasa',
+    tag: '',
+    nome: 'Vinyasa',
+    subheadline: "Un'ora in cui smetti di pensare.",
+    sub: "Pratica fresca, sempre diversa. Movimento, respiro, niente pensieri per un'ora.",
+    link: '/corsi/vinyasa',
+    cta: 'Scopri Vinyasa',
+    waMsg: 'https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20una%20prima%20lezione%20di%20Vinyasa.',
+    foto: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80',
+    overlay: 'rgba(0,0,0,0.30)',
+  },
+];
+
+const tilesAttivi = tilesCorsi.filter(t => PRATICHE_ATTIVE.includes(t.slug));
+
+const siamoCards = [
+  'Insegnanti formati per anni nel metodo specifico',
+  'Pratica tradizionale che dà risultati reali',
+  'Una tribù che resta negli anni',
+];
+
+---
+
+<BaseLayout
+  title="Yoga Tribù · Studio di yoga professionale a Bassano del Grappa"
+  description="Studio di yoga a Bassano del Grappa. Iyengar, Ashtanga e Salute Femminile con insegnanti certificati. Risolvi dolori reali con pratica tradizionale."
+>
+
+  <!-- TILE 1 — Hero 95vh -->
+  <div
+    data-hero
+    class="relative overflow-hidden bg-[#1a1a1a]"
+    style="min-height: 95vh;"
+  >
+    <img
+      src="/images/hero.webp"
+      alt="Insegnante guida la pratica nello studio Yoga Tribù a Bassano del Grappa"
+      class="absolute inset-0 w-full h-full object-cover opacity-55"
+      loading="eager"
+      fetchpriority="high"
+      width="1600"
+      height="900"
+    />
+    <div class="absolute inset-0" style="background: rgba(0,0,0,0.40);"></div>
+    <div
+      class="relative container-default flex items-center justify-center text-center"
+      style="min-height: 95vh;"
+    >
+      <div class="max-w-[900px] hero-content">
+        <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/75 mb-4">Studio di yoga · Bassano del Grappa</p>
+        <h1 class="font-serif text-[48px] md:text-[80px] text-white leading-[1.05] mb-8">
+          Esci diverso da come sei entrato.
+        </h1>
+        <p class="text-white/80 text-[17px] md:text-lg max-w-xl mx-auto leading-relaxed mb-10">
+          Iyengar, Ashtanga e Salute Femminile con insegnanti formati per anni. Per chi cerca una pratica seria e duratura.
+        </p>
+        <div class="flex flex-wrap gap-4 items-center justify-center">
+          <Button
+            variant="primary"
+            size="lg"
+            href="https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20la%20prima%20lezione%20di%20prova%20a%2010%E2%82%AC."
+            external={true}
+          >Prenota la prima lezione</Button>
+          <Button variant="secondary" size="lg" href="/trova-la-tua-pratica">Quale pratica fa per te?</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TILE pratiche attive -->
+  {tilesAttivi.map((tile) => (
+    <div
+      class="relative overflow-hidden group"
+      style="min-height: 70vh;"
+    >
+      <img
+        src={tile.foto}
+        alt={altFor(tile.foto, `Pratica di ${tile.nome} allo studio Yoga Tribù`)}
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+      <div class="absolute inset-0" style={`background: ${tile.overlay};`}></div>
+      <div
+        class="relative h-full flex items-center justify-center text-center"
+        style="min-height: 70vh;"
+      >
+        <div class="container-default py-24">
+          <div class="max-w-[720px] mx-auto">
+            {tile.tag && <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75 mb-5">{tile.tag}</p>}
+            <h2 class="font-serif text-[56px] md:text-[72px] text-white leading-none mb-5">
+              {tile.nome}
+            </h2>
+            <p class="font-sans text-[18px] text-white/90 italic leading-[1.4] mb-6 max-w-md mx-auto">
+              "{tile.subheadline}"
+            </p>
+            <p class="text-white/75 text-base leading-relaxed mb-8 max-w-md mx-auto">
+              {tile.sub}
+            </p>
+            <div class="flex flex-wrap gap-4 items-center justify-center">
+              <Button variant="primary" href={tile.link}>{tile.cta}</Button>
+              <Button variant="secondary" href={tile.waMsg} external={true}>Prenota una lezione</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+
+  <!-- TILE 5 — Trova la tua pratica 60vh -->
+  <div class="bg-background flex items-center justify-center text-center" style="min-height: 60vh;">
+    <div class="container-default py-24 w-full">
+      <div class="max-w-[720px] mx-auto">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">INDECISO?</p>
+        <h2 class="font-serif text-[36px] md:text-[52px] text-text-main leading-tight mb-5">
+          Trova la tua pratica.
+        </h2>
+        <p class="text-text-secondary text-[17px] leading-relaxed mb-10 max-w-lg mx-auto">
+          Tre domande. Sessanta secondi. Una risposta personalizzata.
+        </p>
+        <Button variant="primary" size="md" href="/trova-la-tua-pratica">Inizia</Button>
+        <p class="text-sm mt-4" style="line-height: 1.6; color: #9b9b9b;">
+          Oppure{' '}
+          <LinkApple href="https://wa.me/393287675966?text=Ciao!%20Vorrei%20capire%20quale%20pratica%20fa%20per%20me." external={true}>scrivici su WhatsApp</LinkApple>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TILE 6 — Perché sceglierci -->
+  <div class="bg-background-alt flex items-center justify-center" style="min-height: 80vh;">
+    <div class="container-default py-24 w-full text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-6">PERCHÉ SCEGLIERCI</p>
+      <h2 class="font-serif text-[36px] md:text-[56px] text-text-main leading-tight mb-16">
+        Tre ragioni concrete.
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto mb-16">
+        {siamoCards.map(voce => (
+          <div class="bg-white text-center border border-[#e8e4df] shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="padding: 40px 32px; border-radius: 18px;">
+            <p class="font-serif text-[22px] text-[#2a2a2a] leading-[1.3]" style="font-weight: 500;">{voce}</p>
+          </div>
+        ))}
+      </div>
+
+      <Button variant="primary" size="md" href="/chi-siamo">Scopri chi siamo</Button>
+    </div>
+  </div>
+
+  <!-- TILE EVENTO IN EVIDENZA: aggiorna manualmente quando cambia l'evento del momento
+       (Estate in Villa estate / Ritiro autunno / Workshop speciali / etc) -->
+  <div
+    class="relative overflow-hidden group"
+    style="min-height: 60vh;"
+  >
+    <img
+      src="/images/estate_in_villa.webp"
+      alt="Estate in Villa — Yoga Tribù"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0" style="background: rgba(0,0,0,0.42);"></div>
+    <div
+      class="relative container-default flex items-center justify-center text-center"
+      style="min-height: 60vh;"
+    >
+      <div class="max-w-[720px] mx-auto py-24">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75 mb-4">ESPERIENZA ESTIVA</p>
+        <h2 class="font-serif italic text-[40px] md:text-[60px] text-white leading-tight mb-4">
+          Estate in Villa 2026.
+        </h2>
+        <p class="text-white/80 text-base mb-8">
+          Da giugno a settembre 2026 · Via Ca' Minotto 46, Rosà
+        </p>
+        <p class="text-white/70 text-sm mb-8">
+          Yoga all'aperto sotto il porticato di una villa veneta. Tutta l'estate, ogni sera.
+        </p>
+        <div class="flex flex-wrap gap-4 items-center justify-center">
+          <Button variant="primary" href="/eventi/estate-in-villa">Scopri Estate in Villa</Button>
+          <Button variant="secondary" href="/eventi">Vedi tutti gli eventi</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TILE 8 — Testimonianze carosello ibrido -->
+  <TestimonialCarousel testimonials={testimonials} />
+
+  <CTAFinal
+    headline="Comincia da una sola lezione."
+    subtitle="Prima lezione di prova a 10€. In studio."
+  />
+
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .hero-content {
+    animation: heroIn 600ms ease-out both;
+  }
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-content { animation: none; }
+  }
+
+
+</style>

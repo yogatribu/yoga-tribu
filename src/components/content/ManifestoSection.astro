@@ -1,0 +1,17 @@
+---
+interface Props {
+  text: string;
+  background?: 'default' | 'alt';
+}
+const { text, background = 'default' } = Astro.props;
+const bg = background === 'alt' ? 'bg-background-alt' : 'bg-background';
+---
+
+<section class={`${bg} py-16 md:py-24`}>
+  <div class="container-narrow px-8 md:px-16 text-center">
+    <blockquote
+      class="font-serif italic text-text-main leading-[1.4] text-[28px] md:text-[38px]"
+      set:html={text}
+    />
+  </div>
+</section>

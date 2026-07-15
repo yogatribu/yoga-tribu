@@ -1,0 +1,60 @@
+---
+interface Props {
+  question: string;
+  defaultOpen?: boolean;
+}
+const { question, defaultOpen = false } = Astro.props;
+---
+
+<div class="accordion-item border-b border-border">
+  <button
+    class="accordion-trigger w-full flex items-center justify-between py-6 text-left cursor-pointer group"
+    aria-expanded={defaultOpen ? 'true' : 'false'}
+  >
+    <span class="font-serif text-[20px] text-text-main pr-8 leading-snug group-hover:text-primary transition-colors duration-200">
+      {question}
+    </span>
+    <span
+      class={`accordion-icon shrink-0 w-6 h-6 text-primary transition-transform duration-300 ${defaultOpen ? 'rotate-180' : ''}`}
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </span>
+  </button>
+
+  <div
+    class="accordion-content overflow-hidden transition-all duration-300 ease-out"
+    style={defaultOpen ? '' : 'max-height: 0;'}
+  >
+    <div class="pb-6 text-[15px] text-text-secondary leading-relaxed">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.accordion-item').forEach((item) => {
+    const trigger = item.querySelector('.accordion-trigger');
+    const content = item.querySelector<HTMLElement>('.accordion-content');
+    const icon = item.querySelector('.accordion-icon');
+
+    if (!content) return;
+
+    const isOpen = trigger?.getAttribute('aria-expanded') === 'true';
+    if (isOpen) content.style.maxHeight = content.scrollHeight + 'px';
+
+    trigger?.addEventListener('click', () => {
+      const open = trigger.getAttribute('aria-expanded') === 'true';
+      if (open) {
+        content.style.maxHeight = '0';
+        trigger.setAttribute('aria-expanded', 'false');
+        icon?.classList.remove('rotate-180');
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        trigger.setAttribute('aria-expanded', 'true');
+        icon?.classList.add('rotate-180');
+      }
+    });
+  });
+</script>

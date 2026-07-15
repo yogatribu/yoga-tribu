@@ -1,0 +1,82 @@
+---
+interface Lezione {
+  giorno: string;
+  ora: string;
+  stile: string;
+  tipo: string;
+  insegnante: string;
+  durata: string;
+}
+
+interface Props {
+  lezioni: Lezione[];
+}
+
+const { lezioni } = Astro.props;
+
+const giorni = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
+const giorniLabel = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+
+const colori: Record<string, string> = {
+  iyengar: '#9c9a66',
+  ashtanga: '#7a6b5f',
+  flow: '#b8a68e',
+  teen: '#d4b5a0',
+};
+
+const orari = [...new Set(lezioni.map(l => l.ora))].sort((a, b) => {
+  const [ah, am] = a.split(':').map(Number);
+  const [bh, bm] = b.split(':').map(Number);
+  return ah * 60 + am - (bh * 60 + bm);
+});
+---
+
+<div class="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
+  <table class="w-full border-collapse min-w-[900px]">
+    <thead>
+      <tr>
+        <th class="w-16 text-left pb-4 pr-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary font-sans"></th>
+        {giorniLabel.map(g => (
+          <th class="pb-4 px-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary font-sans text-left">
+            {g}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {orari.map(ora => (
+        <tr class="border-t border-border/50">
+          <td class="pr-4 py-2 text-small text-text-secondary align-top pt-3 whitespace-nowrap">
+            {ora}
+          </td>
+          {giorni.map(giorno => {
+            const lezione = lezioni.find(l => l.giorno === giorno && l.ora === ora);
+            return (
+              <td class="px-2 py-2 align-top">
+                {lezione ? (
+                  <button
+                    class="schedule-cell w-full text-left rounded-[10px] transition-colors duration-200 hover:brightness-95 border border-[#e8e4df]"
+                    data-lezione={JSON.stringify(lezione)}
+                    style={`background: white; padding: 10px;`}
+                  >
+                    <p
+                      class="text-[11px] font-semibold uppercase tracking-[0.1em] font-semibold leading-none mb-1"
+                      style={`color: ${colori[lezione.stile]};`}
+                    >
+                      {lezione.stile}
+                    </p>
+                    <p class="text-small text-text-main leading-tight">{lezione.tipo}</p>
+                    <p class="text-tiny text-text-secondary mt-0.5">{lezione.ora}</p>
+                    <p class="text-[11px] text-text-secondary mt-1 font-sans">con {lezione.insegnante}</p>
+                  </button>
+                ) : (
+                  <div class="min-h-[60px]"></div>
+                )}
+              </td>
+            );
+          })}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

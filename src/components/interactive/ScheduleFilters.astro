@@ -1,0 +1,138 @@
+---
+import SegmentedControl from '../ui/SegmentedControl.astro';
+import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
+
+// Mappa value (stile interno) → slug in visibilita.js
+const FILTER_TO_SLUG: Record<string, string> = {
+  'iyengar': 'iyengar',
+  'ashtanga': 'ashtanga',
+  'flow': 'vinyasa',
+  'teen': 'teen-yoga',
+  'donna': 'salute-femminile',
+};
+
+const filterOptions = [
+  { value: 'tutti',    label: 'Tutti'    },
+  { value: 'iyengar',  label: 'Iyengar'  },
+  { value: 'ashtanga', label: 'Ashtanga' },
+  { value: 'flow',     label: 'Vinyasa'  },
+  { value: 'teen',     label: 'Teen'     },
+  { value: 'donna',    label: 'Salute Femminile' },
+].filter(o => o.value === 'tutti' || PRATICHE_ATTIVE.includes(FILTER_TO_SLUG[o.value] ?? o.value));
+
+const dayOptions = [
+  { value: 'lun', label: 'Lun' },
+  { value: 'mar', label: 'Mar' },
+  { value: 'mer', label: 'Mer' },
+  { value: 'gio', label: 'Gio' },
+  { value: 'ven', label: 'Ven' },
+  { value: 'sab', label: 'Sab' },
+  { value: 'dom', label: 'Dom' },
+];
+
+// Matches the same logic as ScheduleMobile
+const today = new Date().getDay();
+const dayMap = [6, 0, 1, 2, 3, 4, 5];
+const giorni = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
+const defaultDay = giorni[dayMap[today]] ?? 'lun';
+---
+
+<div class="sticky top-16 bg-background z-10 border-b border-border/50">
+
+  <!-- ── MOBILE layout (< md) ─────────────────────── -->
+  <div class="md:hidden px-4 pt-3 pb-3">
+    <!-- GIORNI: griglia a tutta larghezza, niente scroll -->
+    <div class="mobile-days-grid">
+      {dayOptions.map(({ value, label }) => (
+        <button
+          class="mobile-day-btn"
+          data-day-value={value}
+          aria-pressed={value === defaultDay ? 'true' : 'false'}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- ── DESKTOP layout (≥ md) ─────────────────────── -->
+  <div
+    class="hidden md:flex justify-center"
+    style="overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 20px 16px;"
+  >
+    <SegmentedControl
+      scId="schedule-filters"
+      options={filterOptions}
+      defaultValue="tutti"
+      background="#e8e4df"
+    />
+  </div>
+
+</div>
+
+<style is:global>
+  .mobile-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #e8e4df;
+    border-radius: 9999px;
+    padding: 4px;
+    gap: 2px;
+  }
+  .mobile-day-btn {
+    padding: 12px 0;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    background: transparent;
+    color: #6b6b6b;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .mobile-day-btn[aria-pressed="true"] {
+    background: #9c9a66;
+    color: white;
+  }
+</style>
+
+<script>
+  function initScheduleFilters() {
+    // ── PRATICHE filter (desktop) ────────────────────────
+    function applyFilter(filter: string) {
+      const cells = document.querySelectorAll<HTMLElement>('.schedule-cell');
+      cells.forEach(cell => {
+        const lezione = JSON.parse(cell.dataset.lezione ?? '{}');
+        const match = filter === 'tutti' || lezione.stile === filter;
+        const td = cell.closest('td') ?? cell.parentElement;
+        if (td) (td as HTMLElement).style.opacity = match ? '1' : '0.15';
+      });
+    }
+
+    // Desktop: SegmentedControl emette sc-change
+    document.addEventListener('sc-change', (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail.scId === 'schedule-filters') applyFilter(detail.value);
+    });
+
+    // ── MOBILE: griglia giorni ───────────────────────────
+    document.querySelectorAll<HTMLElement>('.mobile-day-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll<HTMLElement>('.mobile-day-btn').forEach(b => {
+          b.setAttribute('aria-pressed', (b === btn).toString());
+        });
+        document.dispatchEvent(new CustomEvent('sc-change', {
+          detail: { scId: 'schedule-days', value: btn.dataset.dayValue },
+          bubbles: true,
+        }));
+      });
+    });
+
+    applyFilter('tutti');
+  }
+
+  initScheduleFilters();
+  document.addEventListener('astro:page-load', initScheduleFilters);
+</script>

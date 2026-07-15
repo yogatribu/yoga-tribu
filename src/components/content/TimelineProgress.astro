@@ -1,0 +1,649 @@
+---
+interface Step {
+  label: string;
+  body: string;
+}
+interface Props {
+  tag?: string;
+  title?: string;
+  steps: Step[];
+  accentColor?: string;
+}
+
+const {
+  tag = 'COSA OTTERRAI',
+  title = 'Quello che cambia, nel tempo.',
+  steps,
+  accentColor = '#9c9a66',
+} = Astro.props;
+
+function hexToRgb(hex: string) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `${r}, ${g}, ${b}`;
+}
+const accentRgb = hexToRgb(accentColor);
+const n = steps.length;
+// Dot positions: evenly distributed with equal margins (1/6, 3/6, 5/6 for n=3)
+const positions = steps.map((_, i) => ((2 * i + 1) / (2 * n)) * 100);
+---
+
+<div
+  class="tp-outer"
+  data-accent={accentColor}
+  data-accent-rgb={accentRgb}
+  data-steps={JSON.stringify(steps)}
+  data-positions={JSON.stringify(positions)}
+  style={`--tp-accent: ${accentColor}; --tp-accent-rgb: ${accentRgb};`}
+>
+  <section class="tp-section" role="region" aria-label="Progressione benefici nel tempo">
+
+    <!-- Header -->
+    <div class="tp-header">
+      <p class="tp-tag">{tag}</p>
+      <h2 class="tp-title">{title}</h2>
+    </div>
+
+    <!-- DESKTOP: orizzontale (≥1024px) -->
+    <div class="tp-desktop-layout">
+      <div class="tp-track-area">
+        <div class="tp-track-bg"></div>
+        <div class="tp-hfill"></div>
+        {steps.map((step, i) => (
+          <div class="tp-step" data-step={i} style={`left: ${positions[i].toFixed(3)}%;`}>
+            <span class="tp-step-label" data-step={i}>{step.label}</span>
+            <button
+              class="tp-dot"
+              data-step={i}
+              tabindex="0"
+              aria-label={`Tappa ${i + 1} di ${n}: ${step.label}`}
+              aria-current="false"
+            >
+              <svg class="tp-check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- MOBILE: verticale (<1024px) -->
+    <div class="tp-mobile-layout">
+      <div class="tp-vtrack-area">
+        <div class="tp-vtrack-bg"></div>
+        <div class="tp-vfill"></div>
+        {steps.map((step, i) => (
+          <div class="tp-vstep" data-step={i} style={`top: ${positions[i].toFixed(3)}%;`}>
+            <button
+              class="tp-dot"
+              data-step={i}
+              tabindex="0"
+              aria-label={`Tappa ${i + 1} di ${n}: ${step.label}`}
+              aria-current="false"
+            >
+              <svg class="tp-check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="tp-step-label" data-step={i}>{step.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CARD condivisa desktop + mobile -->
+    <div class="tp-card-wrap">
+      <div class="tp-card" aria-live="polite" aria-atomic="true">
+        <p class="tp-card-label">{steps[0]?.label ?? ''}</p>
+        <p class="tp-card-body">“{steps[0]?.body ?? ''}”</p>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<style is:global>
+  /* ──────────────────────────────────────────────
+     OUTER WRAPPER & SECTION
+  ─────────────────────────────────────────────── */
+  .tp-outer {
+    background: #f9f5f0;
+    width: 100%;
+  }
+
+  .tp-section {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 96px 24px;
+  }
+
+  /* ──────────────────────────────────────────────
+     HEADER
+  ─────────────────────────────────────────────── */
+  .tp-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .tp-tag {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    margin-bottom: 16px;
+  }
+
+  .tp-title {
+    font-family: 'New York', 'Georgia', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    color: #2a2a2a;
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  /* ──────────────────────────────────────────────
+     DESKTOP LAYOUT (≥1024px)
+  ─────────────────────────────────────────────── */
+  .tp-desktop-layout {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .tp-desktop-layout { display: block; }
+    .tp-mobile-layout  { display: none;  }
+  }
+
+  /* Track area — position container for the horizontal line + dots */
+  .tp-track-area {
+    position: relative;
+    height: 100px; /* room for label above + dot */
+    max-width: 800px;
+    margin: 0 auto 56px;
+  }
+
+  /* Horizontal track background */
+  .tp-track-bg {
+    position: absolute;
+    top: 60px; /* label ~36px + gap 24px */
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e8e4df;
+    border-radius: 9999px;
+  }
+
+  /* Horizontal fill — animated via JS */
+  .tp-hfill {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: 4px;
+    width: 0%;
+    background: var(--tp-accent);
+    border-radius: 9999px;
+    /* box-shadow rimosso: causava glitch ocra visibile a width:0 */
+    transition: width 800ms cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 1;
+  }
+
+  /* Each step container */
+  .tp-step {
+    position: absolute;
+    top: 60px; /* same as track-bg top */
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Label above each dot */
+  .tp-step-label {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #aaaaaa;
+    white-space: nowrap;
+    transition: color 300ms ease;
+  }
+
+  .tp-step-label.label-active   { color: #2a2a2a; }
+  .tp-step-label.label-done     { color: #2a2a2a; }
+
+  /* ──────────────────────────────────────────────
+     MOBILE LAYOUT (<1024px)
+  ─────────────────────────────────────────────── */
+  .tp-mobile-layout {
+    display: block;
+    margin-bottom: 48px;
+  }
+  @media (min-width: 1024px) {
+    .tp-mobile-layout { display: none; }
+  }
+
+  .tp-vtrack-area {
+    position: relative;
+    height: 240px;
+    width: 220px;
+    margin: 0 auto;
+  }
+
+  .tp-vtrack-bg {
+    position: absolute;
+    left: 10px; /* center of 24px dot = 12px, minus 2px for 4px track centering */
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #e8e4df;
+    border-radius: 9999px;
+  }
+
+  .tp-vfill {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 4px;
+    height: 0%;
+    background: var(--tp-accent);
+    border-radius: 9999px;
+    transition: height 800ms cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 1;
+  }
+
+  .tp-vstep {
+    position: absolute;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 2;
+  }
+
+  /* Label right of dot on mobile */
+  .tp-vstep .tp-step-label {
+    position: static;
+    transform: none;
+    bottom: auto;
+    left: auto;
+  }
+
+  /* ──────────────────────────────────────────────
+     DOT
+  ─────────────────────────────────────────────── */
+  .tp-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 9999px;
+    background: white;
+    border: 4px solid #e8e4df;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition:
+      transform      300ms cubic-bezier(0.65, 0, 0.35, 1),
+      background     300ms ease,
+      border-color   300ms ease,
+      box-shadow     300ms ease;
+    outline: none;
+    position: relative;
+  }
+
+  .tp-dot:focus-visible {
+    outline: 2px solid var(--tp-accent);
+    outline-offset: 4px;
+  }
+
+  /* Active state */
+  .tp-dot.dot-active {
+    transform: scale(1.33); /* 24 → 32px */
+    background: var(--tp-accent);
+    border-color: white;
+    box-shadow: 0 0 0 4px rgba(var(--tp-accent-rgb), 0.2);
+    animation: tp-pulse 2s ease-in-out infinite;
+  }
+
+  /* Completed state */
+  .tp-dot.dot-done {
+    transform: scale(1);
+    background: var(--tp-accent);
+    border-color: white;
+    box-shadow: none;
+    animation: none;
+  }
+
+  @keyframes tp-pulse {
+    0%,  100% { box-shadow: 0 0 0  4px rgba(var(--tp-accent-rgb), 0.20); }
+    50%       { box-shadow: 0 0 0 12px rgba(var(--tp-accent-rgb), 0.05); }
+  }
+
+  /* Check mark */
+  .tp-check {
+    opacity: 0;
+    position: absolute;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
+  .tp-dot.dot-done .tp-check { opacity: 1; }
+
+  /* ──────────────────────────────────────────────
+     CARD
+  ─────────────────────────────────────────────── */
+  .tp-card-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .tp-card {
+    max-width: 640px;
+    width: 100%;
+    padding: 40px 48px;
+    background: white;
+    border-radius: 22px;
+    border-left: 4px solid var(--tp-accent);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 200ms ease-in, transform 200ms ease-in;
+  }
+
+  @media (max-width: 640px) {
+    .tp-card { padding: 32px 28px; }
+    .tp-section { padding: 72px 20px; }
+  }
+
+  .tp-card.card-out {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 200ms ease-in, transform 200ms ease-in;
+  }
+
+  .tp-card.card-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+  }
+
+  .tp-card-label {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--tp-accent);
+    margin-bottom: 16px;
+  }
+
+  .tp-card-body {
+    font-family: 'New York', 'Georgia', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    color: #2a2a2a;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  /* ──────────────────────────────────────────────
+     PREFERS-REDUCED-MOTION
+  ─────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .tp-outer .tp-section {
+      position: static !important;
+    }
+    .tp-outer .tp-hfill,
+    .tp-outer .tp-vfill {
+      width: 100% !important;
+      height: 100% !important;
+      transition: none !important;
+    }
+    .tp-outer .tp-dot {
+      transform: scale(1) !important;
+      animation: none !important;
+    }
+    .tp-outer .tp-card {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .tp-outer .tp-card-out,
+    .tp-outer .tp-card-in {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    /* In reduced-motion: show all steps statically stacked */
+    .tp-outer .tp-reduced-stack {
+      display: flex !important;
+    }
+    .tp-outer .tp-card-wrap {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initTimelines() {
+    document.querySelectorAll<HTMLElement>('.tp-outer:not([data-tp-init])').forEach(outer => {
+      outer.dataset.tpInit = '1';
+
+      const section  = outer.querySelector<HTMLElement>('.tp-section')!;
+      const hFill    = outer.querySelector<HTMLElement>('.tp-hfill');
+      const vFill    = outer.querySelector<HTMLElement>('.tp-vfill');
+      const card     = outer.querySelector<HTMLElement>('.tp-card')!;
+      const cardLabel = outer.querySelector<HTMLElement>('.tp-card-label')!;
+      const cardBody  = outer.querySelector<HTMLElement>('.tp-card-body')!;
+      const allDots   = outer.querySelectorAll<HTMLElement>('.tp-dot');
+      const allLabels = outer.querySelectorAll<HTMLElement>('.tp-step-label');
+
+      const stepsData: { label: string; body: string }[] = JSON.parse(outer.dataset.steps ?? '[]');
+      const positions: number[] = JSON.parse(outer.dataset.positions ?? '[]');
+      const n = stepsData.length;
+
+      let animationRunning = false;
+      let animationTimers: ReturnType<typeof setTimeout>[] = [];
+      const seenKey = `tp-seen:${window.location.pathname}`;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ── Helpers ──────────────────────────────────────────
+      function getDotsForStep(i: number): NodeListOf<HTMLElement> {
+        return outer.querySelectorAll<HTMLElement>(`.tp-dot[data-step="${i}"]`);
+      }
+      function getLabelsForStep(i: number): NodeListOf<HTMLElement> {
+        return outer.querySelectorAll<HTMLElement>(`.tp-step-label[data-step="${i}"]`);
+      }
+
+      function setFill(pct: number) {
+        const isDesktop = window.innerWidth >= 1024;
+        if (isDesktop && hFill) hFill.style.width = pct + '%';
+        if (!isDesktop && vFill) vFill.style.height = pct + '%';
+      }
+
+      function setDotInactive(i: number) {
+        getDotsForStep(i).forEach(d => { d.classList.remove('dot-active', 'dot-done'); d.setAttribute('aria-current', 'false'); });
+        getLabelsForStep(i).forEach(l => { l.classList.remove('label-active', 'label-done'); });
+      }
+
+      function setDotActive(i: number) {
+        getDotsForStep(i).forEach(d => { d.classList.remove('dot-done'); d.classList.add('dot-active'); d.setAttribute('aria-current', 'step'); });
+        getLabelsForStep(i).forEach(l => { l.classList.remove('label-done'); l.classList.add('label-active'); });
+        setFill(positions[i]);
+      }
+
+      function setDotDone(i: number) {
+        getDotsForStep(i).forEach(d => { d.classList.remove('dot-active'); d.classList.add('dot-done'); d.setAttribute('aria-current', 'false'); });
+        getLabelsForStep(i).forEach(l => { l.classList.remove('label-active'); l.classList.add('label-done'); });
+      }
+
+      function showCard(i: number, animated = true) {
+        if (!animated) {
+          cardLabel.textContent = stepsData[i].label;
+          cardBody.textContent  = `“${stepsData[i].body}”`;
+          card.classList.add('card-in');
+          return;
+        }
+        card.classList.add('card-out');
+        card.classList.remove('card-in');
+        setTimeout(() => {
+          cardLabel.textContent = stepsData[i].label;
+          cardBody.textContent  = `"${stepsData[i].body}"`;
+          card.classList.remove('card-out');
+          card.classList.add('card-in');
+        }, 220);
+      }
+
+      function showFinalState(animated = false) {
+        for (let i = 0; i < n - 1; i++) setDotDone(i);
+        setDotActive(n - 1);
+        setFill(100);
+        showCard(n - 1, animated);
+      }
+
+      function clearTimers() {
+        animationTimers.forEach(clearTimeout);
+        animationTimers = [];
+      }
+
+      // ── Soft sticky lock ───────────────────────────────
+      function applyStickyLock() {
+        if (prefersReduced) return;
+        outer.style.minHeight = (window.innerHeight + 400) + 'px';
+        section.style.position = 'sticky';
+        section.style.top = '80px';
+      }
+
+      function releaseStickyLock() {
+        section.style.position = '';
+        section.style.top = '';
+        // Slight delay before removing min-height to avoid jump
+        setTimeout(() => { outer.style.minHeight = ''; }, 100);
+      }
+
+      // ── Main animation ──────────────────────────────────
+      function startAnimation() {
+        if (animationRunning) return;
+        animationRunning = true;
+        sessionStorage.setItem(seenKey, '1');
+        applyStickyLock();
+
+        // t=200ms: step 0 activates
+        animationTimers.push(setTimeout(() => {
+          setDotActive(0);
+          showCard(0, false); // first card, no fade-in needed
+          card.classList.add('card-in');
+        }, 200));
+
+        // t=1400ms: step 0 → done, step 1 active
+        animationTimers.push(setTimeout(() => {
+          setDotDone(0);
+          setDotActive(1);
+          showCard(1, true);
+        }, 1400));
+
+        // t=2600ms: step 1 → done, step 2 active
+        animationTimers.push(setTimeout(() => {
+          setDotDone(1);
+          setDotActive(2);
+          showCard(2, true);
+        }, 2600));
+
+        // t=4000ms: line to 100%
+        animationTimers.push(setTimeout(() => {
+          setFill(100);
+        }, 4000));
+
+        // t=4100ms: release lock
+        animationTimers.push(setTimeout(() => {
+          releaseStickyLock();
+          animationRunning = false;
+        }, 4100));
+      }
+
+      // ── Skip (click on dot) ────────────────────────────
+      allDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const i = parseInt(dot.dataset.step ?? '0', 10);
+          clearTimers();
+          releaseStickyLock();
+          animationRunning = false;
+
+          // Complete all previous steps
+          for (let j = 0; j < i; j++) setDotDone(j);
+          // Activate clicked step
+          setDotActive(i);
+          // Reset later steps
+          for (let j = i + 1; j < n; j++) setDotInactive(j);
+          showCard(i, true);
+          setFill(positions[i]);
+        });
+
+        dot.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dot.click(); }
+        });
+      });
+
+      // ── Scroll-away fast-forward ───────────────────────
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (animationRunning && entry.intersectionRatio < 0.3) {
+            clearTimers();
+            releaseStickyLock();
+            animationRunning = false;
+            showFinalState(false);
+          }
+        });
+      }, { threshold: [0.1, 0.3] });
+
+      scrollObserver.observe(section);
+
+      // ── Entry observer ─────────────────────────────────
+      if (prefersReduced) {
+        // Immediately show final state without animation
+        showFinalState(false);
+        // Sync both fills for reduced-motion
+        if (hFill) hFill.style.width  = '100%';
+        if (vFill) vFill.style.height = '100%';
+        for (let i = 0; i < n - 1; i++) setDotDone(i);
+        setDotActive(n - 1);
+        return;
+      }
+
+      const alreadySeen = sessionStorage.getItem(seenKey);
+      if (alreadySeen) {
+        showFinalState(false);
+        return;
+      }
+
+      const entryObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio >= 0.5) {
+            entryObserver.disconnect();
+            startAnimation();
+          }
+        });
+      }, { threshold: 0.5 });
+
+      entryObserver.observe(section);
+    });
+  }
+
+  initTimelines();
+  document.addEventListener('astro:page-load', () => {
+    // Remove init flag after page transitions
+    document.querySelectorAll('.tp-outer[data-tp-init]').forEach(el => {
+      delete (el as HTMLElement).dataset.tpInit;
+    });
+    initTimelines();
+  });
+</script>

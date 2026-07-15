@@ -1,0 +1,77 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+
+const lezioni = [
+  { giorno: 'Lunedì',    ora: '7:00',  tipo: 'Livello 2', durata: '~75 min' },
+  { giorno: 'Lunedì',    ora: '8:45',  tipo: 'Livello 1', durata: '~75 min' },
+  { giorno: 'Lunedì',    ora: '18:00', tipo: 'Livello 2', durata: '~75 min' },
+  { giorno: 'Lunedì',    ora: '19:30', tipo: 'Livello 2', durata: '~75 min' },
+  { giorno: 'Martedì',   ora: '8:45',  tipo: 'Soft',      durata: '~75 min' },
+  { giorno: 'Martedì',   ora: '13:00', tipo: 'Livello 3', durata: '~75 min' },
+  { giorno: 'Mercoledì', ora: '8:45',  tipo: 'Livello 1', durata: '~75 min' },
+  { giorno: 'Mercoledì', ora: '18:00', tipo: 'Livello 2', durata: '~75 min' },
+  { giorno: 'Mercoledì', ora: '19:30', tipo: 'Livello 2', durata: '~75 min' },
+  { giorno: 'Giovedì',   ora: '13:00', tipo: 'Livello 3', durata: '~75 min' },
+];
+
+const sezioniStoria = [
+  { titolo: 'Come ho incontrato lo yoga', paragrafi: ["Vengo dallo sport, che per me è sempre stato una palestra di vita. Mi ha insegnato che si parte sempre dal corpo, ma che il lavoro vero, prima o poi, si sposta e si consolida nella mente. È con questo spirito che mi sono avvicinata allo yoga: all'inizio cercavo solo un modo per equilibrare e migliorare la mia preparazione sportiva. Non immaginavo dove mi avrebbe portata. Nel giro di qualche anno lo yoga era diventato una priorità, più ancora dello sport stesso. Ho iniziato a praticare ogni giorno, poi a trasmettere quello che imparavo agli amici e agli atleti che allenavo. Finché ho capito che non bastava più: sentivo il bisogno di una formazione seria, che desse fondamento a tutto."] },
+  { titolo: 'La formazione',              paragrafi: ["Ho scelto la strada dell'Iyengar Yoga proprio perché è una scuola che non fa sconti: seria, rigorosa, impegnativa. Tre anni di pratica come studente, e altri tre di formazione vera e propria. Un percorso lungo, che mi ha formata in profondità. Mi sono diplomata con Geeta Iyengar, figlia di B.K.S. Iyengar, il maestro che ha portato questa disciplina in tutto il mondo, presso l'istituto di Iyengar Yoga di Pune, in India, dove questo stile ha le sue radici."] },
+  { titolo: 'Perché l\'Iyengar',          paragrafi: ["L'Iyengar Yoga è una pratica profondamente pragmatica. Le posizioni, le asana, si affrontano in modo logico e razionale, senza nulla lasciato al caso. È una disciplina che si declina in molte forme: terapeutica, posturale, dinamica, di forza, di flessibilità. Ed è proprio questo a renderla adatta a chiunque, a qualunque età e con qualunque difficoltà, perché a ogni persona si propone il giusto sforzo, calibrato su di essa."] },
+  { titolo: 'Perché Yoga Tribù',          paragrafi: ["Nel 2014 ho aperto una scuola di yoga a Bassano del Grappa, che condividevo con altri insegnanti di pilates e ginnastica. Con il tempo, però, ho cominciato a sentire la necessità di avere uno spazio davvero mio, dove poter dare forma alla mia idea di yoga senza compromessi. Così, nel 2024, ho deciso di fare il passo: è nata Yoga Tribù."] },
+  { titolo: 'Il mio approccio',           paragrafi: ["Chi inizia a praticare con me, all'inizio, si sente un po' spaesato. I concetti sono nuovi, i criteri diversi da tutto ciò a cui era abituato. Ma poi, una volta entrati nella logica della pratica, succede qualcosa: il beneficio è così concreto che praticare diventa indispensabile. I dolori migliorano, le parti deboli si rinforzano, quelle rigide si ammorbidiscono. E si scopre quante cose può fare il corpo che prima sembravano impensabili. Chi pratica da tempo cambia perfino il modo di respirare e di muoversi."] },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Glenda",
+  "jobTitle": "Yoga Teacher · Founder",
+  "worksFor": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "description": "Fondatrice di Yoga Tribù e insegnante certificata Iyengar e Ashtanga.",
+  "knowsAbout": ["Iyengar Yoga", "Ashtanga Yoga"],
+};
+---
+
+<TeacherLayout
+  title="Glenda · Fondatrice e insegnante Iyengar · Yoga Tribù"
+  description="Glenda è la fondatrice di Yoga Tribù e insegnante certificata Iyengar e Ashtanga. Da oltre 15 anni insegna con rigore, precisione e profonda cura per ogni allievo."
+  schema={schema}
+  nome="Glenda"
+  ruolo="La fondatrice"
+  pratica="Fondatrice · Iyengar"
+  coloreAccento="#9c9a66"
+  fotoHero="/images/insegnanti/glenda.webp"
+  fotoSidebar="/images/insegnanti/glenda.webp"
+  labelFormazione="Certificazioni"
+  formazione={[
+    'Diploma Iyengar Yoga con Geeta Iyengar - RIMYI, Pune (India)',
+    'Percorso completo: 3 anni di pratica + 3 anni di formazione',
+    'Specializzata in Iyengar Yoga',
+    'Fondatrice di Yoga Tribù',
+  ]}
+  sezioniStoria={sezioniStoria}
+  citazioneBio="Ogni vita è un cammino diverso. E lo yoga è il modo che ognuno trova per percorrerlo."
+  introLezioni="Insegno Iyengar a tutti i livelli. Se non sai da dove iniziare, scrivi su WhatsApp: ti dico io qual è la classe giusta per te."
+  lezioni={lezioni}
+>
+  <div slot="lezioni-content" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-[1040px] mx-auto text-left">
+    {[
+      { tag: 'LIVELLO 2', orario: 'Lunedì 7:00' },
+      { tag: 'LIVELLO 1', orario: 'Lunedì 8:45' },
+      { tag: 'LIVELLO 2', orario: 'Lunedì 18:00' },
+      { tag: 'LIVELLO 2', orario: 'Lunedì 19:30' },
+      { tag: 'SOFT',      orario: 'Martedì 8:45' },
+      { tag: 'LIVELLO 3', orario: 'Martedì 13:00' },
+      { tag: 'LIVELLO 1', orario: 'Mercoledì 8:45' },
+      { tag: 'LIVELLO 2', orario: 'Mercoledì 18:00' },
+      { tag: 'LIVELLO 2', orario: 'Mercoledì 19:30' },
+      { tag: 'LIVELLO 3', orario: 'Giovedì 13:00' },
+    ].map(({ tag, orario }) => (
+      <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+        <p class="text-tiny uppercase tracking-widest" style="color: #9c9a66;">{tag}</p>
+        <p class="font-serif text-xl text-text-main">{orario}</p>
+      </div>
+    ))}
+  </div>
+</TeacherLayout>

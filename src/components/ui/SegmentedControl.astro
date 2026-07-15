@@ -1,0 +1,103 @@
+---
+interface Option {
+  value: string;
+  label: string;
+}
+interface Props {
+  options: Option[];
+  defaultValue?: string;
+  scId: string;
+  background?: string;
+  indicatorColor?: string;
+}
+const {
+  options,
+  defaultValue = options[0]?.value ?? '',
+  scId,
+  background = '#e8e4df',
+  indicatorColor = '#9c9a66',
+} = Astro.props;
+---
+
+<div
+  class="sc-wrapper"
+  data-sc-id={scId}
+  role="group"
+  style={`position: relative; display: inline-flex; background: ${background}; border-radius: 9999px; padding: 4px; gap: 0; flex-shrink: 0;`}
+>
+  <div
+    class="sc-indicator"
+    data-sc-id={scId}
+    aria-hidden="true"
+    style={`position: absolute; top: 4px; bottom: 4px; background: ${indicatorColor}; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65, 0, 0.35, 1), width 300ms cubic-bezier(0.65, 0, 0.35, 1); pointer-events: none; z-index: 1;`}
+  ></div>
+  {options.map(({ value, label }) => (
+    <button
+      class="sc-btn"
+      data-sc-id={scId}
+      data-sc-value={value}
+      aria-pressed={value === defaultValue ? 'true' : 'false'}
+      style={`position: relative; z-index: 2; padding: 10px 24px; border-radius: 9999px; font-size: 14px; font-family: Inter, sans-serif; font-weight: 500; border: none; background: transparent; cursor: pointer; white-space: nowrap; transition: color 300ms ease; color: ${value === defaultValue ? 'white' : '#6b6b6b'};`}
+    >
+      {label}
+    </button>
+  ))}
+</div>
+
+<script>
+  function initSegmentedControls() {
+    document.querySelectorAll<HTMLElement>('.sc-wrapper:not([data-sc-init])').forEach(wrapper => {
+      wrapper.dataset.scInit = '1';
+
+      const scId = wrapper.dataset.scId!;
+      const indicator = wrapper.querySelector<HTMLElement>('.sc-indicator');
+      const buttons = wrapper.querySelectorAll<HTMLElement>('.sc-btn');
+
+      function positionIndicator(btn: HTMLElement) {
+        if (!indicator) return;
+        const wRect = wrapper.getBoundingClientRect();
+        const bRect = btn.getBoundingClientRect();
+        indicator.style.width = bRect.width + 'px';
+        indicator.style.transform = `translateX(${bRect.left - wRect.left - 4}px)`;
+      }
+
+      function setActive(value: string) {
+        buttons.forEach(b => {
+          const active = b.dataset.scValue === value;
+          b.setAttribute('aria-pressed', active ? 'true' : 'false');
+          b.style.color = active ? 'white' : '#6b6b6b';
+          if (active) positionIndicator(b);
+        });
+        wrapper.dispatchEvent(new CustomEvent('sc-change', {
+          detail: { value, scId },
+          bubbles: true,
+        }));
+      }
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => setActive(btn.dataset.scValue!));
+      });
+
+      // Position indicator on first render without dispatching event
+      requestAnimationFrame(() => {
+        const activeBtn = wrapper.querySelector<HTMLElement>('.sc-btn[aria-pressed="true"]');
+        if (activeBtn) positionIndicator(activeBtn);
+      });
+
+      // Re-position on resize (responsive)
+      window.addEventListener('resize', () => {
+        const activeBtn = wrapper.querySelector<HTMLElement>('.sc-btn[aria-pressed="true"]');
+        if (activeBtn) positionIndicator(activeBtn);
+      }, { passive: true });
+    });
+  }
+
+  initSegmentedControls();
+  document.addEventListener('astro:page-load', () => {
+    // Remove init flags so components re-initialize after navigation
+    document.querySelectorAll('.sc-wrapper[data-sc-init]').forEach(w => {
+      delete (w as HTMLElement).dataset.scInit;
+    });
+    initSegmentedControls();
+  });
+</script>

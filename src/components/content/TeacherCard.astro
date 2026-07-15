@@ -1,0 +1,137 @@
+---
+import { altFor } from '../../config/imageAlt.js';
+
+interface Props {
+  nome: string;
+  stili: string;
+  foto?: string;
+  link: string;
+  badge?: string;
+  // Props mantenuti per compatibilità con i caller esistenti, non renderizzati
+  accentColor?: string;
+  citazione?: string;
+  annoInizio?: string;
+}
+
+const {
+  nome,
+  stili,
+  foto = 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&q=80',
+  link,
+  badge,
+} = Astro.props;
+---
+
+<a href={link} class="teacher-card" aria-label={`Scopri ${nome}`}>
+  <div class="teacher-photo">
+    {badge && <span class="teacher-badge">{badge}</span>}
+    <img src={foto} alt={altFor(foto, nome)} loading="lazy" />
+  </div>
+  <div class="teacher-info">
+    <span class="tag-category">{stili}</span>
+    <h3 class="teacher-name">{nome}</h3>
+  </div>
+</a>
+
+<style>
+  .teacher-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e8e4df;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    max-width: 240px;
+    width: 100%;
+  }
+
+  .teacher-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .teacher-card:focus-visible {
+    outline: 2px solid #9c9a66;
+    outline-offset: 4px;
+  }
+
+  .teacher-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: #e8e4df;
+    position: relative;
+  }
+
+  .teacher-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+  }
+
+
+  .teacher-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    background: #9c9a66;
+    color: white;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+  }
+
+  .teacher-info {
+    padding: 20px 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .tag-category {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .teacher-name {
+    font-family: 'New York', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #2a2a2a;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  @media (max-width: 767px) {
+    .teacher-name { font-size: 22px; }
+    .teacher-info { padding: 16px 16px 20px; }
+    .teacher-badge { font-size: 9px; padding: 5px 10px; top: 10px; left: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .teacher-card,
+    .teacher-photo img { transition: none; }
+    .teacher-card:hover { transform: none; }
+    .teacher-card:hover .teacher-photo img { transform: none; }
+  }
+</style>

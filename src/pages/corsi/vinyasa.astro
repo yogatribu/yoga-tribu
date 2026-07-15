@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/content/HeroSection.astro';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import ManifestoSection from '../../components/content/ManifestoSection.astro';
+import TeacherCard from '../../components/content/TeacherCard.astro';
+import FAQAccordion from '../../components/content/FAQAccordion.astro';
+import TestimonialCarousel from '../../components/content/TestimonialCarousel.astro';
+import { testimonials } from '../../data/testimonials';
+import ExploreOtherCourses from '../../components/content/ExploreOtherCourses.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
+import HowItWorksSteps from '../../components/content/HowItWorksSteps.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import StickyCTA from '../../components/layout/StickyCTA.astro';
+import FeatureCard from '../../components/content/FeatureCard.astro';
+
+const WA_BASE = 'https://wa.me/393287675966?text=';
+const COLOR = '#b8a68e';
+
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Vinyasa Yoga",
+  "description": "Pratica yoga fluida e dinamica sincronizzata con il respiro. Ideale per ritrovare il piacere del movimento.",
+  "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
+  "courseMode": "in-person",
+  "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
+};
+---
+
+<BaseLayout
+  title="Vinyasa Yoga a Bassano del Grappa · Yoga Tribù"
+  description="Vinyasa Yoga: pratica fluida e sempre diversa. Movimento, respiro, libertà: un'ora per smettere di pensare."
+  schemaJsonLd={courseSchema}
+  noindex={!PRATICHE_ATTIVE.includes('vinyasa')}
+>
+  <HeroSection
+    image="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=1600&q=80"
+    imageAlt="Pratica di Vinyasa Yoga nello studio Yoga Tribù"
+    overlay="rgba(0,0,0,0.3)"
+    tag="Vinyasa Yoga"
+    headline={"Un'ora in cui smetti\ndi pensare."}
+    subheadline="Pratica fresca, sempre diversa. Per chi vuole muoversi, respirare, lasciare fuori il resto."
+    ctas={[
+      {
+        label: 'Prenota la prima lezione',
+        href: WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Vinyasa.'),
+        variant: 'primary',
+        external: true,
+      },
+      {
+        label: 'Vedi gli orari',
+        href: '/orari',
+        variant: 'ghost',
+      },
+    ]}
+    height="90vh"
+  />
+
+  <Section background="alt">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">A chi è dedicato</p>
+      <Heading level={2} class="mb-16">Vinyasa è per te se...</Heading>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto">
+        <FeatureCard
+          icon="Wind"
+          title="Vuoi muoverti senza pensare"
+          body="Una pratica che ti porta nel presente. Niente sequenze rigide, nessun pensiero sulla forma, solo movimento e respiro."
+        />
+        <FeatureCard
+          icon="Shuffle"
+          title="Pratichi già un altro stile e cerchi varietà"
+          body="Iyengar e Ashtanga sono pratiche strutturate. Il Vinyasa ti dà una boccata d'aria diversa, ogni volta una sorpresa."
+        />
+        <FeatureCard
+          icon="Layers"
+          title="Sei alla prima esperienza con lo yoga"
+          body="Vinyasa è la pratica più accessibile per iniziare. Nessuna sequenza fissa da imparare, nessuna tecnica complicata."
+        />
+      </div>
+    </Container>
+  </Section>
+
+  <section class="bg-background py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4 text-center">Cosa otterrai</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-0 text-center" style="font-family:'New York',serif;">Quello che cambia, nel tempo.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 mese</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Il movimento diventa naturale. Smetti di pensare al corpo.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 6 mesi</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Il respiro guida tutto. Anche fuori dal tappeto.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 anno</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Cerchi il movimento. Non lo subisci più.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insegnanti -->
+  <Section background="alt">
+    <Container class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Gli insegnanti</p>
+      <Heading level={2} class="mb-4">Le persone che ti guideranno.</Heading>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12 mx-auto">
+        Insegnanti certificati, formati in anni di studio.
+      </p>
+      <div class="flex justify-center mb-8">
+        <TeacherCard nome="Giulia" stili="Vinyasa Yoga" link="/insegnanti/giulia" />
+      </div>
+      <LinkApple href="/chi-siamo">Conosci tutti gli insegnanti</LinkApple>
+    </Container>
+  </Section>
+
+  <section class="bg-background py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">La tua prima volta</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">Cosa aspettarti in studio.</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">01</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Arrivi 10 min prima</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Ti diamo il tempo di cambiarti e ambientarti prima che la lezione inizi.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">02</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Ti diamo le basi (se nuovo)</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Se è la tua prima volta, l'insegnante ti spiega le 5 posizioni base. Niente di complicato.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">03</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Pratica fluida</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Sequenza guidata, sempre nuova. Si scioglie il corpo, si apre il respiro, si lascia andare il pensiero.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">04</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Rilassamento e silenzio</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Lo studio si svuota lentamente in Savasana. Niente fretta di uscire.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FAQAccordion
+    background="alt"
+    items={[
+      { question: 'Cosa cambia rispetto a Iyengar e Ashtanga?', answer: 'Iyengar è precisione e allineamento. Ashtanga è una sequenza fissa che si ripete. Vinyasa è il più libero dei tre: ogni lezione è diversa, costruita dall\'insegnante in base al gruppo.' },
+      { question: 'Devo essere già flessibile o esperto?', answer: 'No. Vinyasa è probabilmente la pratica più accessibile per chi inizia. Non c\'è una tecnica complicata da imparare.' },
+      { question: 'Posso fare Vinyasa anche se ho dolori fisici?', answer: 'Dipende dai dolori. Se hai problematiche specifiche croniche, Iyengar è probabilmente più indicato. Vinyasa è ideale per chi sta bene fisicamente.' },
+      { question: 'Ogni lezione è davvero diversa?', answer: "Sì. L'insegnante costruisce sequenze sempre nuove, in base alla composizione del gruppo, al periodo dell'anno, al focus del momento." },
+      { question: 'Posso fare Vinyasa come unica pratica?', answer: 'Puoi farla come unica pratica, certo. Ma molti alternano Vinyasa + Iyengar (uno per la libertà, l\'altro per la struttura) e lo trovano un equilibrio perfetto.' },
+    ]}
+  />
+
+  <TestimonialCarousel
+    testimonials={testimonials}
+  />
+
+  <!-- Orari -->
+  <Section background="alt">
+    <Container class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Orari</p>
+      <Heading level={2} class="mb-16">Quando praticare Vinyasa.</Heading>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[780px] mx-auto text-left">
+        {[
+          { tag: 'VINYASA', orario: 'Mercoledì 7:30' },
+          { tag: 'VINYASA', orario: 'Sabato 10:30' },
+          { tag: 'VINYASA', orario: 'Domenica 17:30' },
+        ].map(({ tag, orario }) => (
+          <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+            <p class="text-tiny uppercase tracking-widest" style={`color: ${COLOR};`}>{tag}</p>
+            <p class="font-serif text-xl text-text-main">{orario}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-16">
+        <LinkApple href="/orari">Vedi tutti gli orari</LinkApple>
+      </div>
+    </Container>
+  </Section>
+
+  <ExploreOtherCourses excludeStile="flow" />
+
+  <CTAFinal
+    headline="Un'ora tutta tua."
+    ctaHref={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Vinyasa.')}
+    linkLabel="Vedi gli orari"
+    linkHref="/orari"
+  />
+
+  <StickyCTA messaggioWhatsapp="Ciao! Vorrei prenotare una prima lezione di Vinyasa." />
+</BaseLayout>

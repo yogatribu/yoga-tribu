@@ -1,0 +1,449 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/content/HeroSection.astro';
+import { altFor } from '../../config/imageAlt.js';
+import Button from '../../components/ui/Button.astro';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import TeacherCard from '../../components/content/TeacherCard.astro';
+import FAQAccordion from '../../components/content/FAQAccordion.astro';
+import TestimonialCarousel from '../../components/content/TestimonialCarousel.astro';
+import { testimonials } from '../../data/testimonials';
+import ExploreOtherCourses from '../../components/content/ExploreOtherCourses.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import HowItWorksSteps from '../../components/content/HowItWorksSteps.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import StickyCTA from '../../components/layout/StickyCTA.astro';
+import FeatureCard from '../../components/content/FeatureCard.astro';
+
+const WA_BASE = 'https://wa.me/393287675966?text=';
+
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Iyengar Yoga",
+  "description": "Pratica yoga tradizionale focalizzata su precisione, allineamento e applicazioni terapeutiche. Ideale per chi ha dolori cronici di schiena, spalle e ginocchia.",
+  "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
+  "courseMode": "in-person",
+  "educationalLevel": "Beginner to Advanced",
+  "offers": {
+    "@type": "Offer",
+    "price": "10.00",
+    "priceCurrency": "EUR",
+    "category": "Prima lezione di prova",
+    "availability": "https://schema.org/InStock"
+  }
+};
+---
+
+<BaseLayout
+  title="Iyengar Yoga a Bassano del Grappa · Yoga Tribù"
+  description="Pratica tradizionale Iyengar con insegnanti certificati. Risolvi dolori cronici di schiena, spalle, ginocchia con tecnica precisa."
+  schemaJsonLd={courseSchema}
+>
+  <HeroSection
+    image="/images/iyengar.webp"
+    imageAlt={altFor('/images/iyengar.webp')}
+    tag="Iyengar Yoga"
+    headline={"Per il corpo che ha\nbisogno di precisione."}
+    subheadline="Una pratica tradizionale che risolve dolori reali come schiena, spalle e ginocchia con tecniche precise e insegnanti formati in anni di studio."
+    ctas={[
+      {
+        label: 'Prenota la prima lezione',
+        href: WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Iyengar.'),
+        variant: 'primary',
+        external: true,
+      },
+      {
+        label: 'Vedi gli orari',
+        href: '/orari',
+        variant: 'ghost',
+      },
+    ]}
+    height="90vh"
+  />
+
+  <!-- A chi è dedicato -->
+  <Section background="default" id="a-chi-e-dedicato">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">A chi è dedicato</p>
+      <Heading level={2} class="mb-16">Iyengar è per te se...</Heading>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto">
+        <FeatureCard
+          icon="HeartPulse"
+          title="Hai dolori cronici"
+          body="Schiena, spalle, ginocchia, cervicale. Iyengar lavora sulla causa, non sul sintomo, con applicazioni terapeutiche reali."
+        />
+        <FeatureCard
+          icon="Dumbbell"
+          title="Affianchi un altro sport"
+          body="Iyengar lavora dove gli sport comuni non arrivano: precisione negli allineamenti, equilibrio, consapevolezza del corpo."
+        />
+        <FeatureCard
+          icon="Shield"
+          title="Vuoi prevenire infortuni"
+          body="Rinforzi profondi, mobilità articolare, postura corretta. Una base solida che rende ogni movimento più sicuro."
+        />
+      </div>
+    </Container>
+  </Section>
+
+  <section class="bg-background-alt py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4 text-center">Cosa otterrai</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-0 text-center" style="font-family:'New York',serif;">Quello che cambia, nel tempo.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 mese</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">I dolori più acuti iniziano a sparire.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 6 mesi</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Ti muovi diversamente. La gente se ne accorge.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 anno</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Non sei più la stessa persona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- I 4 livelli (tabs) -->
+  <Section background="default">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">I livelli</p>
+      <Heading level={2} class="mb-4">Tre livelli più una pratica ristorativa.</Heading>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12">
+        Iyengar non è uno stile unico, è un percorso. Ogni livello è pensato per una fase specifica.
+      </p>
+
+      <!-- Segmented control tabs -->
+      <div class="overflow-x-auto pb-2 mb-10">
+        <div class="iyengar-seg-container" style="position: relative; display: inline-flex; background: #e8e4df; border-radius: 9999px; padding: 4px; gap: 2px;" role="tablist">
+          <div id="iyengar-indicator" style="position: absolute; top: 4px; bottom: 4px; background: #9c9a66; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65,0,0.35,1), width 300ms cubic-bezier(0.65,0,0.35,1); pointer-events: none;"></div>
+          {[
+            { id: 'livello-1', label: 'Livello 1 (Base)' },
+            { id: 'livello-2', label: 'Livello 2 (Intermedio)' },
+            { id: 'livello-3', label: 'Livello 3 (Avanzato)' },
+            { id: 'soft', label: 'Soft (Ristorativo)' },
+          ].map(({ id, label }, i) => (
+            <button
+              class="tab-btn"
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              data-tab={id}
+              style={`position: relative; z-index: 1; padding: 10px 20px; border-radius: 9999px; font-size: 14px; font-family: Inter, sans-serif; font-weight: 500; border: none; background: transparent; cursor: pointer; white-space: nowrap; transition: color 300ms ease; color: ${i === 0 ? 'white' : '#6b6b6b'};`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Panels -->
+      {[
+        {
+          id: 'livello-1',
+          nome: 'Livello 1', sub: 'Base',
+          intro: 'Per chi inizia o riprende dopo molto.',
+          adatto: ['Principianti assoluti', 'Chi non pratica da molto tempo', 'Chi vuole costruire fondamenta solide', 'Chi ha dolori cronici e cerca un approccio strutturato'],
+          cosa: 'Posizioni in piedi (Tadasana, Trikonasana, Virabhadrasana), allineamenti precisi, introduzione all\'uso di mattoncini e cinture. L\'insegnante spiega il perché di ogni posizione.',
+          quando: 'Lunedì 8:45 · Mercoledì 8:45',
+          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 1.',
+        },
+        {
+          id: 'livello-2',
+          nome: 'Livello 2', sub: 'Intermedio',
+          intro: 'Per chi pratica da almeno 6 mesi e conosce le posizioni di base.',
+          adatto: ['Chi ha completato almeno 6 mesi di L1', 'Chi conosce la nomenclatura sanscrita base', 'Chi è pronto a lavorare su precisione e allungamenti più profondi'],
+          cosa: 'Posizioni di equilibrio, primi piegamenti indietro, lavoro più profondo sulla rotazione e l\'apertura del torace. Sequenze costruite, non improvvisate.',
+          quando: 'Lunedì 7:00, 18:00, 19:30 · Mercoledì 18:00, 19:30',
+          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 2.',
+        },
+        {
+          id: 'livello-3',
+          nome: 'Livello 3', sub: 'Avanzato',
+          intro: 'Per praticanti esperti.',
+          adatto: ['Chi pratica costantemente da almeno 2 anni', 'Chi ha familiarità con tutte le inversioni', 'Chi vuole approfondire pranayama e asana complesse'],
+          cosa: 'Asana avanzate, inversioni complete, pranayama (tecniche di respirazione), approfondimenti su filosofia e metodo. Lezione più meditativa, ritmo lento.',
+          quando: 'Martedì 13:00 · Giovedì 13:00',
+          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 3.',
+          warning: 'Riservato a chi pratica da almeno 2 anni. Se hai dubbi sul tuo livello, scrivici prima.',
+        },
+        {
+          id: 'soft',
+          nome: 'Iyengar Soft', sub: 'Ristorativo',
+          intro: 'Per chi cerca rigenerazione, recupero o pratica delicata.',
+          adatto: ['Chi ha più di 65 anni', 'Chi sta recuperando da un infortunio', 'Chi ha limitazioni fisiche specifiche', 'Chi è alla prima esperienza con lo yoga'],
+          cosa: 'Posizioni mantenute a lungo, con uso intenso di supporti (coperte, mattoncini, cinture). Pratica passiva, recupero del sistema nervoso, rilascio profondo delle tensioni.',
+          quando: 'Martedì 8:45',
+          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Soft.',
+        },
+      ].map(({ id, nome, sub, intro, adatto, cosa, quando, wa, warning }, i) => (
+        <div class="tab-panel" data-panel={id} style={i !== 0 ? 'display:none;' : ''}>
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
+            <!-- Testo descrittivo: order-2 su mobile, order-1 su desktop -->
+            <div class="order-2 lg:order-1">
+              <h3 class="font-serif text-[36px] text-text-main leading-tight mb-1">{nome}</h3>
+              <p class="text-text-secondary text-sm uppercase tracking-[0.1em] mb-5">{sub}</p>
+              <p class="text-base text-text-secondary leading-relaxed mb-6">{intro}</p>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Adatto a:</p>
+              <ul class="flex flex-col gap-1.5 mb-6">
+                {adatto.map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
+              </ul>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede in lezione:</p>
+              <p class="text-sm text-text-secondary leading-relaxed mb-4">{cosa}</p>
+              {warning && (
+                <p class="text-sm text-error bg-error/5 border border-error/20 rounded-sm px-4 py-3">
+                  ⚠ {warning}
+                </p>
+              )}
+            </div>
+            <!-- Box info: order-1 su mobile (priorità), order-2 su desktop -->
+            <aside class="order-1 lg:order-2 lg:sticky" style="top: 100px; background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+              <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">{sub}</p>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+                <span style="font-size: 14px; color: #6b6b6b;">Orario</span>
+                <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">{quando}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+                <span style="font-size: 14px; color: #6b6b6b;">Durata</span>
+                <span style="font-size: 14px; color: #2a2a2a;">~75 min</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+                <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
+                <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">{intro}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0;">
+                <span style="font-size: 14px; color: #6b6b6b;">Insegnante</span>
+                <span style="font-size: 14px; color: #2a2a2a;">Glenda</span>
+              </div>
+              <div style="display: flex; justify-content: center; margin-top: 24px;">
+                <Button
+                  variant="primary"
+                  size="md"
+                  href={WA_BASE + encodeURIComponent(wa)}
+                  external={true}
+                >
+                  Prenota una lezione
+                </Button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      ))}
+    </Container>
+  </Section>
+
+  <Section background="alt">
+    <Container>
+      <div style="max-width: 760px; margin: 0 auto;">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Perché scegliere Iyengar</p>
+        <Heading level={2} class="mb-8">Una pratica che lavora sulla causa.</Heading>
+        <div class="space-y-4 text-base text-text-secondary leading-relaxed mb-10">
+          <p>L'Iyengar Yoga è noto per l'uso di supporti come mattoncini, cinture e coperte, che non sono facilitazioni ma strumenti di precisione. Permettono a ogni corpo di accedere alla postura corretta, indipendentemente dalla flessibilità di partenza.</p>
+          <p>È una pratica rara in Italia: pochi insegnanti hanno la formazione e la certificazione richiesta dal metodo. A Yoga Tribù, Glenda insegna Iyengar da oltre quindici anni con certificazione diretta.</p>
+        </div>
+        <Button variant="primary" href={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Iyengar per capire se fa per me.')} external={true}>
+          Prenota una lezione di prova
+        </Button>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Insegnanti -->
+  <Section background="default">
+    <Container class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Gli insegnanti</p>
+      <Heading level={2} class="mb-4">Le persone che ti guideranno.</Heading>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12 mx-auto">
+        Insegnanti certificati, formati in anni di studio.
+      </p>
+      <div class="flex justify-center mb-8">
+        <TeacherCard nome="Glenda" stili="Iyengar Yoga" link="/insegnanti/glenda" foto="/images/insegnanti/glenda.webp" />
+      </div>
+      <LinkApple href="/chi-siamo">Conosci tutti gli insegnanti</LinkApple>
+    </Container>
+  </Section>
+
+  <!-- Come si svolge -->
+  <section class="bg-background-alt py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">La tua prima volta</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">Cosa aspettarti in studio.</h2>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed">Perché iniziare a praticare non deve essere fonte di stress.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">01</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Arrivi 10 min prima</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Ti diamo il tempo di cambiarti e ambientarti prima che la lezione inizi.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">02</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Ti accogliamo</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Parliamo del tuo livello, di eventuali dolori o limitazioni. Adattiamo la pratica a te.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">03</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Pratica guidata</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">L'insegnante guida ogni passaggio. Non sei mai solo: se non sai una posizione, te la mostriamo.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">04</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Rilassamento finale</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Ogni lezione finisce con Savasana, il rilassamento profondo sul tappetino. Esci sereno e ricaricato.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cosa portare -->
+  <Section background="default">
+    <Container size="narrow">
+      <Heading level={2} class="text-center mb-12">Vieni leggero.</Heading>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[800px] mx-auto mt-10">
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-7 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]" data-reveal>
+          <h3 class="font-serif text-xl font-medium mb-5" style="font-family:'New York',serif; color:#2a2a2a;">Cosa lasciare a casa</h3>
+          <ul class="space-y-3">
+            {['Tappetino', 'Mattoncini, cinture', 'Coperte', 'Vestiti firmati'].map(item => (
+              <li class="flex items-center gap-3 text-sm text-[#2a2a2a]">
+                <span class="text-[#c89797] flex-shrink-0">✕</span>{item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-white border border-[#9c9a66]/30 rounded-[18px] px-7 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]" data-reveal data-reveal-delay="100">
+          <h3 class="font-serif text-xl font-medium mb-5" style="font-family:'New York',serif; color:#2a2a2a;">Cosa trovi qui</h3>
+          <ul class="space-y-3">
+            {['Tappetini di qualità', 'Mattoncini, cinture', 'Coperte, sedie', 'Spogliatoio'].map(item => (
+              <li class="flex items-center gap-3 text-sm text-[#2a2a2a]">
+                <span class="text-[#9c9a66] flex-shrink-0">✓</span>{item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p class="text-sm text-[#9b9b9b] text-center mt-6">
+        Vieni con abiti comodi (leggings, t-shirt). A piedi nudi, ovviamente.
+      </p>
+    </Container>
+  </Section>
+
+  <!-- FAQ -->
+  <FAQAccordion
+    title="Domande frequenti."
+    background="alt"
+    items={[
+      { question: 'Posso fare Iyengar se ho un\'ernia/scoliosi/problema specifico?', answer: 'La maggior parte dei nostri allievi viene proprio per questo. Iyengar nasce con applicazioni terapeutiche reali. Prima della lezione, parla con l\'insegnante delle tue condizioni: adatterà la pratica a te.' },
+      { question: 'Devo essere flessibile per iniziare?', answer: 'No. La flessibilità è il risultato della pratica, non il prerequisito. I nostri allievi più rigidi diventano i più consapevoli del loro corpo nei primi mesi.' },
+      { question: 'Dopo quanto tempo vedo i primi risultati?', answer: 'Dipende da cosa cerchi, ma prima di quanto pensi. Sulle tensioni quotidiane bastano 2-3 settimane di pratica regolare. Sui dolori cronici, come il mal di schiena, di solito servono 1-2 mesi. Sulla flessibilità e la trasformazione più profonda, dai 6 mesi in su. La costante è una: la pratica regolare, una o due volte a settimana.' },
+      { question: 'Come capisco il mio livello?', answer: 'Se sei alla prima volta o non pratichi da anni → Livello 1 (Base) o Soft. Se conosci le posizioni base → Livello 2. Se hai dubbi, scrivici e ti aiutiamo a scegliere.' },
+    ]}
+  />
+
+  <TestimonialCarousel
+    testimonials={testimonials}
+  />
+
+  <!-- Orari -->
+  <Section background="alt">
+    <Container class="text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Orari</p>
+      <Heading level={2} class="mb-16">Quando praticare Iyengar.</Heading>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-[1040px] mx-auto text-left">
+        {[
+          { tag: 'LIVELLO 1', orario: 'Lunedì 8:45' },
+          { tag: 'LIVELLO 1', orario: 'Mercoledì 8:45' },
+          { tag: 'LIVELLO 2', orario: 'Lunedì 7:00' },
+          { tag: 'LIVELLO 2', orario: 'Lunedì 18:00' },
+          { tag: 'LIVELLO 2', orario: 'Lunedì 19:30' },
+          { tag: 'LIVELLO 2', orario: 'Mercoledì 18:00' },
+          { tag: 'LIVELLO 2', orario: 'Mercoledì 19:30' },
+          { tag: 'LIVELLO 3', orario: 'Martedì 13:00' },
+          { tag: 'LIVELLO 3', orario: 'Giovedì 13:00' },
+          { tag: 'SOFT', orario: 'Martedì 8:45' },
+        ].map(({ tag, orario }) => (
+          <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+            <p class="text-tiny uppercase tracking-widest" style="color: #9c9a66;">{tag}</p>
+            <p class="font-serif text-xl text-text-main">{orario}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-16">
+        <LinkApple href="/orari">Vedi tutti gli orari</LinkApple>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Esplora altre -->
+  <ExploreOtherCourses excludeStile="iyengar" />
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline="Inizia da una sola lezione."
+    ctaHref={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Iyengar.')}
+    linkLabel="Vedi gli orari"
+    linkHref="/orari"
+  />
+
+  <StickyCTA messaggioWhatsapp="Ciao! Vorrei prenotare una prima lezione di Iyengar." />
+
+</BaseLayout>
+
+<script>
+  // Segmented control tabs
+  const tabs = document.querySelectorAll<HTMLElement>('.tab-btn');
+  const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
+  const indicator = document.getElementById('iyengar-indicator') as HTMLElement | null;
+  const segContainer = document.querySelector<HTMLElement>('.iyengar-seg-container');
+
+  function positionIndicator(activeBtn: HTMLElement) {
+    if (!indicator || !segContainer) return;
+    const cRect = segContainer.getBoundingClientRect();
+    const bRect = activeBtn.getBoundingClientRect();
+    indicator.style.width = bRect.width + 'px';
+    indicator.style.transform = `translateX(${bRect.left - cRect.left - 4}px)`;
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.tab;
+      tabs.forEach(t => {
+        const active = t.dataset.tab === id;
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+        t.style.color = active ? 'white' : '#6b6b6b';
+        if (active) positionIndicator(t);
+      });
+      panels.forEach(p => {
+        p.style.display = p.dataset.panel === id ? '' : 'none';
+      });
+    });
+  });
+
+  requestAnimationFrame(() => {
+    const first = document.querySelector<HTMLElement>('.tab-btn[data-tab="livello-1"]');
+    if (first) positionIndicator(first);
+  });
+
+</script>

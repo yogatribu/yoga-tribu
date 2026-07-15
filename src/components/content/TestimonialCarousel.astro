@@ -1,0 +1,442 @@
+---
+interface Testimonial {
+  quote: string;
+  author: string;
+  age: string;
+  meta: string;
+}
+
+interface Props {
+  testimonials: Testimonial[];
+  tag?: string;
+  title?: string;
+  backgroundColor?: string;
+  speed?: number;
+}
+
+const {
+  testimonials,
+  tag = 'COSA DICONO DI NOI',
+  title = 'Quello che gli allievi raccontano.',
+  backgroundColor = '#f9f5f0',
+  speed = 60,
+} = Astro.props;
+---
+
+<section class="tc-section" style={`background: ${backgroundColor};`}>
+  <div class="tc-header">
+    <p class="tc-tag">{tag}</p>
+    <h2 class="tc-title">{title}</h2>
+  </div>
+
+  <div
+    class="testimonial-marquee-container"
+    data-speed={speed}
+    data-bg={backgroundColor}
+    role="region"
+    aria-label="Recensioni degli allievi"
+    tabindex="0"
+  >
+    <div class="tc-track">
+      {testimonials.map((t) => (
+        <div class="tc-card" role="article">
+          <p class="tc-quote">“{t.quote}”</p>
+          <div class="tc-footer">
+            <p class="tc-name">{t.author}{t.age ? `, ${t.age}` : ''}</p>
+            <span class="tc-meta">{t.meta}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* ── Section ── */
+  .tc-section {
+    padding: 96px 0;
+  }
+
+  .tc-header {
+    text-align: center;
+    padding: 0 24px;
+    margin-bottom: 48px;
+  }
+
+  .tc-tag {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    margin-bottom: 12px;
+  }
+
+  .tc-title {
+    font-family: 'New York', Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: #2a2a2a;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* ── Marquee container ── */
+  .testimonial-marquee-container {
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    pointer-events: auto;
+    outline: none;
+  }
+
+  .testimonial-marquee-container:focus-visible {
+    outline: 2px solid #9c9a66;
+    outline-offset: -2px;
+  }
+
+  /* Previeni drag nativo browser su immagini/testo dentro le card */
+  .testimonial-marquee-container img {
+    pointer-events: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+  }
+
+  .testimonial-marquee-container * {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Gradient fade ai lati */
+  .testimonial-marquee-container::before,
+  .testimonial-marquee-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .testimonial-marquee-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--tc-bg, #f9f5f0) 0%, transparent 100%);
+  }
+  .testimonial-marquee-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--tc-bg, #f9f5f0) 0%, transparent 100%);
+  }
+
+  /* ── Track ── */
+  .tc-track {
+    display: flex;
+    gap: 24px;
+    padding: 24px 24px;
+    will-change: transform;
+  }
+
+  /* ── Card ── */
+  .tc-card {
+    flex-shrink: 0;
+    width: 380px;
+    min-height: 240px;
+    background: white;
+    border-radius: 22px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tc-quote {
+    font-family: 'New York', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #2a2a2a;
+    margin: 0 0 24px;
+    flex: 1;
+  }
+
+  .tc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tc-name {
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2a2a2a;
+    margin: 0;
+  }
+
+  .tc-meta {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1023px) {
+    .tc-card { width: 360px; }
+    .tc-track { gap: 20px; }
+  }
+
+  @media (max-width: 767px) {
+    .tc-card { width: min(320px, 85vw); min-height: 220px; padding: 24px; }
+    .tc-quote { font-size: 15px; }
+    .tc-track { gap: 16px; padding: 20px 16px; }
+    .tc-section { padding: 64px 0; }
+    .tc-header { margin-bottom: 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tc-track { transform: none !important; }
+  }
+</style>
+
+<script>
+  class HybridMarquee {
+    container: HTMLElement;
+    track: HTMLElement;
+    cards: NodeListOf<HTMLElement>;
+    speed: number;
+    position: number;
+    totalWidth: number;
+    isPaused: boolean;
+    isDragging: boolean;
+    resumeTimeout: ReturnType<typeof setTimeout> | null;
+    lastTime: number | null;
+    animFrameId: number | null;
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.track = container.querySelector('.tc-track') as HTMLElement;
+      this.cards = this.track.querySelectorAll<HTMLElement>(':scope > .tc-card');
+      this.speed = parseFloat(container.dataset.speed ?? '60') || 60;
+      this.position = 0;
+      this.totalWidth = 0;
+      this.isPaused = false;
+      this.isDragging = false;
+      this.resumeTimeout = null;
+      this.lastTime = null;
+      this.animFrameId = null;
+
+      // Set CSS variable for gradient color
+      const bg = container.dataset.bg ?? '#f9f5f0';
+      container.style.setProperty('--tc-bg', bg);
+
+      this.init();
+    }
+
+    init() {
+      this.cloneCards();
+      // setTimeout 150ms garantisce che font e CSS siano applicati prima di misurare
+      // Un singolo RAF non è sufficiente — le card potrebbero avere offsetWidth = 0
+      setTimeout(() => {
+        this.calculateWidth();
+        this.bindEvents();
+        this.animFrameId = requestAnimationFrame(this.animate.bind(this));
+      }, 150);
+    }
+
+    cloneCards() {
+      const originals = Array.from(this.cards);
+      originals.forEach(card => {
+        const clone = card.cloneNode(true) as HTMLElement;
+        clone.setAttribute('aria-hidden', 'true');
+        this.track.appendChild(clone);
+      });
+    }
+
+    calculateWidth() {
+      // Width of original set only (before clones)
+      let width = 0;
+      const gap = window.innerWidth < 768 ? 16 : window.innerWidth < 1024 ? 20 : 24;
+      this.cards.forEach(card => {
+        width += card.offsetWidth + gap;
+      });
+      this.totalWidth = width;
+    }
+
+    animate(currentTime: number) {
+      if (this.isPaused || this.isDragging) {
+        this.lastTime = currentTime;
+        this.animFrameId = requestAnimationFrame(this.animate.bind(this));
+        return;
+      }
+
+      if (!this.lastTime) this.lastTime = currentTime;
+      const deltaTime = currentTime - this.lastTime;
+      this.lastTime = currentTime;
+
+      const pixelsPerSecond = this.totalWidth / this.speed;
+      this.position -= (pixelsPerSecond * deltaTime) / 1000;
+
+      if (this.position <= -this.totalWidth) {
+        this.position += this.totalWidth;
+      }
+
+      this.track.style.transform = `translateX(${this.position}px)`;
+      this.animFrameId = requestAnimationFrame(this.animate.bind(this));
+    }
+
+    pauseTemporary() {
+      this.isPaused = true;
+      clearTimeout(this.resumeTimeout!);
+    }
+
+    resumeImmediate() {
+      clearTimeout(this.resumeTimeout!);
+      this.isPaused = false;
+      this.lastTime = null;
+    }
+
+    bindEvents() {
+      // ── Hover desktop ──
+      // Guard: non pausare se il drag è già in corso (mouse uscito e rientrato)
+      this.container.addEventListener('mouseenter', () => {
+        if (!this.isDragging) this.pauseTemporary();
+      });
+      this.container.addEventListener('mouseleave', () => {
+        if (!this.isDragging) this.resumeImmediate();
+      });
+
+      // ── Mouse drag ──
+      let isDown = false;
+      let startX = 0;
+      let startPosition = 0;
+
+      this.container.addEventListener('mousedown', (e: MouseEvent) => {
+        isDown = true;
+        this.isDragging = true;
+        // Imposta pausa esplicitamente (mouseenter potrebbe non essere scattato)
+        this.isPaused = true;
+        clearTimeout(this.resumeTimeout!);
+        startX = e.pageX;
+        startPosition = this.position;
+        this.container.style.cursor = 'grabbing';
+        e.preventDefault(); // previene drag nativo browser e selezione testo
+      });
+
+      // mousemove su window: cattura anche se il cursore esce dal container durante il drag
+      const onMouseMove = (e: MouseEvent) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const walk = (e.pageX - startX) * 1.5;
+        this.position = startPosition + walk;
+        // while per gestire salti grandi durante drag veloce
+        while (this.position > 0) this.position -= this.totalWidth;
+        while (this.position <= -this.totalWidth) this.position += this.totalWidth;
+        this.track.style.transform = `translateX(${this.position}px)`;
+      };
+
+      // mouseup su window: gestisce anche rilascio fuori dal container
+      const onMouseUp = () => {
+        if (!isDown) return;
+        isDown = false;
+        this.isDragging = false;
+        this.container.style.cursor = 'grab';
+        // Riprendi solo se il mouse è fuori dal container; se è dentro, l'hover resta attivo
+        const isMouseInside = this.container.matches(':hover');
+        if (!isMouseInside) {
+          this.resumeImmediate();
+        }
+        // Se è inside, isPaused resta true (hover attivo)
+      };
+
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+
+      // ── Touch ──
+      let touchStartX = 0;
+      let touchStartPosition = 0;
+
+      this.container.addEventListener('touchstart', (e: TouchEvent) => {
+        this.isDragging = true;
+        this.isPaused = true;
+        clearTimeout(this.resumeTimeout!);
+        touchStartX = e.touches[0].pageX;
+        touchStartPosition = this.position;
+      }, { passive: true });
+
+      this.container.addEventListener('touchmove', (e: TouchEvent) => {
+        if (!this.isDragging) return;
+        const walk = (e.touches[0].pageX - touchStartX) * 1.5;
+        this.position = touchStartPosition + walk;
+        while (this.position > 0) this.position -= this.totalWidth;
+        while (this.position <= -this.totalWidth) this.position += this.totalWidth;
+        this.track.style.transform = `translateX(${this.position}px)`;
+      }, { passive: true });
+
+      this.container.addEventListener('touchend', () => {
+        this.isDragging = false;
+        this.resumeImmediate();
+      });
+
+      // ── Trackpad horizontal scroll ──
+      this.container.addEventListener('wheel', (e: WheelEvent) => {
+        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+        e.preventDefault();
+        this.position -= e.deltaX;
+        while (this.position > 0) this.position -= this.totalWidth;
+        while (this.position <= -this.totalWidth) this.position += this.totalWidth;
+        this.track.style.transform = `translateX(${this.position}px)`;
+      }, { passive: false });
+
+      // ── Keyboard ──
+      this.container.addEventListener('keydown', (e: KeyboardEvent) => {
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth < 1024;
+        const gap = isMobile ? 16 : isTablet ? 20 : 24;
+        const cardW = isMobile ? Math.min(320, window.innerWidth * 0.85) : isTablet ? 360 : 380;
+        const step = cardW + gap;
+        if (e.key === 'ArrowLeft') {
+          this.position = Math.min(0, this.position + step);
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          this.position = Math.max(-this.totalWidth + step, this.position - step);
+          e.preventDefault();
+        }
+      });
+
+      // ── Resize ──
+      window.addEventListener('resize', () => {
+        this.calculateWidth();
+      }, { passive: true });
+    }
+
+    destroy() {
+      if (this.animFrameId) cancelAnimationFrame(this.animFrameId);
+      clearTimeout(this.resumeTimeout!);
+    }
+  }
+
+  function initMarquees() {
+    document.querySelectorAll<HTMLElement>('.testimonial-marquee-container:not([data-initialized])').forEach(container => {
+      container.dataset.initialized = 'true';
+      new HybridMarquee(container);
+    });
+  }
+
+  initMarquees();
+  document.addEventListener('astro:page-load', () => {
+    // Remove init flag so reinit works after navigation
+    document.querySelectorAll('.testimonial-marquee-container[data-initialized]').forEach(el => {
+      delete (el as HTMLElement).dataset.initialized;
+    });
+    initMarquees();
+  });
+</script>

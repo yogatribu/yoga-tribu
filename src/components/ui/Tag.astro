@@ -1,0 +1,20 @@
+---
+interface Props {
+  color?: 'default' | 'iyengar' | 'ashtanga' | 'flow' | 'teen';
+  class?: string;
+}
+
+const { color = 'default', class: className = '' } = Astro.props;
+
+const colorClasses = {
+  default:  'text-primary',
+  iyengar:  'text-iyengar',
+  ashtanga: 'text-ashtanga',
+  flow:     'text-flow',
+  teen:     'text-teen',
+};
+---
+
+<p class={`text-[12px] font-semibold uppercase tracking-[0.1em] font-sans ${colorClasses[color]} ${className}`}>
+  <slot />
+</p>

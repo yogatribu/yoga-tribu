@@ -1,0 +1,192 @@
+---
+import '../styles/globals.css';
+import { ViewTransitions } from 'astro:transitions';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  schemaJsonLd?: object | object[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Studio di yoga professionale a Bassano del Grappa. Iyengar, Ashtanga e Salute Femminile, insegnanti certificati, lezioni ogni giorno.',
+  ogImage = '/images/og-default.jpg',
+  canonicalUrl,
+  schemaJsonLd,
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = 'https://yogatribu.it';
+const canonical = canonicalUrl ?? `${siteUrl}${Astro.url.pathname}`;
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "HealthClub"],
+  "name": "Yoga Tribù",
+  "url": "https://yogatribu.it",
+  "telephone": "+393287675966",
+  "email": "info@yogatribu.it",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Giuseppe Mazzini 1",
+    "addressLocality": "San Giuseppe",
+    "addressRegion": "VI",
+    "postalCode": "36022",
+    "addressCountry": "IT"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "07:00", "closes": "21:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "08:45", "closes": "20:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "07:30", "closes": "21:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "13:00", "closes": "20:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "08:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:30", "closes": "12:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "17:30", "closes": "19:00" }
+  ],
+  "priceRange": "€€",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "45.7659897",
+    "longitude": "11.7545503"
+  },
+  "hasMap": "https://www.google.com/maps/place/Yoga+Tribu/@45.7659897,11.7545503,17z/",
+  "sameAs": [
+    "https://instagram.com/yoga__tribu",
+    "https://www.facebook.com/people/Yoga-Trib%C3%B9/100028284085474/"
+  ],
+  "description": "Studio di yoga professionale a Bassano del Grappa. Iyengar, Ashtanga e Salute Femminile con insegnanti certificati e formati per anni nel metodo specifico."
+};
+
+// Normalize schemaJsonLd to always be an array (plus LocalBusiness always first)
+const allSchemas: object[] = [localBusiness];
+if (schemaJsonLd) {
+  const extras = Array.isArray(schemaJsonLd) ? schemaJsonLd : [schemaJsonLd];
+  allSchemas.push(...extras);
+}
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/b08dcb14-11d1-4566-b1a6-16621b119ceb.js" defer></script>
+
+    <!-- Google Analytics 4 — attivato solo dopo consenso Iubenda -->
+    <script type="text/plain" class="_iub_cs_activate" async src="https://www.googletagmanager.com/gtag/js?id=G-0GKQSD86CG"></script>
+    <script type="text/plain" class="_iub_cs_activate">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0GKQSD86CG');
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#9c9a66" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow" />
+    }
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Yoga Tribù" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <!-- Font preload — solo above-the-fold -->
+    <link rel="preload" href="/fonts/NewYork.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Task 7: View Transitions -->
+    <ViewTransitions />
+
+    <!-- Schema.org (LocalBusiness sempre presente + eventuali schema specifici per pagina) -->
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <Header />
+    <main class="pt-[89px]">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+  // Task 2 — Scroll reveal (Intersection Observer)
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const delay = el.dataset.revealDelay ?? '0';
+          el.style.transitionDelay = delay + 'ms';
+          el.classList.add('revealed');
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+  }
+
+  // Task 15 — Counter animation
+  function initCounters() {
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const target = parseFloat(el.dataset.count ?? '0');
+        const suffix = el.dataset.countSuffix ?? '';
+        const duration = 1500;
+        const start = performance.now();
+        function step(now: number) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = Math.round(eased * target);
+          el.textContent = value + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach((el) => counterObserver.observe(el));
+  }
+
+  initScrollReveal();
+  initCounters();
+
+  // Re-init after view transitions
+  document.addEventListener('astro:page-load', () => {
+    initScrollReveal();
+    initCounters();
+  });
+</script>

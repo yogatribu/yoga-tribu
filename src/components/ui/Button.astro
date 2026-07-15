@@ -1,0 +1,105 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'secondary-ocra' | 'secondary-dark' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  external?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  external = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const variantClass = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  'secondary-ocra': 'btn-secondary-ocra',
+  tertiary: 'btn-tertiary',
+  'secondary-dark': 'btn-secondary-dark',
+}[variant];
+
+const sizeClass = {
+  sm: 'px-5 py-2 text-[13px]',
+  md: 'px-6 py-2.5 text-[14px]',
+  lg: 'px-7 py-3 text-[15px]',
+}[size];
+
+const base = 'inline-flex items-center justify-center font-sans font-medium rounded-full cursor-pointer tracking-[-0.01em]';
+const classes = `${base} ${variantClass} ${sizeClass} ${className}`;
+
+const Tag = href ? 'a' : 'button';
+const linkProps = href
+  ? { href, ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}) }
+  : {};
+---
+
+<Tag class={classes} {...linkProps} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  /* Primary — no hover change, only active scale */
+  .btn-primary {
+    background: #9c9a66;
+    color: #ffffff;
+    border: 1.5px solid #9c9a66;
+    transition: transform 100ms ease-out;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* Secondary — ivory bg, instant flip on hover (no bg/color transition) */
+  .btn-secondary {
+    background: #ffffff;
+    color: #9c9a66;
+    border: 1.5px solid #9c9a66;
+    transition: transform 100ms ease-out;
+  }
+  .btn-secondary:hover {
+    background: #9c9a66;
+    color: #ffffff;
+  }
+  .btn-secondary:active { transform: scale(0.97); }
+
+  /* Secondary-ocra — white bg on ocra background, opacity-only hover */
+  .btn-secondary-ocra {
+    background: #ffffff;
+    color: #9c9a66;
+    border: 1.5px solid #9c9a66;
+    transition: all 200ms ease;
+  }
+  .btn-secondary-ocra:hover { opacity: 0.9; }
+  .btn-secondary-ocra:active { transform: scale(0.97); }
+
+  /* Secondary-dark — transparent, white border/text for dark hero backgrounds */
+  .btn-secondary-dark {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    transition: background-color 200ms ease, border-color 200ms ease, transform 100ms ease-out;
+  }
+  .btn-secondary-dark:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #ffffff;
+  }
+  .btn-secondary-dark:active { transform: scale(0.97); }
+
+  /* Tertiary — subtle hover with slow background transition */
+  .btn-tertiary {
+    background: transparent;
+    color: #9c9a66;
+    border: 1px solid transparent;
+    transition: background-color 150ms ease-out, border-color 150ms ease-out, transform 100ms ease-out;
+  }
+  .btn-tertiary:hover {
+    background: #faf8f5;
+    border-color: #e8e4df;
+  }
+  .btn-tertiary:active { transform: scale(0.97); }
+</style>

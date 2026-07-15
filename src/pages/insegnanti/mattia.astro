@@ -1,0 +1,75 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mattia",
+  "jobTitle": "Iyengar Yoga Teacher",
+  "worksFor": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "knowsAbout": ["Iyengar Yoga", "Ritiri di Yoga"],
+};
+---
+
+<TeacherLayout
+  title="Mattia · Iyengar Yoga · Yoga Tribù"
+  description="Mattia è insegnante Iyengar certificato livello 1. Co-conduce i ritiri di Yoga Tribù insieme a Glenda."
+  schema={schema}
+  noindex={!INSEGNANTI_ATTIVI.includes('mattia')}
+  nome="Mattia"
+  ruolo="Insegnante"
+  pratica="Iyengar Yoga"
+  coloreAccento="#9c9a66"
+  fotoHero="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=1600&q=80"
+  fotoSidebar="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80"
+  sottotitoloHero="Iyengar Yoga, certificato livello 1. Co-conduce i ritiri di Yoga Tribù insieme a Glenda."
+  formazione={[
+    'Certified Iyengar Yoga Teacher, Livello 1',
+  ]}
+  sezioniStoria={[
+    {
+      titolo: 'Chi è Mattia',
+      paragrafi: ['[DA COMPLETARE — formazione, percorso nello yoga, anni di pratica. Mattia ha un proprio studio di yoga e collabora con Glenda nella conduzione dei ritiri di Yoga Tribù.]'],
+    },
+    {
+      titolo: 'Il suo ruolo nei ritiri',
+      paragrafi: ['[DA COMPLETARE — perché co-conduce i ritiri con Glenda, cosa porta all\'esperienza del ritiro.]'],
+    },
+    {
+      titolo: 'Cosa vedono i partecipanti',
+      paragrafi: ['[DA COMPLETARE — cosa cambia per chi partecipa ai ritiri con Mattia e Glenda.]'],
+    },
+    {
+      titolo: 'Il suo principio',
+      paragrafi: ['[DA COMPLETARE — una frase guida.]'],
+    },
+  ]}
+  filosofiaSinistra={[
+    '[DA COMPLETARE — primo blocco filosofia/approccio all\'insegnamento.]',
+  ]}
+  filosofiaDestra={[
+    '[DA COMPLETARE — secondo blocco filosofia/approccio all\'insegnamento.]',
+  ]}
+  tagLezioni="Ritiri"
+  titoloLezioni="Dove trovarmi."
+  introLezioni="Mattia non tiene lezioni regolari in studio. Lo trovi ai ritiri di Yoga Tribù, che co-conduce insieme a Glenda."
+  lezioni={[]}
+  ctaHeadline="Vuoi vivere un ritiro con noi?"
+  ctaLinkLabel="Scopri i prossimi ritiri"
+  ctaLinkHref="/eventi#ritiri"
+  waTestoCustom="Ciao! Sono interessato ai ritiri di Yoga Tribù con Mattia e Glenda."
+>
+  <div slot="lezioni-content" class="max-w-[600px] mx-auto text-center">
+    <a
+      href="/eventi#ritiri"
+      class="group block bg-white border border-[#e8e4df] rounded-[22px] px-8 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] no-underline"
+    >
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Prossimi ritiri</p>
+      <p class="font-serif text-[28px] text-[#2a2a2a] leading-tight mb-3">Guarda il calendario ritiri</p>
+      <p class="text-sm text-text-secondary leading-relaxed">
+        I ritiri si tengono durante l'anno in location selezionate. Scopri le date e i dettagli.
+      </p>
+    </a>
+  </div>
+</TeacherLayout>

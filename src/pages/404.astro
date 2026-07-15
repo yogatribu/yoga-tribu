@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Pagina non trovata · Yoga Tribù"
+  description="La pagina che stavi cercando non esiste o è stata spostata."
+>
+  <div
+    class="min-h-screen bg-background flex items-center justify-center px-6"
+  >
+    <div class="max-w-[600px] w-full text-center py-16">
+      <p
+        class="font-serif italic leading-none mb-6 select-none"
+        style="font-size: clamp(80px, 15vw, 120px); color: #9c9a66;"
+      >
+        404
+      </p>
+      <h1 class="font-serif text-[28px] md:text-[36px] text-text-main leading-tight mb-4">
+        Hai trovato una porta<br/>che non esiste.
+      </h1>
+      <p class="text-text-secondary text-base leading-relaxed mb-12 max-w-sm mx-auto">
+        La pagina che cercavi è stata spostata, eliminata, o forse non è mai esistita.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+        <Button variant="primary" size="lg" href="/">Torna alla home</Button>
+        <Button variant="secondary" size="lg" href="/corsi">Esplora le pratiche</Button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

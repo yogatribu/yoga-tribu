@@ -1,0 +1,85 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+import Button from '../../components/ui/Button.astro';
+
+
+const sezioniStoria = [
+  {
+    titolo: 'Il percorso',
+    paragrafi: [
+      "Mi sono laureata in Ostetricia nel 2004 e ho iniziato immediatamente a lavorare con le donne in gravidanza. Quello che mi ha colpito fin dall'inizio non era il momento del parto in sé, era tutto quello che veniva prima e dopo. La preparazione, l'ascolto, la relazione con il proprio corpo che cambia.",
+    ],
+  },
+  {
+    titolo: 'La specializzazione',
+    paragrafi: [
+      "Negli anni mi sono specializzata in salutofisiologia perinatale: l'idea che la gravidanza e il post-parto siano eventi fisiologici, non patologici. La donna ha risorse enormi, il mio compito è aiutarla a trovarle, non sostituirle.",
+      "La riabilitazione pelvi-perineale e il massaggio neonatale sono diventati parte centrale del mio lavoro perché rispondono a bisogni concreti: un pavimento pelvico che non è mai stato \"rieducato\" dopo il parto, un neonato che si calma con il tocco, una mamma che finalmente si sente vista.",
+    ],
+  },
+  {
+    titolo: 'I Cerchi di Cura',
+    paragrafi: [
+      "I Cerchi di Cura sono incontri di gruppo per donne nel post-parto. Non corsi, non lezioni. Cerchi veri, dove si parla, si piange, si ride, ci si riconosce. L'isolamento del post-parto è uno dei temi più sottovalutati: il gruppo è uno strumento potente per uscirne.",
+    ],
+  },
+  {
+    titolo: 'Cosa trovi a Yoga Tribù',
+    paragrafi: [
+      "Ho scelto di portare i miei percorsi a Yoga Tribù perché condividiamo la stessa filosofia: niente moda, niente esteriorità. Pratica vera, relazioni vere, competenza certificata. Uno spazio dove le donne possono venire esattamente come sono.",
+    ],
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sara Zampierin",
+  "jobTitle": "Ostetrica · Insegnante Salute Femminile",
+  "worksFor": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "description": "Ostetrica e specialista in salutofisiologia, riabilitazione pelvi-perineale e massaggio neonatale.",
+  "knowsAbout": ["Ginnastica Pelvica", "Massaggio Neonatale", "Accompagnamento alla Nascita", "Riabilitazione Pelvi-perineale"],
+};
+---
+
+<TeacherLayout
+  title="Sara Zampierin · Salute Femminile · Yoga Tribù"
+  description="Sara Zampierin è ostetrica e insegnante di Salute Femminile a Yoga Tribù. Ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita."
+  schema={schema}
+  nome="Sara"
+  ruolo="Insegnante"
+  pratica="Salute Femminile"
+  nascondiDivider={true}
+  coloreAccento="#c89797"
+  fotoHero="/images/insegnanti/sara.webp"
+  fotoSidebar="/images/insegnanti/sara.webp"
+  labelFormazione="Formazione e specializzazioni"
+  formazione={[
+    'Laurea in Ostetricia - abilitata dal 2004',
+    'Specializzazione in Salutofisiologia perinatale',
+    'Formazione in riabilitazione pelvi-perineale',
+    'Certificazione in massaggio neonatale',
+    'Corsi di accompagnamento alla nascita dal 2006',
+    '20+ anni di esperienza con donne in gravidanza e nel post-parto',
+  ]}
+  sezioniStoria={sezioniStoria}
+  filosofiaSinistra={[]}
+  filosofiaDestra={[]}
+  lezioni={[]}
+>
+  <div slot="lezioni-content" class="text-center">
+    <p class="text-base text-[#6b6b6b] leading-relaxed max-w-[560px] mx-auto mb-6">
+      I miei percorsi si organizzano in base al periodo e alle esigenze di ogni donna.
+      Ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita e cerchi
+      di cura: scrivimi per sapere cosa è attivo al momento e trovare il momento giusto.
+    </p>
+    <Button
+      variant="primary"
+      size="md"
+      href="https://wa.me/393287675966?text=Ciao%20Sara!%20Vorrei%20sapere%20quali%20percorsi%20sono%20attivi%20al%20momento."
+      external={true}
+    >
+      Scrivimi su WhatsApp
+    </Button>
+  </div>
+</TeacherLayout>

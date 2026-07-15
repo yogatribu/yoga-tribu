@@ -1,0 +1,76 @@
+---
+interface Tab {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  tabs: Tab[];
+  defaultActive?: string;
+  class?: string;
+}
+
+const { tabs, defaultActive, class: className = '' } = Astro.props;
+const activeId = defaultActive ?? tabs[0]?.id;
+---
+
+<div class={`tabs-component ${className}`} data-default-active={activeId}>
+  <!-- Tab list -->
+  <div class="tabs-list flex flex-wrap gap-2 overflow-x-auto pb-px" role="tablist">
+    {tabs.map(({ id, label }) => (
+      <button
+        class={`tab-btn font-sans text-sm px-6 py-3 rounded-sm transition-colors duration-200 whitespace-nowrap ${
+          id === activeId
+            ? 'bg-primary text-white font-medium'
+            : 'text-text-secondary hover:bg-background-alt'
+        }`}
+        role="tab"
+        aria-selected={id === activeId ? 'true' : 'false'}
+        aria-controls={`tab-panel-${id}`}
+        data-tab-id={id}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+
+  <!-- Tab panels (populated via slots named after ids) -->
+  <div class="tabs-panels mt-8">
+    {tabs.map(({ id }) => (
+      <div
+        id={`tab-panel-${id}`}
+        role="tabpanel"
+        class={`tab-panel ${id !== activeId ? 'hidden' : ''}`}
+        data-panel-id={id}
+      >
+        <slot name={id} />
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tabs-component').forEach((tabs) => {
+    const buttons = tabs.querySelectorAll<HTMLElement>('.tab-btn');
+    const panels = tabs.querySelectorAll<HTMLElement>('.tab-panel');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.tabId;
+
+        buttons.forEach((b) => {
+          const isActive = b.dataset.tabId === id;
+          b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          b.classList.toggle('bg-primary', isActive);
+          b.classList.toggle('text-white', isActive);
+          b.classList.toggle('font-medium', isActive);
+          b.classList.toggle('text-text-secondary', !isActive);
+        });
+
+        panels.forEach((panel) => {
+          panel.classList.toggle('hidden', panel.dataset.panelId !== id);
+        });
+      });
+    });
+  });
+</script>

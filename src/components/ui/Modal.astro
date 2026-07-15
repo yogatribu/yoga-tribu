@@ -1,0 +1,79 @@
+---
+interface Props {
+  id: string;
+  maxWidth?: string;
+}
+const { id, maxWidth = '480px' } = Astro.props;
+---
+
+<div
+  id={id}
+  class="modal fixed inset-0 z-[70] hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+>
+  <!-- Backdrop -->
+  <div
+    class="modal-backdrop absolute inset-0"
+    style="background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);"
+  ></div>
+
+  <!-- Panel -->
+  <div
+    class="modal-panel relative bg-white shadow-lg w-full p-8 translate-y-6 opacity-0 transition-all duration-200 ease-out"
+    style={`max-width: ${maxWidth}; border-radius: 20px;`}
+  >
+    <!-- Close button -->
+    <button
+      class="modal-close absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-text-secondary hover:text-text-main transition-colors"
+      aria-label="Chiudi"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <slot />
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.modal').forEach((modal) => {
+    const backdrop = modal.querySelector('.modal-backdrop');
+    const closeBtn = modal.querySelector('.modal-close');
+    const panel = modal.querySelector('.modal-panel');
+
+    function open() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modal.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => {
+        panel?.classList.remove('translate-y-6', 'opacity-0');
+      });
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      panel?.classList.add('translate-y-6', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }, 200);
+    }
+
+    backdrop?.addEventListener('click', close);
+    closeBtn?.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+
+    // Expose open/close on the element
+    (modal as any)._open = open;
+    (modal as any)._close = close;
+  });
+</script>

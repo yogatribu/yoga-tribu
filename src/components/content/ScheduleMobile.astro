@@ -1,0 +1,142 @@
+---
+interface Lezione {
+  giorno: string;
+  ora: string;
+  stile: string;
+  tipo: string;
+  insegnante: string;
+  durata: string;
+}
+
+interface Props {
+  lezioni: Lezione[];
+}
+
+const { lezioni } = Astro.props;
+
+const giorni = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
+const giorniLabel: Record<string, string> = {
+  lun: 'Lunedì', mar: 'Martedì', mer: 'Mercoledì',
+  gio: 'Giovedì', ven: 'Venerdì', sab: 'Sabato', dom: 'Domenica',
+};
+const giorniShort: Record<string, string> = {
+  lun: 'Lun', mar: 'Mar', mer: 'Mer',
+  gio: 'Gio', ven: 'Ven', sab: 'Sab', dom: 'Dom',
+};
+
+const colori: Record<string, string> = {
+  iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0',
+};
+
+const today = new Date().getDay();
+const dayMap = [6, 0, 1, 2, 3, 4, 5];
+const defaultDay = giorni[dayMap[today]] ?? 'lun';
+---
+
+<div class="mobile-schedule">
+  <!-- Contenuto per giorno (day-tab rimossi: la selezione giorno avviene nel SegmentedControl GIORNI sopra) -->
+  {giorni.map(g => {
+    const dayLessons = lezioni.filter(l => l.giorno === g).sort((a, b) => {
+      const [ah, am] = a.ora.split(':').map(Number);
+      const [bh, bm] = b.ora.split(':').map(Number);
+      return ah * 60 + am - (bh * 60 + bm);
+    });
+    const mattina = dayLessons.filter(l => parseInt(l.ora) < 13);
+    const pomeriggio = dayLessons.filter(l => parseInt(l.ora) >= 13 && parseInt(l.ora) < 17);
+    const sera = dayLessons.filter(l => parseInt(l.ora) >= 17);
+
+    return (
+      <div
+        class="day-panel pt-8"
+        data-day={g}
+        style={g !== defaultDay ? 'display: none;' : ''}
+      >
+        <h2 class="font-serif text-2xl text-text-main mb-6">{giorniLabel[g]}</h2>
+
+        {dayLessons.length === 0 && (
+          <p class="text-text-secondary text-sm italic">Nessuna lezione in programma.</p>
+        )}
+
+        {mattina.length > 0 && (
+          <div class="mb-8">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-4">Mattina</p>
+            <div class="flex flex-col gap-3">
+              {mattina.map(l => (
+                <button
+                  class="schedule-cell w-full text-left rounded-[10px] p-4 bg-white border border-[#e8e4df]"
+                  data-lezione={JSON.stringify(l)}
+                >
+                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.stile}</p>
+                  <p class="text-base text-text-main font-medium">{l.tipo}</p>
+                  <p class="text-small text-text-secondary">{l.ora}</p>
+                  <p class="text-[11px] text-text-secondary mt-1 font-sans">con {l.insegnante}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {pomeriggio.length > 0 && (
+          <div class="mb-8">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-4">Pomeriggio</p>
+            <div class="flex flex-col gap-3">
+              {pomeriggio.map(l => (
+                <button
+                  class="schedule-cell w-full text-left rounded-[10px] p-4 bg-white border border-[#e8e4df]"
+                  data-lezione={JSON.stringify(l)}
+                >
+                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.stile}</p>
+                  <p class="text-base text-text-main font-medium">{l.tipo}</p>
+                  <p class="text-small text-text-secondary">{l.ora}</p>
+                  <p class="text-[11px] text-text-secondary mt-1 font-sans">con {l.insegnante}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {sera.length > 0 && (
+          <div class="mb-8">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-4">Sera</p>
+            <div class="flex flex-col gap-3">
+              {sera.map(l => (
+                <button
+                  class="schedule-cell w-full text-left rounded-[10px] p-4 bg-white border border-[#e8e4df]"
+                  data-lezione={JSON.stringify(l)}
+                >
+                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.stile}</p>
+                  <p class="text-base text-text-main font-medium">{l.tipo}</p>
+                  <p class="text-small text-text-secondary">{l.ora}</p>
+                  <p class="text-[11px] text-text-secondary mt-1 font-sans">con {l.insegnante}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  })}
+</div>
+
+<script>
+  function initMobileSchedule() {
+    function activate(day: string) {
+      document.querySelectorAll<HTMLElement>('.day-panel').forEach(p => {
+        p.style.display = p.dataset.day === day ? 'block' : 'none';
+      });
+    }
+
+    // Ascolta il SegmentedControl GIORNI in ScheduleFilters
+    document.addEventListener('sc-change', (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail.scId === 'schedule-days') activate(detail.value);
+    });
+
+    // Init: mostra il pannello del giorno di default (già impostato server-side)
+    const defaultPanel = document.querySelector<HTMLElement>('.day-panel:not([style*="none"])')?.dataset.day;
+    if (defaultPanel) activate(defaultPanel);
+  }
+
+  initMobileSchedule();
+  document.addEventListener('astro:page-load', initMobileSchedule);
+</script>

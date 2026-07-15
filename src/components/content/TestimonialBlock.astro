@@ -1,0 +1,43 @@
+---
+interface Props {
+  testo: string;
+  nome: string;
+  dettaglio: string;
+  foto?: string;
+  background?: 'default' | 'alt';
+}
+
+const {
+  testo,
+  nome,
+  dettaglio,
+  foto,
+  background = 'default',
+} = Astro.props;
+
+const bg = background === 'alt' ? 'bg-background-alt' : 'bg-background';
+---
+
+<section class={`${bg} py-24 md:py-32`}>
+  <div class="container-narrow text-center">
+    <blockquote class="font-serif italic text-[28px] md:text-[34px] text-text-main leading-[1.4] mb-10">
+      "{testo}"
+    </blockquote>
+    <div class="flex items-center justify-center gap-4">
+      {foto ? (
+        <img src={foto} alt={nome} class="w-14 h-14 rounded-full object-cover" />
+      ) : (
+        <div class="w-14 h-14 rounded-full bg-background-alt border border-border flex items-center justify-center">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+      )}
+      <div class="text-left">
+        <p class="font-sans text-sm font-medium text-text-main">{nome}</p>
+        <p class="text-small text-text-secondary">{dettaglio}</p>
+      </div>
+    </div>
+  </div>
+</section>

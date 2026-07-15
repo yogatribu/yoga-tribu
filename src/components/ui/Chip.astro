@@ -1,0 +1,21 @@
+---
+interface Props {
+  label: string;
+  active?: boolean;
+  dataValue?: string;
+  class?: string;
+}
+const { label, active = false, dataValue, class: className = '' } = Astro.props;
+---
+
+<button
+  class={`chip-btn inline-flex items-center px-6 py-3 rounded-full border text-sm font-sans transition-all duration-250 cursor-pointer ${
+    active
+      ? 'bg-primary text-white border-primary'
+      : 'bg-transparent text-text-main border-border hover:bg-background-alt hover:border-primary'
+  } ${className}`}
+  data-value={dataValue ?? label}
+  aria-pressed={active ? 'true' : 'false'}
+>
+  {label}
+</button>

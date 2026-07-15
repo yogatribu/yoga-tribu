@@ -1,0 +1,33 @@
+---
+import FAQItem from './FAQItem.astro';
+
+interface FAQItemType {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: FAQItemType[];
+  title?: string;
+  background?: 'default' | 'alt';
+}
+
+const { items, title = 'Domande frequenti.', background = 'default' } = Astro.props;
+---
+
+<section class={`faq-section ${background === 'alt' ? 'faq-section--alt' : ''}`}>
+  <div class="faq-container">
+    <h2 class="faq-title">{title}</h2>
+    <div class="faq-list">
+      {items.map(({ question, answer }) => (
+        <FAQItem question={question} answer={answer} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section--alt {
+    background: #faf8f5;
+  }
+</style>

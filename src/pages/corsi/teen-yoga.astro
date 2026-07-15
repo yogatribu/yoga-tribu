@@ -1,0 +1,286 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/content/HeroSection.astro';
+import TeacherCard from '../../components/content/TeacherCard.astro';
+import Button from '../../components/ui/Button.astro';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import HowItWorksSteps from '../../components/content/HowItWorksSteps.astro';
+import TeenToggle from '../../components/interactive/TeenToggle.astro';
+import FAQItem from '../../components/content/FAQItem.astro';
+import TestimonialCarousel from '../../components/content/TestimonialCarousel.astro';
+import { testimonials } from '../../data/testimonials';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import StickyCTA from '../../components/layout/StickyCTA.astro';
+import FeatureCard from '../../components/content/FeatureCard.astro';
+import ExploreOtherCourses from '../../components/content/ExploreOtherCourses.astro';
+import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
+
+const WA_BASE = 'https://wa.me/393287675966?text=';
+const COLOR = '#d4b5a0';
+---
+
+<BaseLayout
+  title="Teen Yoga a Bassano del Grappa · Yoga Tribù"
+  description="Yoga per ragazze e ragazzi tra i 13 e i 20 anni. A Bassano del Grappa, venerdì 17:00."
+  noindex={!PRATICHE_ATTIVE.includes('teen-yoga')}
+>
+  <!-- Hero 90vh -->
+  <div
+    data-hero
+    class="relative flex items-center justify-center overflow-hidden bg-[#2a2a2a]"
+    style="min-height: 90vh;"
+  >
+    <img
+      src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1600&q=80"
+      alt="Teen Yoga"
+      class="absolute inset-0 w-full h-full object-cover"
+      style="opacity: 0.6;"
+      loading="eager" fetchpriority="high"
+    />
+    <div class="absolute inset-0" style="background: rgba(0,0,0,0.3);"></div>
+    <div class="relative container-default py-20 text-center">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/80 mb-4 font-sans">Teen Yoga</p>
+      <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight mb-6">
+        Per chi sta diventando<br/>se stesso.
+      </h1>
+      <p class="text-white/85 text-lg max-w-md mx-auto mb-10">
+        Yoga per ragazze e ragazzi tra i 13 e i 20 anni.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <Button variant="primary" href={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Teen Yoga.')} external={true}>Prenota la prima lezione</Button>
+        <Button variant="secondary-dark" href="/orari">Vedi gli orari</Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle Genitore / Teen -->
+  <TeenToggle />
+
+  <!-- A chi è dedicato — DINAMICA -->
+  <Section background="alt">
+    <Container>
+
+      <!-- VERSIONE GENITORE -->
+      <div data-content="genitore">
+        <Tag class="mb-5" style={`color: ${COLOR};`}>A chi è dedicato</Tag>
+        <Heading level={2} class="mb-16">Teen Yoga è adatto a tuo figlio se...</Heading>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto">
+          <FeatureCard
+            icon="Smartphone"
+            title="Passa troppe ore davanti a schermi"
+            body="Tablet, computer, smartphone. La postura ne risente ogni giorno."
+          />
+          <FeatureCard
+            icon="BookOpen"
+            title="Vive lo stress scolastico"
+            body="Ansia da prestazione, pressione voti, ritmi intensi. Lo yoga è uno strumento concreto per imparare a respirare e gestire la tensione."
+          />
+          <FeatureCard
+            icon="Smile"
+            title="Cerca uno spazio dove stare bene"
+            body="I social, gli schermi, le aspettative, tutto diventa rumore. Lo yoga è un'ora di silenzio e movimento puri."
+          />
+        </div>
+      </div>
+
+      <!-- VERSIONE TEEN -->
+      <div data-content="teen" style="display: none;">
+        <Tag class="mb-5" style={`color: ${COLOR};`}>Per te se...</Tag>
+        <Heading level={2} class="mb-16">Teen Yoga è per te se...</Heading>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto">
+          <FeatureCard
+            icon="Smartphone"
+            title="Sei sempre col collo piegato sul telefono"
+            body="Spalle in avanti, schiena curva, mal di testa serale. Lo yoga rimette a posto la postura, toglie tensioni che nemmeno sai di avere."
+          />
+          <FeatureCard
+            icon="Zap"
+            title="La scuola ti svuota"
+            body="Verifiche, voti, pressione costante. Lo yoga ti dà 60 minuti senza pensieri, senza schermi, senza stress."
+          />
+          <FeatureCard
+            icon="Heart"
+            title="Vuoi un posto dove non devi essere bravo"
+            body="Niente performance, niente confronti, niente giudizi. Solo tu, il tappetino, il respiro."
+          />
+        </div>
+      </div>
+
+    </Container>
+  </Section>
+
+  <!-- Cosa otterrai — DINAMICA -->
+  <Section background="default">
+    <Container>
+
+      <!-- GENITORE -->
+      <div data-content="genitore">
+        <Heading level={2} class="mb-12">Cosa cambia con la pratica.</Heading>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[
+            { title: 'Gestione dello stress', body: 'Strumenti concreti per calmare l\'ansia prima di una verifica o di una situazione difficile.' },
+            { title: 'Postura che migliora', body: 'A 13-20 anni il corpo cambia in fretta. Lo yoga lavora sulla struttura del corpo: colonna, cervicale, spalle.' },
+            { title: 'Concentrazione', body: 'Allenarsi a stare presenti per un\'ora attiva la stessa capacità necessaria nello studio.' },
+            { title: 'Autostima nel corpo', body: 'In un\'età di insicurezze, riscoprire il proprio corpo come strumento potente, non da giudicare.' },
+          ].map(({ title, body }) => (
+            <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{title}</p>
+              <p class="text-sm text-text-secondary leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- TEEN -->
+      <div data-content="teen" style="display: none;">
+        <Heading level={2} class="mb-12">Cosa ti porti a casa.</Heading>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[
+            { title: 'Dormi meglio', body: 'Anche se vai a letto tardi, il sonno è diverso. Più profondo, ti svegli meno stanco.' },
+            { title: 'Smetti di sentirti contratto', body: 'Quelle tensioni alle spalle e al collo che hai sempre, vanno via. Pian piano.' },
+            { title: 'Scuola un po\' meno pesante', body: 'Non ti diventerà divertente, ma imparerai a respirare prima delle verifiche.' },
+            { title: 'Sentirsi a posto con se stessi', body: 'A 15 anni nessuno si sente "a posto" sempre. Lo yoga ti dà uno spazio dove non devi essere nessuno.' },
+          ].map(({ title, body }) => (
+            <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{title}</p>
+              <p class="text-sm text-text-secondary leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </Container>
+  </Section>
+
+  <!-- Insegnante (titolo dinamico) -->
+  <Section background="alt">
+    <Container class="text-center">
+      <Tag class="mb-5" style={`color: ${COLOR};`}>L'insegnante</Tag>
+      <div data-content="genitore">
+        <Heading level={2} class="mb-4">Chi seguirà tuo figlio.</Heading>
+      </div>
+      <div data-content="teen" style="display: none;">
+        <Heading level={2} class="mb-4">La tua insegnante.</Heading>
+      </div>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12 mx-auto">
+        Insegnanti certificati, formati in anni di studio.
+      </p>
+      <div class="flex justify-center mb-8">
+        <TeacherCard nome="Asia" stili="Teen Yoga" link="/insegnanti/asia" />
+      </div>
+      <LinkApple href="/chi-siamo">Conosci tutti gli insegnanti</LinkApple>
+    </Container>
+  </Section>
+
+  <!-- Come si svolge (statica) -->
+  <section class="bg-background py-16 md:py-24">
+    <div class="container-default">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] mb-4" style="color: #9c9a66;">Come funziona</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">Una lezione Teen Yoga.</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">01</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Arrivi</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Lo spogliatoio è tuo, ti cambi, prendi un tappetino.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">02</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Cominciamo in cerchio</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">Brevissimo check-in, come state, cosa avete in giro per la testa. 2 minuti, poi via.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">03</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Pratica insieme</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">60 minuti di pratica guidata, posizioni adattate al gruppo, movimento, respiro, qualche risata.</p>
+        </div>
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
+                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
+                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">04</p>
+          <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Chiusura</h3>
+          <p class="text-sm text-[#6b6b6b] leading-relaxed">5 minuti di rilassamento. Esci sereno e pronto per il resto della giornata.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ — DINAMICA -->
+  <div data-content="genitore">
+    <section class="faq-section">
+      <div class="faq-container">
+        <h2 class="faq-title">Domande frequenti.</h2>
+        <div class="faq-list">
+          <FAQItem question="Mio figlio/a non ha mai fatto yoga, può iniziare?" answer="Sì. Il Teen Yoga è pensato proprio per principianti. L'insegnante adatta tutto al gruppo, parte sempre dalle basi." />
+          <FAQItem question="È un ambiente sicuro per adolescenti?" answer="Sì. Gruppo dedicato di solo adolescenti, insegnante formato per questa fascia d'età. Niente adulti misti, niente pressione, ambiente protetto." />
+          <FAQItem question="Quanto dura la lezione?" answer="60 minuti, una volta a settimana (venerdì 17:00)." />
+          <FAQItem question="Posso assistere come genitore?" answer="Preferiamo che il gruppo sia solo di adolescenti. Aiuta i ragazzi a sentirsi liberi, a non sentirsi osservati. Se vuoi parlare con l'insegnante, sei benvenuto prima o dopo." />
+          <FAQItem question="C'è una prova per i ragazzi?" answer="La prima lezione è di prova, a 10€. Se tuo figlio/a non si trova bene, non c'è nessun obbligo." />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div data-content="teen" style="display: none;">
+    <section class="faq-section">
+      <div class="faq-container">
+        <h2 class="faq-title">Domande che probabilmente hai.</h2>
+        <div class="faq-list">
+          <FAQItem question="Devo essere flessibile o sportivo? Spoiler: no." answer="Tipo per niente. Lo yoga lavora con il corpo che hai oggi. Se non riesci a toccarti i piedi, va benissimo. Davvero." />
+          <FAQItem question="Sarò il/la più imbranato/a della classe?" answer="No. Il gruppo è di gente come te, alcuni alla prima volta, alcuni che vengono da 6 mesi, ma nessuno che ti guarda." />
+          <FAQItem question='Devo dire cose tipo "namasté" o robe spirituali?' answer="No. Il nostro Teen Yoga è una pratica vera, non una scena da film. Si lavora sul corpo, sul respiro, sul presente." />
+          <FAQItem question="I miei amici possono venire con me?" answer="Assolutamente sì. Anzi, è meglio. Spesso si crea un piccolo gruppo di amici che vengono insieme." />
+          <FAQItem question="Quanto costa?" answer="La prima lezione è 10€ (prova). Se vuoi continuare, c'è uno sconto specifico per teen, chiedici i dettagli." />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Orari -->
+  <Section background="alt">
+    <Container class="text-center">
+      <Tag class="mb-5 inline-block" style={`color: ${COLOR};`}>Orari</Tag>
+      <Heading level={2} class="mb-16">Quando praticare Teen Yoga.</Heading>
+      <div class="flex justify-center">
+        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="width: 248px; min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+          <p class="text-tiny uppercase tracking-widest" style={`color: ${COLOR};`}>TEEN YOGA</p>
+          <p class="font-serif text-xl text-text-main">Venerdì 17:00</p>
+        </div>
+      </div>
+      <div class="mt-16">
+        <LinkApple href="/orari">Vedi tutti gli orari</LinkApple>
+      </div>
+    </Container>
+  </Section>
+
+  <TestimonialCarousel
+    testimonials={testimonials}
+    backgroundColor="#fdf8f3"
+  />
+
+  <ExploreOtherCourses excludeStile="teen" />
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline="Vieni a una lezione."
+    ctaHref={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una prima lezione di Teen Yoga.')}
+    linkLabel="Vedi gli orari"
+    linkHref="/orari"
+  />
+
+  <StickyCTA messaggioWhatsapp="Ciao! Vorrei informazioni su Teen Yoga." />
+</BaseLayout>
+

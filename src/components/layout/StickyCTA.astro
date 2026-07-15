@@ -1,0 +1,52 @@
+---
+interface Props {
+  messaggioWhatsapp: string;
+}
+const { messaggioWhatsapp } = Astro.props;
+const waUrl = `https://wa.me/393287675966?text=${encodeURIComponent(messaggioWhatsapp)}`;
+---
+
+<div
+  id="sticky-cta"
+  class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 border-t border-border backdrop-blur-lg px-4 py-3 translate-y-full transition-transform duration-250 ease-out md:hidden"
+  aria-hidden="true"
+>
+  <a
+    href={waUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="block w-full bg-primary text-white text-[15px] font-medium text-center py-3.5 rounded-full transition-colors hover:bg-[#8a885a]"
+  >
+    Prenota la prima lezione
+  </a>
+</div>
+
+<script>
+  const cta = document.getElementById('sticky-cta');
+  let lastScrollY = window.scrollY;
+  let shown = false;
+
+  function update() {
+    const scrolled = window.scrollY > document.documentElement.scrollHeight * 0.3;
+    const scrollingDown = window.scrollY > lastScrollY;
+    lastScrollY = window.scrollY;
+
+    if (scrolled && scrollingDown && !shown) {
+      cta?.classList.remove('translate-y-full');
+      cta?.setAttribute('aria-hidden', 'false');
+      shown = true;
+    } else if (!scrollingDown && shown) {
+      cta?.classList.add('translate-y-full');
+      cta?.setAttribute('aria-hidden', 'true');
+      shown = false;
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { update(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+</script>

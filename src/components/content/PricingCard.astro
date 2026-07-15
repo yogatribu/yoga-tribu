@@ -1,0 +1,85 @@
+---
+import Button from '../ui/Button.astro';
+
+interface Props {
+  tag: string;
+  nome: string;
+  prezzo: string;
+  costoLezione?: string;
+  sconto?: string;
+  validita?: string;
+  descrizione: string;
+  bullets: string[];
+  featured?: boolean;
+  ctaLabel: string;
+  messaggioWa: string;
+}
+
+const {
+  tag,
+  nome,
+  prezzo,
+  costoLezione,
+  sconto,
+  validita,
+  descrizione,
+  bullets,
+  featured = false,
+  ctaLabel,
+  messaggioWa,
+} = Astro.props;
+
+const waUrl = `https://wa.me/393287675966?text=${encodeURIComponent(messaggioWa)}`;
+---
+
+<div
+  class={`relative flex flex-col bg-white transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] ${
+    featured
+      ? 'border-2 border-primary shadow-md'
+      : 'border border-border'
+  }`}
+  style="border-radius: 22px;"
+>
+  {featured && (
+    <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+      <span class="bg-primary text-white text-tiny uppercase tracking-wider px-3 py-1.5 rounded-sm whitespace-nowrap">
+        Più scelto
+      </span>
+    </div>
+  )}
+
+  <div class="p-7 flex flex-col flex-1">
+    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-primary mb-3">{tag}</p>
+    <h3 class="font-serif text-2xl text-text-main mb-4">{nome}</h3>
+
+    <div class="mb-2">
+      <span class="font-sans text-[36px] font-medium text-text-main leading-none">{prezzo}</span>
+    </div>
+    {costoLezione && (
+      <p class="text-small text-text-secondary mb-1">{costoLezione}</p>
+    )}
+    {sconto && (
+      <p class="text-small font-medium text-error mb-3">{sconto}</p>
+    )}
+    {validita && (
+      <p class="text-small text-text-secondary mb-4">{validita}</p>
+    )}
+
+    <p class="text-sm text-text-secondary leading-relaxed mb-6">{descrizione}</p>
+
+    <div class="border-t border-border pt-5 mb-6 flex flex-col gap-2.5 flex-1">
+      {bullets.map(b => (
+        <p class="text-sm text-text-secondary flex gap-2">
+          <span class="text-primary shrink-0">✓</span>
+          {b}
+        </p>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <Button variant="primary" size="md" href={waUrl} external={true}>
+        {ctaLabel}
+      </Button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+
+const lezioni = [
+  { giorno: 'Martedì',  ora: '17:30', tipo: 'Mysore',  durata: '60-90 min' },
+  { giorno: 'Martedì',  ora: '19:00', tipo: 'Guidata', durata: '~90 min'   },
+  { giorno: 'Giovedì',  ora: '17:30', tipo: 'Mysore',  durata: '60-90 min' },
+  { giorno: 'Giovedì',  ora: '19:00', tipo: 'Guidata', durata: '~90 min'   },
+  { giorno: 'Venerdì',  ora: '7:00',  tipo: 'Mysore',  durata: '60-90 min' },
+  { giorno: 'Sabato',   ora: '8:30',  tipo: 'Mysore',  durata: '60-90 min' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Victor",
+  "jobTitle": "Ashtanga Yoga Teacher",
+  "worksFor": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
+  "knowsAbout": ["Ashtanga Yoga", "Mysore Style"],
+};
+---
+
+<TeacherLayout
+  title="Victor · Insegnante Ashtanga · Yoga Tribù"
+  description="Victor insegna Ashtanga a Yoga Tribù: Mysore e lezioni guidate. Praticante quotidiano da anni, insegna con disciplina e rispetto per la tradizione."
+  schema={schema}
+  nome="Victor"
+  ruolo="Insegnante"
+  pratica="Ashtanga Yoga"
+  coloreAccento="#7a6b5f"
+  fotoHero="/images/insegnanti/victor.webp"
+  fotoSidebar="/images/insegnanti/victor.webp"
+  citazioneBio="Practice and all is coming."
+  formazione={[
+    '200 ore Hatha Yoga - The Yoga Institute, Mumbai (2006)',
+    '200 ore Ashtanga Yoga - scuola accreditata Yoga Alliance, Barcellona (2016)',
+    'In pratica dal 1995',
+  ]}
+  sezioniStoria={[
+    {
+      titolo: 'Come ho incontrato lo yoga',
+      paragrafi: ["Vengo da São Paulo, dove ho iniziato a praticare Ashtanga a 15 anni seguendo la tradizione di Mysore. Ho cominciato in un momento in cui avevo bisogno di struttura e direzione, e l'Ashtanga me le ha date subito. È stata una pratica che mi ha accompagnato ovunque: in Spagna, Indonesia, Inghilterra. Ovunque andassi, trovavo una shala e una comunità."],
+    },
+    {
+      titolo: 'Perché l\'Ashtanga',
+      paragrafi: ["La sequenza fissa, il respiro, il movimento come forma di meditazione: è questo che mi ha tenuto legato all'Ashtanga. Ho esplorato anche Aikido, Zen, Capoeira, ma è sempre stato il tappetino dell'Ashtanga che portavo con me nei traslochi e nei viaggi. Questa portabilità, questa indipendenza della pratica dalle condizioni della vita, è ancora oggi una delle cose che più mi sta a cuore trasmettere."],
+    },
+    {
+      titolo: 'La formazione',
+      paragrafi: ["Mi sono formato al The Yoga Institute di Mumbai nel 2006, dove ho studiato hatha yoga, la filosofia dell'Ashtanga e le sue otto componenti. Nel 2016 ho completato una seconda formazione in una scuola accreditata Yoga Alliance a Barcellona, dopo la quale ho iniziato a insegnare Ashtanga a Manchester. Tra il 2019 e il 2020 ho vissuto a Varanasi, nel nord dell'India, per una ricerca di dottorato sull'induismo e l'ambiente: un'immersione che ha trasformato anche il mio rapporto con la pratica. Dal 2023 sono in Italia."],
+    },
+    {
+      titolo: 'Il mio approccio',
+      paragrafi: ["Quello che vedo più spesso, in chi pratica con me nel tempo, è una trasformazione nel rapporto con il proprio corpo. Non tanto più flessibilità o più forza, ma una capacità crescente di ascoltarsi: distinguere il disagio utile da quello che segnala un limite da rispettare. Mi piace seguire da vicino chi pratica, capire dove si può spingere e dove invece vale la pena fermarsi. Nel tempo la pratica diventa qualcosa al di là del corpo, una compagnia per la vita nei momenti belli e in quelli difficili."],
+    },
+  ]}
+  introLezioni="Mysore e lezioni guidate, quattro giorni su sei. Il Mysore richiede un appuntamento iniziale per i nuovi allievi, scrivici prima di venire."
+  lezioni={lezioni}
+>
+  <div slot="lezioni-content" class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[800px] mx-auto text-left">
+    {[
+      { tag: 'MYSORE',  orario: 'Martedì 17:30' },
+      { tag: 'GUIDATA', orario: 'Martedì 19:00' },
+      { tag: 'MYSORE',  orario: 'Giovedì 17:30' },
+      { tag: 'GUIDATA', orario: 'Giovedì 19:00' },
+      { tag: 'MYSORE',  orario: 'Venerdì 7:00' },
+      { tag: 'MYSORE',  orario: 'Sabato 8:30' },
+    ].map(({ tag, orario }) => (
+      <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+        <p class="text-tiny uppercase tracking-widest" style="color: #7a6b5f;">{tag}</p>
+        <p class="font-serif text-xl text-text-main">{orario}</p>
+      </div>
+    ))}
+  </div>
+</TeacherLayout>

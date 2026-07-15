@@ -1,0 +1,217 @@
+---
+import { PRATICHE_ATTIVE, INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+interface Props {
+  voce: 'corsi' | 'chi-siamo' | 'abbonamenti' | 'eventi';
+}
+const { voce } = Astro.props;
+
+const tuttePratiche = [
+  { slug: 'iyengar',          label: 'Iyengar Yoga',       href: '/corsi/iyengar' },
+  { slug: 'ashtanga',         label: 'Ashtanga Yoga',      href: '/corsi/ashtanga' },
+  { slug: 'vinyasa',          label: 'Vinyasa Yoga',       href: '/corsi/vinyasa' },
+  { slug: 'teen-yoga',        label: 'Teen Yoga',          href: '/corsi/teen-yoga' },
+  { slug: 'salute-femminile', label: 'Salute Femminile',   href: '/corsi/salute-femminile' },
+];
+const pratiche = tuttePratiche.filter(p => PRATICHE_ATTIVE.includes(p.slug));
+
+const tuttiInsegnanti = [
+  { slug: 'glenda', label: 'Glenda', href: '/insegnanti/glenda' },
+  { slug: 'mattia', label: 'Mattia', href: '/insegnanti/mattia' },
+  { slug: 'giulia', label: 'Giulia', href: '/insegnanti/giulia' },
+  { slug: 'victor', label: 'Victor', href: '/insegnanti/victor' },
+  { slug: 'asia',   label: 'Asia',   href: '/insegnanti/asia' },
+  { slug: 'sara',   label: 'Sara',   href: '/insegnanti/sara' },
+];
+const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug));
+---
+
+<!--
+  Il pannello è posizionato dall'header (#mega-container absolute top-full).
+  Qui gestiamo solo il contenuto visivo: sfondo, padding, griglia, link.
+-->
+<div class="mega-panel-inner">
+
+  {voce === 'corsi' && (
+    <div class="mega-col">
+      <p class="mega-label">Scopri le pratiche</p>
+      <nav class="mega-nav">
+        <a href="/corsi" class="mega-link">Scopri le pratiche</a>
+        {pratiche.map(p => (
+          <a href={p.href} class="mega-link">{p.label}</a>
+        ))}
+        <a href="/trova-la-tua-pratica" class="mega-link">Trova la tua pratica</a>
+      </nav>
+    </div>
+  )}
+
+  {voce === 'chi-siamo' && (
+    <div class="mega-grid-2">
+      <div class="mega-col">
+        <p class="mega-label">La nostra storia</p>
+        <nav class="mega-nav">
+          <a href="/chi-siamo" class="mega-link">Chi siamo</a>
+          <a href="/chi-siamo#modo" class="mega-link">Il nostro modo</a>
+          <a href="/chi-siamo#studio" class="mega-link">Lo studio</a>
+        </nav>
+      </div>
+      <div class="mega-col">
+        <p class="mega-label">Le persone</p>
+        <nav class="mega-nav">
+          <a href="/chi-siamo#insegnanti" class="mega-link">Tutti gli insegnanti</a>
+          {insegnanti.map(i => (
+            <a href={i.href} class="mega-link">{i.label}</a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  )}
+
+  {voce === 'abbonamenti' && (
+    <div class="mega-col">
+      <p class="mega-label">Scopri i piani</p>
+      <nav class="mega-nav">
+        <a href="/abbonamenti" class="mega-link">Tutti gli abbonamenti</a>
+        <a href="/abbonamenti#studio" class="mega-link">Lezioni in studio</a>
+        <a href="/abbonamenti#private" class="mega-link">Lezioni private</a>
+        <a
+          href="https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20la%20prima%20lezione%20di%20prova%20a%2010%E2%82%AC."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mega-link"
+        >Prima lezione di prova a 10€</a>
+      </nav>
+    </div>
+  )}
+
+  {voce === 'eventi' && (
+    <div class="mega-grid-eventi">
+      <div class="mega-col">
+        <p class="mega-label">Esplora gli eventi</p>
+        <nav class="mega-nav">
+          <a href="/eventi" class="mega-link">Tutti gli eventi</a>
+          <a href="/eventi/estate-in-villa" class="mega-link">Estate in Villa</a>
+          <a href="/eventi#ritiri" class="mega-link">Ritiri</a>
+          <a href="/eventi#workshop" class="mega-link">Workshop mensili</a>
+        </nav>
+      </div>
+      <div class="mega-col">
+        <p class="mega-label">Prossimo evento</p>
+        <a href="/eventi/estate-in-villa" class="mega-card-link">
+          <div class="mega-card-img">
+            <img
+              src="/images/estate_in_villa.webp"
+              alt="Estate in Villa"
+              loading="lazy"
+            />
+          </div>
+          <p class="mega-card-title">Estate in Villa</p>
+          <p class="mega-card-sub">Iscrizioni 2026 in arrivo</p>
+        </a>
+      </div>
+    </div>
+  )}
+
+</div>
+
+<style>
+  /* Pannello interno — sfondo e padding */
+  .mega-panel-inner {
+    background: rgba(249, 245, 240, 0.97);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid #e8e4df;
+    padding: 48px 80px 64px;
+  }
+
+  /* Label colonna */
+  .mega-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9c9a66;
+    margin-bottom: 20px;
+  }
+
+  /* Colonna singola */
+  .mega-col {
+    min-width: 240px;
+  }
+
+  /* Stack verticale link */
+  .mega-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Link principale — New York serif */
+  .mega-link {
+    font-family: 'New York', Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #2a2a2a;
+    text-decoration: none;
+    white-space: nowrap;
+    display: block;
+    transition: opacity 200ms ease;
+  }
+  .mega-link:hover {
+    opacity: 0.6;
+  }
+
+  /* Griglia 2 colonne (chi-siamo) */
+  .mega-grid-2 {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 80px;
+    width: fit-content;
+  }
+
+  /* Griglia eventi: colonne link + card preview */
+  .mega-grid-eventi {
+    display: grid;
+    grid-template-columns: auto 280px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* Card evento */
+  .mega-card-link {
+    display: block;
+    text-decoration: none;
+  }
+  .mega-card-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background: #e8e4df;
+  }
+  .mega-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 400ms ease;
+  }
+  .mega-card-link:hover .mega-card-img img {
+    transform: scale(1.01);
+  }
+  .mega-card-title {
+    font-family: 'New York', serif;
+    font-size: 17px;
+    color: #2a2a2a;
+    margin-bottom: 4px;
+  }
+  .mega-card-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #6b6b6b;
+  }
+</style>

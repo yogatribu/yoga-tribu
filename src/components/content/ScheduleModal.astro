@@ -1,0 +1,148 @@
+---
+import Button from '../ui/Button.astro';
+---
+
+<!-- Shared lesson modal — opened by JS from schedule cells -->
+<div
+  id="schedule-modal"
+  class="fixed inset-0 z-[70] hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+>
+  <div
+    class="absolute inset-0"
+    id="schedule-modal-backdrop"
+    style="background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);"
+  ></div>
+
+  <div
+    id="schedule-modal-panel"
+    class="relative bg-white rounded-[20px] shadow-[0_24px_48px_rgba(0,0,0,0.15)] w-full max-w-[480px] p-8 translate-y-6 opacity-0 transition-all duration-200 ease-out"
+  >
+    <button
+      id="schedule-modal-close"
+      class="absolute top-4 right-4 w-9 h-9 flex items-center justify-center text-[#6b6b6b] hover:bg-[#f9f5f0] rounded-full transition-colors"
+      aria-label="Chiudi"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <p id="modal-stile" class="text-xs font-semibold uppercase tracking-[0.1em] mb-2"></p>
+    <h3 id="modal-tipo" class="font-serif text-2xl font-medium text-[#2a2a2a]" style="font-family:'New York',serif;"></h3>
+
+    <div class="space-y-0 mt-4">
+      <div class="flex justify-between py-3 border-b border-[#e8e4df]">
+        <span class="text-sm text-[#6b6b6b]">Quando</span>
+        <span id="modal-giorno-ora" class="text-sm text-[#2a2a2a]"></span>
+      </div>
+      <div class="flex justify-between py-3 border-b border-[#e8e4df]">
+        <span class="text-sm text-[#6b6b6b]">Insegnante</span>
+        <span id="modal-insegnante" class="text-sm text-[#2a2a2a]"></span>
+      </div>
+      <div class="flex justify-between py-3 border-b border-[#e8e4df]">
+        <span class="text-sm text-[#6b6b6b]">Durata</span>
+        <span id="modal-durata" class="text-sm text-[#2a2a2a]"></span>
+      </div>
+      <div class="flex justify-between py-3">
+        <span class="text-sm text-[#6b6b6b]">Capienza</span>
+        <span class="text-sm text-[#2a2a2a]">15 persone</span>
+      </div>
+    </div>
+
+    <p id="modal-descrizione" class="text-sm text-[#6b6b6b] leading-relaxed mt-5 mb-5"></p>
+
+    <div class="mt-6 flex justify-center">
+      <Button id="modal-link-corso" variant="primary" size="md" href="#"></Button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('schedule-modal');
+  const panel = document.getElementById('schedule-modal-panel');
+  const backdrop = document.getElementById('schedule-modal-backdrop');
+  const closeBtn = document.getElementById('schedule-modal-close');
+
+  const giorniLabel: Record<string, string> = {
+    lun: 'Lunedì', mar: 'Martedì', mer: 'Mercoledì',
+    gio: 'Giovedì', ven: 'Venerdì', sab: 'Sabato', dom: 'Domenica',
+  };
+
+  const stileLinks: Record<string, string> = {
+    iyengar: '/corsi/iyengar',
+    ashtanga: '/corsi/ashtanga',
+    flow: '/corsi/vinyasa',
+    teen: '/corsi/teen-yoga',
+  };
+
+  const stileColors: Record<string, string> = {
+    iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0',
+  };
+
+  const descrizioni: Record<string, string> = {
+    'iyengar-Livello 1': 'Per chi inizia o riprende dopo molto. Posizioni in piedi, allineamenti, uso di mattoncini e cinture.',
+    'iyengar-Livello 2': 'Per chi pratica da almeno 6 mesi. Lavoro più profondo su precisione e allungamento.',
+    'iyengar-Livello 3': 'Per praticanti esperti. Asana complesse, inversioni, pranayama.',
+    'iyengar-Soft': 'Pratica delicata per chi cerca rigenerazione o ha limitazioni fisiche.',
+    'ashtanga-Mysore': 'Pratica autonoma: conosci la sequenza, la pratichi al tuo ritmo. L\'insegnante ti aggiusta individualmente.',
+    'ashtanga-Guidata': 'L\'insegnante chiama le posizioni con la voce. Tutto il gruppo pratica insieme.',
+    'flow-Vinyasa': 'Sequenza fluida, sempre diversa. Movimento, respiro, presenza.',
+    'teen-Teen Yoga': 'Pratica pensata per ragazzi 12-17 anni. Postura, gestione dello stress, concentrazione.',
+  };
+
+  function openModal(lezione: { giorno: string; ora: string; stile: string; tipo: string; insegnante: string; durata: string }) {
+    const stileEl = document.getElementById('modal-stile')!;
+    stileEl.textContent = lezione.stile.toUpperCase();
+    stileEl.style.color = stileColors[lezione.stile] ?? '#9c9a66';
+
+    (document.getElementById('modal-tipo')!).textContent = lezione.tipo;
+    (document.getElementById('modal-giorno-ora')!).textContent = `${giorniLabel[lezione.giorno] ?? lezione.giorno} · ${lezione.ora}`;
+    (document.getElementById('modal-insegnante')!).textContent = lezione.insegnante;
+    (document.getElementById('modal-durata')!).textContent = lezione.durata;
+
+    const key = `${lezione.stile}-${lezione.tipo}`;
+    (document.getElementById('modal-descrizione')!).textContent = descrizioni[key] ?? '';
+
+    const linkEl = document.getElementById('modal-link-corso') as HTMLAnchorElement;
+    const href = stileLinks[lezione.stile] ?? '/corsi';
+    linkEl.href = href;
+    linkEl.textContent = `Scopri ${lezione.stile.charAt(0).toUpperCase() + lezione.stile.slice(1)}`;
+
+    modal!.classList.remove('hidden');
+    modal!.classList.add('flex');
+    modal!.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => {
+      panel!.classList.remove('translate-y-6', 'opacity-0');
+    });
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    panel!.classList.add('translate-y-6', 'opacity-0');
+    setTimeout(() => {
+      modal!.classList.add('hidden');
+      modal!.classList.remove('flex');
+      modal!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }, 200);
+  }
+
+  backdrop?.addEventListener('click', closeModal);
+  closeBtn?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal!.classList.contains('hidden')) closeModal();
+  });
+
+  // Delegate click from schedule cells
+  document.addEventListener('click', (e) => {
+    const cell = (e.target as Element).closest('.schedule-cell');
+    if (cell) {
+      const lezione = JSON.parse((cell as HTMLElement).dataset.lezione ?? '{}');
+      openModal(lezione);
+    }
+  });
+</script>

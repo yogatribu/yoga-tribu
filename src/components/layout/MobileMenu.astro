@@ -1,0 +1,251 @@
+---
+import { PRATICHE_ATTIVE, INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+const tuttePratiche = [
+  { slug: 'iyengar',          label: 'Iyengar Yoga',     href: '/corsi/iyengar' },
+  { slug: 'ashtanga',         label: 'Ashtanga Yoga',    href: '/corsi/ashtanga' },
+  { slug: 'vinyasa',          label: 'Vinyasa Yoga',     href: '/corsi/vinyasa' },
+  { slug: 'teen-yoga',        label: 'Teen Yoga',        href: '/corsi/teen-yoga' },
+  { slug: 'salute-femminile', label: 'Salute Femminile', href: '/corsi/salute-femminile' },
+];
+const pratiche = tuttePratiche.filter(p => PRATICHE_ATTIVE.includes(p.slug));
+
+const tuttiInsegnanti = [
+  { slug: 'glenda', label: 'Glenda', href: '/insegnanti/glenda' },
+  { slug: 'mattia', label: 'Mattia', href: '/insegnanti/mattia' },
+  { slug: 'giulia', label: 'Giulia', href: '/insegnanti/giulia' },
+  { slug: 'victor', label: 'Victor', href: '/insegnanti/victor' },
+  { slug: 'asia',   label: 'Asia',   href: '/insegnanti/asia' },
+  { slug: 'sara',   label: 'Sara',   href: '/insegnanti/sara' },
+];
+const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug));
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 bg-background z-[100] flex flex-col overflow-hidden"
+  aria-hidden="true"
+  style="transform: translateX(100%); transition: transform 300ms ease-out;"
+>
+
+  <!-- Top bar: back (L2 only) + X (sempre) -->
+  <div class="flex items-center justify-between px-6 flex-shrink-0" style="height: 64px; border-bottom: 1px solid #e8e4df;">
+    <button
+      id="mm-back"
+      aria-label="Torna indietro"
+      class="flex items-center justify-center text-[#2a2a2a]"
+      style="min-width: 44px; min-height: 44px; visibility: hidden; background: none; border: none; cursor: pointer; padding: 8px;"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <button
+      id="mobile-menu-close"
+      aria-label="Chiudi menu"
+      class="flex items-center justify-center text-[#2a2a2a] hover:text-text-secondary transition-colors"
+      style="width: 44px; height: 44px; background: none; border: none; cursor: pointer;"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Panels area -->
+  <div class="relative flex-1 overflow-hidden">
+
+    <!-- Level 1 -->
+    <nav
+      id="mm-l1"
+      class="absolute inset-0 overflow-y-auto px-6 pt-2"
+      style="transition: transform 250ms ease;"
+    >
+      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="corsi" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
+        Pratiche
+      </button>
+      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="chi-siamo" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
+        Chi Siamo
+      </button>
+      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="abbonamenti" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
+        Abbonamenti
+      </button>
+      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="eventi" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
+        Eventi
+      </button>
+      <a href="/orari" class="block text-[#2a2a2a]" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; text-decoration: none;">
+        Orari
+      </a>
+      <a href="/contatti" class="block text-[#2a2a2a]" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; text-decoration: none;">
+        Contatti
+      </a>
+    </nav>
+
+    <!-- Level 2 -->
+    <div
+      id="mm-l2"
+      class="absolute inset-0 overflow-y-auto"
+      style="transform: translateX(100%); transition: transform 250ms ease;"
+    >
+
+      <!-- Sub-menu: Corsi -->
+      <nav id="mm-sub-corsi" class="mm-submenu px-6 pt-4" style="display: none;">
+        <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">SCOPRI LE PRATICHE</p>
+        <a href="/corsi" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutti i corsi</a>
+        {pratiche.map(p => (
+          <a href={p.href} class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">{p.label}</a>
+        ))}
+        <a href="/trova-la-tua-pratica" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Trova la tua pratica</a>
+      </nav>
+
+      <!-- Sub-menu: Chi Siamo -->
+      <nav id="mm-sub-chi-siamo" class="mm-submenu px-6 pt-4" style="display: none;">
+        <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">LA NOSTRA STORIA</p>
+        <a href="/chi-siamo" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Chi siamo</a>
+        <a href="/chi-siamo#filosofia" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Filosofia e metodo</a>
+        <a href="/chi-siamo#studio" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Lo studio</a>
+        <a href="/chi-siamo#insegnanti" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutti gli insegnanti</a>
+        {insegnanti.map(i => (
+          <a href={i.href} class="block" style="padding: 14px 0 14px 16px; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none; color: #6b6b6b;">{i.label}</a>
+        ))}
+      </nav>
+
+      <!-- Sub-menu: Abbonamenti -->
+      <nav id="mm-sub-abbonamenti" class="mm-submenu px-6 pt-4" style="display: none;">
+        <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">SCOPRI I PIANI</p>
+        <a href="/abbonamenti" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutti gli abbonamenti</a>
+        <a href="/abbonamenti#studio" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Lezioni in studio</a>
+        <a href="/abbonamenti#private" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Lezioni private</a>
+        <a href="https://wa.me/393287675966" target="_blank" rel="noopener noreferrer" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Prima lezione di prova — 10€</a>
+      </nav>
+
+      <!-- Sub-menu: Eventi -->
+      <nav id="mm-sub-eventi" class="mm-submenu px-6 pt-4" style="display: none;">
+        <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">ESPLORA GLI EVENTI</p>
+        <a href="/eventi" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutti gli eventi</a>
+        <a href="/eventi/estate-in-villa" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Estate in Villa</a>
+        <a href="/eventi#ritiri" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Ritiri</a>
+        <a href="/eventi#workshop" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Workshop mensili</a>
+      </nav>
+
+    </div>
+
+  </div>
+
+  <!-- CTA sempre visibile in fondo -->
+  <div class="px-6 py-4 flex-shrink-0" style="border-top: 1px solid #e8e4df;">
+    <a
+      href="https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20la%20prima%20lezione%20di%20prova%20a%2010%E2%82%AC."
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full bg-primary text-white text-center rounded-full font-sans font-medium text-base transition-all duration-250 hover:bg-[#8a885a] active:scale-[0.97] tracking-[-0.01em]"
+      style="padding: 14px 24px;"
+    >
+      Prenota la prima lezione
+    </a>
+  </div>
+
+</div>
+
+<!-- Backdrop overlay -->
+<div
+  id="mobile-backdrop"
+  style="position: fixed; inset: 0; z-index: 99; background: rgba(0,0,0,0.3); opacity: 0; pointer-events: none; transition: opacity 300ms ease;"
+></div>
+
+<script>
+  let mobileMenuAbortController: AbortController | undefined;
+
+  function initMobileMenu() {
+    if (mobileMenuAbortController) mobileMenuAbortController.abort();
+    mobileMenuAbortController = new AbortController();
+    const { signal } = mobileMenuAbortController;
+
+    const menu = document.getElementById('mobile-menu') as HTMLElement | null;
+    const backdrop = document.getElementById('mobile-backdrop') as HTMLElement | null;
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const backBtn = document.getElementById('mm-back') as HTMLElement | null;
+    const l1 = document.getElementById('mm-l1') as HTMLElement | null;
+    const l2 = document.getElementById('mm-l2') as HTMLElement | null;
+
+    if (!menu || !backdrop || !l1 || !l2) return;
+
+    function resetToL1() {
+      l1!.style.transform = 'translateX(0)';
+      l2!.style.transform = 'translateX(100%)';
+      if (backBtn) backBtn.style.visibility = 'hidden';
+      document.querySelectorAll<HTMLElement>('.mm-submenu').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+
+    // Stato chiuso + L1 a ogni re-init
+    menu.style.transform = 'translateX(100%)';
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    backdrop.style.opacity = '0';
+    backdrop.style.pointerEvents = 'none';
+    resetToL1();
+
+    function openMenu() {
+      menu!.style.transform = 'translateX(0)';
+      menu!.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      backdrop!.style.opacity = '1';
+      backdrop!.style.pointerEvents = 'auto';
+    }
+
+    function closeMenu() {
+      menu!.style.transform = 'translateX(100%)';
+      menu!.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      backdrop!.style.opacity = '0';
+      backdrop!.style.pointerEvents = 'none';
+      // Reset to L1 dopo la chiusura del drawer
+      setTimeout(resetToL1, 300);
+    }
+
+    function goToL2(subId: string) {
+      document.querySelectorAll<HTMLElement>('.mm-submenu').forEach(el => {
+        el.style.display = 'none';
+      });
+      const sub = document.getElementById(`mm-sub-${subId}`);
+      if (sub) sub.style.display = '';
+      l2!.scrollTop = 0;
+      l1!.style.transform = 'translateX(-100%)';
+      l2!.style.transform = 'translateX(0)';
+      if (backBtn) backBtn.style.visibility = 'visible';
+    }
+
+    function goToL1() {
+      l1!.style.transform = 'translateX(0)';
+      l2!.style.transform = 'translateX(100%)';
+      if (backBtn) backBtn.style.visibility = 'hidden';
+    }
+
+    backBtn?.addEventListener('click', goToL1, { signal });
+    closeBtn?.addEventListener('click', closeMenu, { signal });
+    backdrop.addEventListener('click', closeMenu, { signal });
+
+    document.querySelectorAll<HTMLButtonElement>('.mm-has-sub').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        if (target) goToL2(target);
+      }, { signal });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    }, { signal });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024) closeMenu();
+    }, { signal });
+
+    (window as any).openMobileMenu = openMenu;
+  }
+
+  document.addEventListener('DOMContentLoaded', initMobileMenu);
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>

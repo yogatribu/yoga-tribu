@@ -1,0 +1,27 @@
+---
+interface Props {
+  level?: 1 | 2 | 3 | 4;
+  serif?: boolean;
+  italic?: boolean;
+  class?: string;
+}
+
+const { level = 2, serif = true, italic = false, class: className = '' } = Astro.props;
+
+const Tag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4';
+
+const sizeClasses = {
+  1: 'text-h1-mobile md:text-h1',
+  2: 'text-h2-mobile md:text-h2',
+  3: 'text-h3-mobile md:text-h3',
+  4: 'text-h4',
+};
+
+const fontClass = serif ? 'font-serif' : 'font-sans';
+const italicClass = italic ? 'italic' : '';
+const classes = `${sizeClasses[level]} ${fontClass} text-text-main leading-tight ${italicClass} ${className}`;
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  width?: string;
+  class?: string;
+}
+const { width = 'full', class: className = '' } = Astro.props;
+---
+
+<hr
+  class={`border-0 border-t border-border ${width !== 'full' ? `max-w-[${width}] mx-auto` : ''} ${className}`}
+/>

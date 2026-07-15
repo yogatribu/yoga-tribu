@@ -1,0 +1,206 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import CTAFinal from '../components/content/CTAFinal.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Tag from '../components/ui/Tag.astro';
+import Heading from '../components/ui/Heading.astro';
+import Divider from '../components/ui/Divider.astro';
+import { altFor } from '../config/imageAlt.js';
+
+interface SezioneStoria {
+  titolo?: string;
+  paragrafi: string[];
+}
+
+interface Lezione {
+  giorno: string;
+  ora: string;
+  tipo: string;
+  durata: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  schema?: object;
+  noindex?: boolean;
+
+  nome: string;
+  ruolo: string;
+  pratica: string;
+  coloreAccento: string;
+  fotoHero: string;
+  fotoSidebar: string;
+  sottotitoloHero?: string;
+
+  labelFormazione?: string;
+  formazione: string[];
+
+  sezioniStoria: SezioneStoria[];
+  citazioneBio?: string;
+  nascondiDivider?: boolean;
+
+  filosofiaSinistra?: string[];
+  filosofiaDestra?: string[];
+  titoloFilosofia?: string;
+
+  introLezioni?: string;
+  lezioniContainerClass?: string;
+  lezioni: Lezione[];
+
+  tagLezioni?: string;
+  titoloLezioni?: string;
+  ctaHeadline?: string;
+  ctaLinkLabel?: string;
+  ctaLinkHref?: string;
+  waTestoCustom?: string;
+}
+
+const {
+  title,
+  description,
+  schema,
+  noindex = false,
+  nome,
+  ruolo,
+  pratica,
+  coloreAccento,
+  fotoHero,
+  fotoSidebar,
+  sottotitoloHero,
+  labelFormazione = 'Formazione',
+  formazione,
+  sezioniStoria,
+  citazioneBio,
+  nascondiDivider = false,
+  filosofiaSinistra = [],
+  filosofiaDestra = [],
+  titoloFilosofia = 'Come insegno.',
+  introLezioni,
+  lezioniContainerClass = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-[1040px] mx-auto text-left",
+  lezioni,
+  tagLezioni = 'Quando trovarmi',
+  titoloLezioni = 'Le mie lezioni in studio.',
+  ctaHeadline = 'Vieni a una mia lezione.',
+  ctaLinkLabel = 'Vedi gli orari',
+  ctaLinkHref = '/orari',
+  waTestoCustom,
+} = Astro.props;
+
+const waHref = `https://wa.me/393287675966?text=${encodeURIComponent(waTestoCustom ?? `Ciao! Vorrei prenotare una prima lezione di prova con ${nome}.`)}`;
+const hasFilosofia = filosofiaSinistra.length > 0 && filosofiaDestra.length > 0;
+---
+
+<BaseLayout title={title} description={description} schemaJsonLd={schema} noindex={noindex}>
+
+  <!-- 1. Hero -->
+  <div data-hero class="relative overflow-hidden bg-[#2a2a2a]" style="min-height: 60vh;">
+    <div class="relative container-default flex items-end" style="min-height: 60vh; padding-bottom: 4rem;">
+      <div class="max-w-xl">
+        <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/70 mb-4">{ruolo}</p>
+        <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight mb-3">{nome}</h1>
+        <p class="text-sm uppercase tracking-[0.1em] mb-6" style={`color: ${coloreAccento};`}>{pratica}</p>
+        {sottotitoloHero && <p class="text-white/80 text-base max-w-md leading-relaxed">{sottotitoloHero}</p>}
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Bio -->
+  <Section background="default">
+    <Container>
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-16 items-start">
+
+        <!-- Sidebar -->
+        <div class="md:sticky md:top-24">
+          <div class="aspect-[3/4] rounded-md overflow-hidden mb-8">
+            <img
+              src={fotoSidebar}
+              alt={altFor(fotoSidebar, `${nome} — Yoga Tribù`)}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">{labelFormazione}</p>
+          <ul class="space-y-2 mb-8">
+            {formazione.map(c => (
+              <li class="text-sm text-text-secondary flex gap-2">
+                <span class="mt-0.5" style={`color: ${coloreAccento};`}>·</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Testo bio -->
+        <div>
+          {citazioneBio && (
+            <blockquote class="font-serif italic text-[22px] md:text-[28px] text-text-secondary leading-[1.4] mb-10 max-w-xl">
+              “{citazioneBio}”
+            </blockquote>
+          )}
+          {!citazioneBio && !nascondiDivider && <Divider class="max-w-[80px] mb-10" />}
+          <div class="space-y-6 text-base text-text-secondary leading-relaxed">
+            {sezioniStoria.map(s => (
+              <div>
+                {s.titolo && <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">{s.titolo}</h2>}
+                {s.paragrafi.map(p => <p class="mb-3 last:mb-0">{p}</p>)}
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 3. Filosofia -->
+  {hasFilosofia && (
+    <Section background="alt" id="filosofia">
+      <Container>
+        <Tag class="mb-5">Filosofia</Tag>
+        <Heading level={2} class="mb-10">{titoloFilosofia}</Heading>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start max-w-4xl">
+          <div class="space-y-6 text-base text-text-secondary leading-relaxed">
+            {filosofiaSinistra.map(p => <p>{p}</p>)}
+          </div>
+          <div class="space-y-6 text-base text-text-secondary leading-relaxed">
+            {filosofiaDestra.map(p => <p>{p}</p>)}
+          </div>
+        </div>
+      </Container>
+    </Section>
+  )}
+
+  <!-- 4. Lezioni -->
+  <Section background={hasFilosofia ? 'default' : 'alt'} id="lezioni">
+    <Container>
+      <Tag class="mb-5 text-center">{tagLezioni}</Tag>
+      <Heading level={2} class={introLezioni ? "mb-4 text-center" : "mb-8 text-center"}>{titoloLezioni}</Heading>
+      {introLezioni && (
+        <p class="text-text-secondary text-base max-w-[600px] mx-auto leading-relaxed mb-10 text-center">{introLezioni}</p>
+      )}
+      {Astro.slots.has('lezioni-content') ? (
+        <slot name="lezioni-content" />
+      ) : (
+        <div class={lezioniContainerClass}>
+          {lezioni.map(l => (
+            <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default">
+              <p class="text-tiny uppercase tracking-widest" style={`color: ${coloreAccento};`}>{l.tipo}</p>
+              <p class="font-serif text-xl text-text-main">{l.giorno} {l.ora}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </Container>
+  </Section>
+
+  <!-- 5. CTA finale -->
+  <CTAFinal
+    headline={ctaHeadline}
+    ctaHref={waHref}
+    linkLabel={ctaLinkLabel}
+    linkHref={ctaLinkHref}
+  />
+
+</BaseLayout>

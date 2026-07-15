@@ -1,0 +1,45 @@
+---
+import Button from '../ui/Button.astro';
+import LinkApple from '../ui/LinkApple.astro';
+
+interface Props {
+  headline: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  linkLabel?: string;
+  linkHref?: string;
+}
+
+const {
+  headline,
+  subtitle = 'Prima lezione di prova a 10€. In studio.',
+  ctaLabel = 'Prenota la prima lezione',
+  ctaHref = 'https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20la%20prima%20lezione%20di%20prova%20a%2010%E2%82%AC.',
+  linkLabel,
+  linkHref,
+} = Astro.props;
+
+const isExternal = ctaHref.startsWith('http');
+---
+
+<section class="py-24" style="background: #9c9a66;">
+  <div class="container-narrow text-center">
+    <h2 class="font-serif text-h2-mobile md:text-h2 text-white mb-5">
+      {headline}
+    </h2>
+    {subtitle && (
+      <p class="text-base leading-relaxed mb-10 max-w-[560px] mx-auto" style="color: white; opacity: 0.85;">
+        {subtitle}
+      </p>
+    )}
+    <Button variant="secondary-ocra" size="lg" href={ctaHref} external={isExternal}>
+      {ctaLabel}
+    </Button>
+    {linkLabel && linkHref && (
+      <div class="mt-5">
+        <LinkApple href={linkHref} tone="light">{linkLabel}</LinkApple>
+      </div>
+    )}
+  </div>
+</section>

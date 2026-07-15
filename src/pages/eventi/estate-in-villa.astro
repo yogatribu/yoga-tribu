@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Divider from '../../components/ui/Divider.astro';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import MapLink from '../../components/ui/MapLink.astro';
+
+const waHref = "https://wa.me/393287675966?text=Ciao!%20Vorrei%20informazioni%20sull%27Estate%20in%20Villa%202026.";
+
+const lezioni = [
+  {
+    tag: 'CONCENTRAZIONE · MEDITAZIONE',
+    tagColor: '#8a8a7a',
+    giorno: 'Lunedì',
+    orario: '19:30 - 20:30',
+    insegnante: 'Dino',
+    contatto: '+39 320 615 4453',
+  },
+  {
+    tag: 'IYENGAR YOGA',
+    tagColor: '#9c9a66',
+    giorno: 'Martedì',
+    orario: '19:30 - 20:45',
+    insegnante: 'Glenda',
+    contatto: '+39 328 767 5966',
+  },
+  {
+    tag: 'VINYASA YOGA',
+    tagColor: '#b8a68e',
+    giorno: 'Mercoledì',
+    orario: '19:30 - 20:45',
+    insegnante: 'Giulia',
+    contatto: '+39 349 054 0700',
+  },
+  {
+    tag: 'ASHTANGA YOGA',
+    tagColor: '#7a6b5f',
+    giorno: 'Giovedì',
+    orario: '19:30 - 20:45',
+    insegnante: 'Victor',
+    contatto: '+44 795 180 3123',
+  },
+];
+---
+
+<BaseLayout
+  title="Estate in Villa 2026 · Yoga Tribù"
+  description="Quattro lezioni serali a settimana in una villa a Rosà. Da giugno a settembre, all'aperto, sotto il portico."
+>
+
+  <!-- ── Hero ───────────────────────────────────────── -->
+  <div
+    data-hero
+    class="relative flex items-end overflow-hidden bg-[#1a1a1a]"
+    style="min-height: 80vh;"
+  >
+    <img
+      src="/images/estate_in_villa.webp"
+      alt="Yoga all'aperto in villa — Estate 2026 Yoga Tribù"
+      class="absolute inset-0 w-full h-full object-cover opacity-60"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.05) 100%);"></div>
+    <div class="relative container-default pb-20 pt-32">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/70 mb-6">YOGA TRIBÙ · ESTATE 2026</p>
+      <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight mb-6 max-w-3xl" style="font-family:'New York',serif;">
+        Quest'estate,<br/>si pratica in villa.
+      </h1>
+      <p class="text-white/80 text-lg md:text-xl max-w-lg leading-relaxed mb-10">
+        Quattro lezioni serali a settimana. All'aperto, sotto il portico.
+      </p>
+      <Button variant="secondary-dark" size="lg" href={waHref} external={true}>
+        Scrivici su WhatsApp
+      </Button>
+    </div>
+  </div>
+
+  <!-- ── Info rapide ────────────────────────────────── -->
+  <Section background="alt" size="compact">
+    <Container>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Periodo</p>
+          <p class="text-text-main text-sm font-medium">Giugno - Settembre 2026</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Lezioni</p>
+          <p class="text-text-main text-sm font-medium">4 a settimana</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Luogo</p>
+          <p class="text-text-main text-sm font-medium">Via Ca' Minotto 46, Rosà (VI)</p>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Prezzi</p>
+          <p class="text-text-main text-sm font-medium">75€ / 5 lezioni · 20€ a lezione</p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── Layout editoriale a due colonne ───────────── -->
+  <Section background="default">
+    <Container>
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-16 items-start">
+
+        <!-- Colonna principale -->
+        <div>
+
+          <!-- Paragrafo 1 -->
+          <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6 max-w-[620px]">
+            Da giugno a settembre, il calendario di Yoga Tribù si allarga. Quattro sere a settimana, la pratica si sposta in una villa a Rosà. Stessi insegnanti, stessa qualità, aria aperta sotto il portico.
+          </p>
+
+          <!-- Foto grande -->
+          <div class="my-10">
+            <img
+              src="/images/porticato.webp"
+              alt="Il porticato della villa — Estate in Villa Yoga Tribù"
+              class="w-full h-[420px] object-cover rounded-[22px]"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Paragrafo 2 -->
+          <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6 max-w-[620px]">
+            Le lezioni al centro di San Giuseppe continuano regolarmente. L'estate in villa è un'aggiunta al calendario, non una sostituzione. Puoi venire in villa, continuare al centro, o fare entrambe le cose.
+          </p>
+
+          <!-- Sezione orari -->
+          <div class="mt-12">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Quando</p>
+            <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-8" style="font-family:'New York',serif;">
+              Le lezioni in villa.
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {lezioni.map((l) => (
+                <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                  <p
+                    class="text-[10px] font-semibold uppercase tracking-[0.1em] leading-tight mb-3"
+                    style={`color: ${l.tagColor};`}
+                  >
+                    {l.tag}
+                  </p>
+                  <p class="font-serif text-[24px] text-text-main leading-tight mb-1" style="font-family:'New York',serif;">
+                    {l.giorno}
+                  </p>
+                  <p class="text-sm text-text-secondary mb-4">{l.orario}</p>
+                  <div class="border-t border-[#e8e4df] pt-4">
+                    <p class="text-sm text-text-main font-medium mb-1">{l.insegnante}</p>
+                    <LinkApple href={`tel:${l.contatto.replace(/\s/g, '')}`} tone="ocra">
+                      {l.contatto}
+                    </LinkApple>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Griglia 2 foto -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+            <img
+              src="/images/posizione.webp"
+              alt="Pratica yoga all'aperto nel parco della villa — Estate in Villa Yoga Tribù"
+              class="w-full h-[280px] object-cover rounded-[18px]"
+              loading="lazy"
+            />
+            <img
+              src="/images/campo_tennis.webp"
+              alt="Campo da tennis della villa — Estate in Villa Yoga Tribù"
+              class="w-full h-[280px] object-cover rounded-[18px]"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Prezzi -->
+          <div class="mt-12">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Come partecipare</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Pacchetto 5 lezioni</p>
+                <p class="font-serif text-[40px] text-text-main leading-none mb-1" style="font-family:'New York',serif;">75€</p>
+              </div>
+              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Lezione singola</p>
+                <p class="font-serif text-[40px] text-text-main leading-none mb-1" style="font-family:'New York',serif;">20€</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Sidebar ──────────────────────────────── -->
+        <div class="sticky top-24">
+          <div class="bg-background-alt border border-border rounded-[22px] p-6 mb-6">
+            <p class="font-serif text-[28px] text-text-main mb-1" style="font-family:'New York',serif;">Estate in Villa</p>
+            <p class="text-sm text-text-secondary mb-5">Giugno - Settembre 2026</p>
+            <Divider class="mb-5" />
+            <div class="space-y-3 text-sm mb-6">
+              <div class="flex justify-between">
+                <span class="text-text-secondary">Periodo</span>
+                <span class="text-text-main">Giu - Set 2026</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-text-secondary">Lezioni</span>
+                <span class="text-text-main">Lun - Gio</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-text-secondary">Orario</span>
+                <span class="text-text-main">19:30 - 20:45</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-text-secondary">Luogo</span>
+                <span class="text-text-main text-right max-w-[160px]">Via Ca' Minotto 46, Rosà (VI)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-text-secondary">Prezzi</span>
+                <span class="text-text-main">75€ · 20€ a lezione</span>
+              </div>
+            </div>
+            <div class="text-center">
+              <Button variant="primary" size="md" href="https://wa.me/393287675966?text=Ciao%2C%20vorrei%20iscrivermi%20all%27Estate%20in%20Villa%202026" external={true}>
+                Iscriviti alle lezioni
+              </Button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ── Location ───────────────────────────────────── -->
+  <Section background="alt">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dove</p>
+      <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4" style="font-family:'New York',serif;">
+        Via Ca' Minotto 46, Rosà.
+      </h2>
+      <p class="text-base text-[#2a2a2a] leading-[1.7] max-w-[620px] mb-6">
+        La villa si trova a Rosà, a pochi minuti da Bassano del Grappa. Spazio all'aperto, portico coperto per la pratica, parcheggio disponibile.
+      </p>
+      <MapLink address="Via Ca' Minotto 46, Rosà, VI">
+        Apri in Maps
+      </MapLink>
+    </Container>
+  </Section>
+
+  <!-- ── CTA finale ─────────────────────────────────── -->
+  <CTAFinal
+    headline="Vieni a praticare in villa."
+    subtitle="Estate 2026, da giugno a settembre."
+    ctaLabel="Scrivici su WhatsApp"
+    ctaHref={waHref}
+    linkLabel="Vedi tutti gli eventi"
+    linkHref="/eventi"
+  />
+
+</BaseLayout>

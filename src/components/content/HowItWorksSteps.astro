@@ -1,0 +1,57 @@
+---
+interface Step {
+  number: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  tag?: string;
+  title: string;
+  subtitle?: string;
+  steps: Step[];
+  background?: 'default' | 'alt';
+  accentColor?: string;
+  useCards?: boolean;
+}
+
+const {
+  tag,
+  title,
+  subtitle,
+  steps,
+  background = 'alt',
+  accentColor = '#9c9a66',
+  useCards = false,
+} = Astro.props;
+
+const bg = background === 'alt' ? 'bg-background-alt' : 'bg-background';
+---
+
+<section class={`${bg} py-16 md:py-24`}>
+  <div class="container-default">
+    {tag && <p class="text-[11px] font-semibold uppercase tracking-[0.1em] mb-4" style={`color: ${accentColor};`}>{tag}</p>}
+    <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">{title}</h2>
+    {subtitle && <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-14">{subtitle}</p>}
+
+    <div class={useCards ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5' : `grid gap-12 md:gap-8 grid-cols-1 md:grid-cols-${steps.length}`}>
+      {steps.map(({ number, title: stepTitle, body }) => (
+        <div class={useCards ? 'bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]' : ''}>
+          {useCards ? (
+            <>
+              <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">{number}</p>
+              <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3">{stepTitle}</h3>
+              <p class="text-sm text-[#6b6b6b] leading-relaxed">{body}</p>
+            </>
+          ) : (
+            <>
+              <p class="font-serif text-[48px] md:text-[64px] leading-none mb-4" style={`color: ${accentColor};`}>{number}</p>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{stepTitle}</p>
+              <p class="text-sm text-text-secondary leading-relaxed">{body}</p>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

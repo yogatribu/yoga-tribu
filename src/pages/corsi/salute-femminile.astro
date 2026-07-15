@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import LinkApple from '../../components/ui/LinkApple.astro';
+import TeacherCard from '../../components/content/TeacherCard.astro';
+import CTAFinal from '../../components/content/CTAFinal.astro';
+import HowItWorksSteps from '../../components/content/HowItWorksSteps.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import StickyCTA from '../../components/layout/StickyCTA.astro';
+import FAQAccordion from '../../components/content/FAQAccordion.astro';
+import ExploreOtherCourses from '../../components/content/ExploreOtherCourses.astro';
+import TestimonialCarousel from '../../components/content/TestimonialCarousel.astro';
+import { testimonials } from '../../data/testimonials';
+import FeatureCard from '../../components/content/FeatureCard.astro';
+import { altFor } from '../../config/imageAlt.js';
+
+const WA_BASE = 'https://wa.me/393287675966?text=';
+const COLOR = '#c89797';
+
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Salute Femminile",
+  "description": "Percorsi dedicati alla salute femminile: ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita, cerchi di cura.",
+  "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
+  "courseMode": "in-person",
+  "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
+};
+
+const tabs = [
+  {
+    id: 'pelvica',
+    label: 'Ginnastica Pelvica',
+    headline: 'Il pavimento pelvico: il muscolo più ignorato del corpo.',
+    body: [
+      'Ogni donna ha un pavimento pelvico. Poche lo conoscono. Ancora meno lo allenano consapevolmente, finché non comincia a dare problemi.',
+      "La ginnastica pelvica con Sara non è solo Kegel. È un lavoro profondo di consapevolezza, rinforzo e rilascio del gruppo muscolare più importante per la salute femminile in ogni fase della vita: gravidanza, post-parto, menopausa.",
+      'Sia che tu stia cercando un bambino, sia che tu sia già in gravidanza, sia che tu stia recuperando dopo il parto, questo è il punto da cui partire.',
+    ],
+    orario: 'Lunedì 10:00',
+    durata: '~60 minuti',
+    per: 'Tutte le donne, a qualsiasi età',
+  },
+  {
+    id: 'massaggio',
+    label: 'Massaggio Neonatale',
+    headline: 'Il primo linguaggio tra mamma e bambino.',
+    body: [
+      'Il massaggio neonatale è una delle pratiche più antiche di cura del bambino, e una delle più potenti per costruire il legame madre-figlio nei primi mesi di vita.',
+      'Sara insegna le tecniche di massaggio seguendo la metodologia internazionale IAIM (International Association of Infant Massage): movimenti dolci, rispettosi del ritmo del bambino, pensati per rafforzare il sistema immunitario, migliorare il sonno e calmare le coliche.',
+      "Il corso è pensato per mamme (e papà) con bambini tra le 6 settimane e i 6 mesi. Si impara a leggere i segnali del bambino, a rispettare il suo consenso, a trasformare il momento del massaggio in un momento di connessione vera.",
+    ],
+    orario: 'Giovedì 10:00',
+    durata: '~60 minuti',
+    per: 'Mamme (e papà) con bambini 0 - 6 mesi',
+  },
+  {
+    id: 'nascita',
+    label: 'Accompagnamento alla Nascita',
+    headline: 'Prepararsi al parto con conoscenza, non con paura.',
+    body: [
+      "L'accompagnamento alla nascita con Sara non è il classico corso pre-parto ospedaliero. È un percorso più lento, più personale, pensato per aiutarti a capire cosa sta succedendo nel tuo corpo e cosa ti aspetta, in modo da arrivare al parto con fiducia invece che con ansia.",
+      'Si lavora sulla respirazione, sulle posizioni per il travaglio, sulle aspettative realistiche, sul ruolo del partner, sui piani di nascita. Si parla di dolore, non per spaventare, ma per smettere di temerlo.',
+      "Il corso si svolge in piccoli gruppi (massimo 6 coppie) per garantire spazio alla relazione e alle domande di ognuna. Ideale tra la 28ª e la 34ª settimana.",
+    ],
+    orario: 'Mercoledì 10:00',
+    durata: '~75 minuti · 6 incontri',
+    per: 'Donne in gravidanza (28ª - 34ª settimana)',
+  },
+  {
+    id: 'cerchi',
+    label: 'Cerchi di Cura',
+    headline: 'Perché il post-parto non si affronta da soli.',
+    body: [
+      'I Cerchi di Cura sono incontri di gruppo per mamme nel post-parto. Non corsi. Non lezioni. Cerchi, dove si porta quello che c\'è: stanchezza, confusione, gioia, dubbi, momenti in cui non ci si riconosce più.',
+      "L'isolamento del post-parto è uno dei temi meno discussi ma più diffusi. Le donne che ne parlano spesso scoprono di non essere le sole. Il gruppo diventa lo spazio in cui ci si trova, ci si riconosce, ci si sostiene.",
+      "Si parla di allattamento, sonno, relazione di coppia, identità materna, ritorno alla vita di prima. Non ci sono risposte giuste, ci sono domande accolte. Sara facilita lo spazio; le mamme costruiscono il contenuto.",
+    ],
+    orario: 'Venerdì 10:00',
+    durata: '~90 minuti',
+    per: 'Mamme nel post-parto (0 - 18 mesi)',
+  },
+];
+---
+
+<BaseLayout
+  title="Salute Femminile a Bassano del Grappa · Yoga Tribù"
+  description="Percorsi di salute femminile con Sara Zampierin, ostetrica. Ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita."
+  schemaJsonLd={courseSchema}
+>
+  <!-- Hero -->
+  <div
+    data-hero
+    class="relative flex items-center justify-center overflow-hidden bg-[#2a2a2a]"
+    style="min-height: 90vh;"
+  >
+    <img
+      src="/images/salute_femminile.webp"
+      alt={altFor('/images/salute_femminile.webp')}
+      class="absolute inset-0 w-full h-full object-cover"
+      style="opacity: 0.5;"
+      loading="eager" fetchpriority="high"
+    />
+    <div class="absolute inset-0" style="background: rgba(0,0,0,0.35);"></div>
+    <div class="relative container-default py-20 text-center">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/80 mb-4 font-sans">Salute Femminile</p>
+      <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight mb-6">
+        Percorsi per la donna.<br/>In ogni fase.
+      </h1>
+      <p class="text-white/85 text-lg max-w-lg mx-auto mb-10">
+        Ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita, cerchi di cura.
+      </p>
+      <Button variant="primary" size="lg" href={WA_BASE + encodeURIComponent('Ciao! Vorrei informazioni sui percorsi di Salute Femminile.')} external={true}>
+        Scrivici su WhatsApp
+      </Button>
+    </div>
+  </div>
+
+
+
+  <!-- 4-tab interactive -->
+  <Section background="alt">
+    <Container>
+      <Tag class="mb-5" style={`color: ${COLOR};`}>I percorsi</Tag>
+      <Heading level={2} class="mb-10">Cosa facciamo insieme.</Heading>
+
+      <!-- Segmented tab bar -->
+      <div class="overflow-x-auto mb-12" id="dg-tab-bar">
+        <div class="donna-seg-container" style="position: relative; display: inline-flex; background: #e8e4df; border-radius: 9999px; padding: 4px; gap: 2px;">
+          <div id="donna-indicator" style={`position: absolute; top: 4px; bottom: 4px; background: ${COLOR}; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65,0,0.35,1), width 300ms cubic-bezier(0.65,0,0.35,1); pointer-events: none;`}></div>
+          {tabs.map((tab, i) => (
+            <button
+              class="dg-tab"
+              data-tab={tab.id}
+              style={`position: relative; z-index: 1; padding: 10px 20px; border-radius: 9999px; font-size: 14px; font-family: Inter, sans-serif; font-weight: 500; border: none; background: transparent; cursor: pointer; white-space: nowrap; transition: color 300ms ease; color: ${i === 0 ? 'white' : '#6b6b6b'};`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Tab panels -->
+      {tabs.map((tab, i) => (
+        <div
+          class="dg-panel"
+          data-panel={tab.id}
+          style={i === 0 ? '' : 'display: none;'}
+        >
+          <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16 items-start">
+            <div>
+              <h3 class="font-serif text-[28px] md:text-[36px] text-text-main leading-tight mb-8">
+                {tab.headline}
+              </h3>
+              <div class="space-y-5 text-base text-text-secondary leading-relaxed">
+                {tab.body.map(p => <p>{p}</p>)}
+              </div>
+            </div>
+            <div style="background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+              <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #c89797; margin-bottom: 16px;">{tab.label}</p>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+                <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
+                <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">{tab.per}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0;">
+                <span style="font-size: 14px; color: #6b6b6b;">Insegnante</span>
+                <span style="font-size: 14px; color: #2a2a2a;">Sara</span>
+              </div>
+              <div style="display: flex; justify-content: center; margin-top: 24px;">
+                <Button
+                  variant="primary"
+                  size="md"
+                  href={WA_BASE + encodeURIComponent(`Ciao! Vorrei informazioni su: ${tab.label}.`)}
+                  external={true}
+                >
+                  Chiedi informazioni
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+    </Container>
+  </Section>
+
+  <!-- A chi è dedicato -->
+  <Section background="default">
+    <Container>
+      <Tag class="mb-5" style={`color: ${COLOR};`}>A chi è dedicato</Tag>
+      <Heading level={2} class="mb-16">Questi percorsi sono per te se...</Heading>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1120px] mx-auto">
+        <FeatureCard
+          icon="Heart"
+          title="Sei in gravidanza"
+          body="Vuoi vivere questo momento con consapevolezza, non con paura. Vuoi arrivare al parto informata, preparata, con fiducia nel tuo corpo."
+        />
+        <FeatureCard
+          icon="Sparkles"
+          title="Sei nel post-parto"
+          body="Stai cercando di ritrovare te stessa dopo la nascita. Il corpo cambia, la vita cambia, e non sempre è facile parlarne. Qui c'è spazio."
+        />
+        <FeatureCard
+          icon="Leaf"
+          title="Vuoi prenderti cura di te"
+          body="Anche senza gravidanza in corso, il pavimento pelvico merita attenzione. La ginnastica pelvica è per tutte le donne, a qualsiasi età."
+        />
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Insegnante -->
+  <Section background="alt">
+    <Container class="text-center">
+      <Tag class="mb-5">Gli insegnanti</Tag>
+      <Heading level={2} class="mb-4">Le persone che ti guideranno.</Heading>
+      <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12 mx-auto">
+        Insegnanti certificati, formati in anni di studio.
+      </p>
+      <div class="flex justify-center mb-8">
+        <TeacherCard nome="Sara" stili="Salute Femminile" link="/insegnanti/sara" foto="/images/insegnanti/sara.webp" />
+      </div>
+      <LinkApple href="/chi-siamo">Conosci tutti gli insegnanti</LinkApple>
+    </Container>
+  </Section>
+
+  <!-- Come funziona -->
+  <HowItWorksSteps
+    tag="Il tuo primo incontro"
+    title="Come iniziare."
+    steps={[
+      { number: '01', title: 'Scrivici su WhatsApp', body: 'Dicci in quale fase sei (gravidanza, post-parto, o solo curiosità) e Sara ti risponde di persona.' },
+      { number: '02', title: 'Primo incontro conoscitivo', body: 'Prima di iniziare qualsiasi percorso, Sara fa un breve colloquio per capire le tue esigenze specifiche.' },
+      { number: '03', title: 'Inizi il percorso', body: 'Ti inserisci nel gruppo giusto per te. Piccoli gruppi, atmosfera accogliente, nessuna fretta.' },
+      { number: '04', title: 'Vai al tuo ritmo', body: 'Ogni percorso ha la sua frequenza. Si costruisce insieme, in base a dove sei e dove vuoi arrivare.' },
+    ]}
+    background="default"
+    useCards={true}
+  />
+
+  <!-- FAQ -->
+  <FAQAccordion
+    background="alt"
+    items={[
+      { question: 'Posso partecipare se non sono in gravidanza?', answer: 'Sì. La ginnastica pelvica è pensata per tutte le donne, in gravidanza, dopo il parto, o semplicemente per prendersi cura della propria salute pelvica in qualsiasi fase della vita.' },
+      { question: 'Da che settimana posso iniziare i corsi in gravidanza?', answer: 'La ginnastica pelvica è indicata dalla 12ª settimana in poi, con adattamenti. L\'accompagnamento alla nascita è ideale dalla 28ª alla 34ª settimana. Sara valuta ogni caso individualmente.' },
+      { question: 'Il massaggio neonatale è solo per mamme?', answer: 'No. I papà sono benvenuti, e spesso il massaggio diventa il loro spazio privilegiato per creare un legame fisico col bambino nelle prime settimane.' },
+      { question: 'I Cerchi di Cura richiedono iscrizione anticipata?', answer: 'Sì, il numero di posti è limitato per mantenere l\'atmosfera raccolta che li caratterizza. Scrivici per verificare disponibilità.' },
+      { question: 'Sara è disponibile per incontri privati?', answer: 'Sì, su richiesta. Utile per situazioni specifiche o per chi preferisce un percorso personalizzato. Scrivici per organizzarlo.' },
+    ]}
+  />
+
+  <!-- Come funziona -->
+  <Section background="default">
+    <Container size="narrow" class="text-center">
+      <Tag class="mb-5 inline-block" style={`color: ${COLOR};`}>Come funziona</Tag>
+      <Heading level={2} class="mb-6">I percorsi partono a gruppi.</Heading>
+      <p class="text-text-secondary text-base leading-relaxed mb-10 max-w-[560px] mx-auto">
+        I percorsi di Salute Femminile non seguono un calendario fisso. Sara apre piccoli gruppi in base alle fasi e alle esigenze di chi partecipa. Scrivile su WhatsApp per sapere quando parte il prossimo percorso adatto a te.
+      </p>
+      <Button variant="primary" size="lg" href={WA_BASE + encodeURIComponent('Ciao! Vorrei sapere quando parte il prossimo percorso di Salute Femminile.')} external={true}>
+        Scrivici su WhatsApp
+      </Button>
+    </Container>
+  </Section>
+
+  <TestimonialCarousel
+    testimonials={testimonials}
+    backgroundColor="#faf8f5"
+  />
+
+  <ExploreOtherCourses excludeStile="donna" />
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline="Inizia da una conversazione."
+    subtitle="Scrivici su WhatsApp, Sara risponde di persona e ti aiuta a capire da dove cominciare."
+    ctaLabel="Scrivici su WhatsApp"
+    ctaHref={WA_BASE + encodeURIComponent('Ciao! Vorrei informazioni sui percorsi di Salute Femminile.')}
+    linkLabel="Vedi gli orari"
+    linkHref="/orari"
+  />
+
+  <StickyCTA messaggioWhatsapp="Ciao! Vorrei informazioni sui percorsi di Salute Femminile." />
+</BaseLayout>
+
+<script>
+  const COLOR_DONNA = '#c89797';
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.dg-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.dg-panel');
+  const indicator = document.getElementById('donna-indicator') as HTMLElement | null;
+  const segContainer = document.querySelector<HTMLElement>('.donna-seg-container');
+
+  function positionIndicator(activeBtn: HTMLElement) {
+    if (!indicator || !segContainer) return;
+    const cRect = segContainer.getBoundingClientRect();
+    const bRect = activeBtn.getBoundingClientRect();
+    indicator.style.width = bRect.width + 'px';
+    indicator.style.transform = `translateX(${bRect.left - cRect.left - 4}px)`;
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => {
+        const active = t.dataset.tab === target;
+        t.style.color = active ? 'white' : '#6b6b6b';
+        if (active) positionIndicator(t);
+      });
+      panels.forEach(p => {
+        p.style.display = p.dataset.panel === target ? '' : 'none';
+      });
+    });
+  });
+
+  requestAnimationFrame(() => {
+    const first = tabs[0];
+    if (first) positionIndicator(first);
+  });
+</script>

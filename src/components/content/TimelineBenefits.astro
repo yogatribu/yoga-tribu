@@ -1,0 +1,135 @@
+---
+interface Step {
+  label: string;
+  headline: string;
+  body: string;
+}
+
+interface Props {
+  tag?: string;
+  title: string;
+  subtitle?: string;
+  steps: Step[];
+  accentColor?: string;
+}
+
+const {
+  tag,
+  title,
+  subtitle,
+  steps,
+  accentColor = '#9c9a66',
+} = Astro.props;
+---
+
+<section class="bg-background py-24 md:py-32 timeline-section" data-reveal>
+  <div class="container-default">
+    {tag && <p class="text-[11px] font-semibold uppercase tracking-[0.1em] mb-4" style={`color: ${accentColor};`}>{tag}</p>}
+    <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">{title}</h2>
+    {subtitle && <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-16 md:mb-20">{subtitle}</p>}
+
+    <!-- Desktop: horizontal timeline -->
+    <div class="hidden md:block relative">
+      <!-- Track grigio di sfondo -->
+      <div class="absolute top-[7px] left-0 right-0 h-[2px] bg-border"></div>
+      <!-- Fill animato -->
+      <div
+        class="timeline-line-fill absolute top-[7px] left-0 h-[2px]"
+        style={`background: ${accentColor};`}
+      ></div>
+
+      <div class="grid gap-12 pt-10" style={`grid-template-columns: repeat(${steps.length}, 1fr);`}>
+        {steps.map(({ label, headline, body }, i) => (
+          <div class="relative timeline-step" data-index={i}>
+            <!-- Dot: parte grigio, si illumina quando entra nel viewport -->
+            <div
+              class="timeline-dot absolute -top-[17px] left-0 w-3.5 h-3.5 rounded-full bg-border transition-colors duration-500"
+              data-accent={accentColor}
+            ></div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{label}</p>
+            <h3 class="font-serif text-xl text-text-main mb-3">{headline}</h3>
+            <p class="text-sm text-text-secondary leading-relaxed">{body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile: vertical timeline -->
+    <div class="md:hidden relative pl-6">
+      <!-- Track grigio -->
+      <div class="absolute left-[7px] top-0 bottom-0 w-[2px] bg-border"></div>
+      <!-- Fill animato verticale -->
+      <div
+        class="timeline-line-fill-v absolute left-[7px] top-0 w-[2px]"
+        style={`background: ${accentColor};`}
+      ></div>
+      <div class="flex flex-col gap-12">
+        {steps.map(({ label, headline, body }, i) => (
+          <div class="relative timeline-step-v" data-index={i}>
+            <div
+              class="timeline-dot-v absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full bg-border transition-colors duration-500"
+              data-accent={accentColor}
+            ></div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">{label}</p>
+            <h3 class="font-serif text-xl text-text-main mb-2">{headline}</h3>
+            <p class="text-sm text-text-secondary leading-relaxed">{body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline-line-fill {
+    width: 0%;
+    transition: width 1.4s ease-out;
+  }
+  .timeline-section.tl-active .timeline-line-fill {
+    width: 100%;
+  }
+
+  .timeline-line-fill-v {
+    height: 0%;
+    transition: height 1.4s ease-out;
+  }
+  .timeline-section.tl-active .timeline-line-fill-v {
+    height: 100%;
+  }
+
+  .timeline-dot,
+  .timeline-dot-v {
+    transition: background-color 400ms ease;
+  }
+  .timeline-dot.tl-dot-active,
+  .timeline-dot-v.tl-dot-active {
+    /* background set via JS from data-accent */
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.timeline-section').forEach((section) => {
+    const lineFill = section.querySelector<HTMLElement>('.timeline-line-fill');
+    const lineFillV = section.querySelector<HTMLElement>('.timeline-line-fill-v');
+    const dots = section.querySelectorAll<HTMLElement>('.timeline-dot, .timeline-dot-v');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          section.classList.add('tl-active');
+          // Animate each dot with stagger
+          dots.forEach((dot, i) => {
+            setTimeout(() => {
+              const accent = dot.dataset.accent ?? '#9c9a66';
+              dot.style.backgroundColor = accent;
+              dot.classList.add('tl-dot-active');
+            }, i * 350);
+          });
+          sectionObserver.unobserve(section);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sectionObserver.observe(section);
+  });
+</script>

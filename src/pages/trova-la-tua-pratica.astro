@@ -1,0 +1,271 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import LinkApple from '../components/ui/LinkApple.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Tag from '../components/ui/Tag.astro';
+import Heading from '../components/ui/Heading.astro';
+import Divider from '../components/ui/Divider.astro';
+import { PRATICHE_ATTIVE } from '../config/visibilita.js';
+
+const domande = [
+  {
+    id: 'q1',
+    testo: 'Perché vuoi fare yoga?',
+    opzioni: [
+      { id: 'a', testo: 'Ho dolori fisici o limitazioni che voglio risolvere', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
+      { id: 'b', testo: 'Voglio costruire una pratica seria e costante', peso: { iyengar: 0, ashtanga: 1, flow: 0 } },
+      { id: 'c', testo: 'Voglio muovermi di più, sentirmi meglio nel corpo', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
+      { id: 'd', testo: 'Voglio ridurre lo stress e trovare calma', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
+    ],
+  },
+  {
+    id: 'q2',
+    testo: 'Come ti rapporti con la disciplina e la ripetizione?',
+    opzioni: [
+      { id: 'a', testo: 'Mi piace la struttura: sapere cosa mi aspetta mi aiuta', peso: { iyengar: 0, ashtanga: 1, flow: 0 } },
+      { id: 'b', testo: 'Preferisco varietà, non la stessa cosa ogni volta', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
+      { id: 'c', testo: 'Ho bisogno di capire il perché di ogni cosa che faccio', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
+      { id: 'd', testo: 'Non ho ancora capito cosa funziona per me', peso: { iyengar: 0, ashtanga: 0, flow: 0 } },
+    ],
+  },
+  {
+    id: 'q3',
+    testo: 'Qual è la tua relazione con il corpo in questo momento?',
+    opzioni: [
+      { id: 'a', testo: 'Ho aree di dolore o rigidità che mi limitano', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
+      { id: 'b', testo: 'Mi sento abbastanza a mio agio, voglio migliorare la forza', peso: { iyengar: 0, ashtanga: 1, flow: 0 } },
+      { id: 'c', testo: 'Voglio ritrovare il piacere del movimento', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
+      { id: 'd', testo: 'Non ho una relazione intenzionale con il corpo', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
+    ],
+  },
+];
+
+// Chiavi quiz attive (flow = vinyasa)
+const activeQuizKeys = (['iyengar', 'ashtanga', 'flow'] as const).filter(k => {
+  if (k === 'flow') return PRATICHE_ATTIVE.includes('vinyasa');
+  return PRATICHE_ATTIVE.includes(k);
+});
+
+const risultati = {
+  iyengar: {
+    titolo: 'Iyengar',
+    descrizione: 'Una pratica precisa che lavora sui tuoi dolori e costruisce consapevolezza nel corpo, passo dopo passo.',
+    link: '/corsi/iyengar',
+  },
+  ashtanga: {
+    titolo: 'Ashtanga',
+    descrizione: 'Una pratica costante e strutturata, che ti dà disciplina e un posto a cui tornare ogni giorno.',
+    link: '/corsi/ashtanga',
+  },
+  flow: {
+    titolo: 'Vinyasa',
+    descrizione: 'Un movimento fluido e sempre diverso, per ritrovare leggerezza e piacere nel corpo.',
+    link: '/corsi/vinyasa',
+  },
+};
+---
+
+<BaseLayout
+  title="Trova la tua pratica · Yoga Tribù"
+  description="Tre domande, sessanta secondi. Scopri quale pratica fa per te tra Iyengar e Ashtanga."
+>
+  <!-- Intro compatta -->
+  <div class="bg-background">
+    <Container size="narrow" class="pt-20 md:pt-28 pb-6 text-center">
+      <h1 class="font-serif text-4xl md:text-[44px] text-text-main leading-tight mb-3">
+        Trova la tua pratica.
+      </h1>
+      <p class="text-sm text-text-secondary leading-relaxed">
+        Tre domande, sessanta secondi, una risposta su misura.
+      </p>
+    </Container>
+  </div>
+
+  <!-- Quiz (sempre visibile) -->
+  <div class="bg-background-alt" id="quiz-section">
+    <Container size="narrow" class="py-8">
+      <!-- Stato: domande -->
+      <div id="quiz-domande">
+        <!-- Barra progresso -->
+        <div class="mb-10">
+          <div class="flex justify-between items-center mb-2">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary">Domanda <span id="counter-current">1</span> di {domande.length}</p>
+            <p class="text-tiny text-text-secondary" id="counter-pct">0%</p>
+          </div>
+          <div class="h-1 bg-border rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-primary transition-all duration-300" style="width: 0%"></div>
+          </div>
+          <button
+            id="quiz-back"
+            class="group inline-flex items-center gap-1 mt-3"
+            style="display:none; color:#9c9a66; font-size:14px; font-family:Inter,sans-serif; font-weight:400; background:none; border:none; cursor:pointer; padding:0;"
+          >
+            <span style="text-decoration:none;">‹</span>
+            <span class="group-hover:underline">Domanda precedente</span>
+          </button>
+        </div>
+
+        <!-- Domande -->
+        {domande.map((d, idx) => (
+          <div
+            id={`domanda-${idx}`}
+            class="quiz-step"
+            style={idx === 0 ? '' : 'display:none'}
+            data-step={idx}
+          >
+            <h2 class="font-serif text-[28px] md:text-[36px] text-text-main leading-tight mb-8">
+              {d.testo}
+            </h2>
+            <div class="space-y-3">
+              {d.opzioni.map((o) => (
+                <button
+                  class="quiz-option w-full text-left p-5 rounded-md border border-border bg-background hover:border-primary/50 hover:bg-background transition-all duration-150 group"
+                  data-step={idx}
+                  data-domanda={d.id}
+                  data-pesi={JSON.stringify(o.peso)}
+                >
+                  <span class="text-base text-text-main leading-relaxed group-hover:text-primary transition-colors">{o.testo}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Stato: risultato -->
+      <div id="quiz-risultato" style="display:none">
+        <div class="text-center py-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">La tua pratica</p>
+          <h2 id="res-headline" class="font-serif text-[44px] md:text-[56px] text-[#2a2a2a] leading-tight mb-5"
+              style="font-family:'New York',serif;"></h2>
+          <p id="res-descrizione" class="text-base text-[#6b6b6b] leading-relaxed max-w-md mx-auto mb-8"></p>
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center mb-8">
+            <Button id="res-link-corso" variant="primary" size="lg" href="#">
+              Scopri
+            </Button>
+            <Button id="res-wa-cta" variant="secondary" size="lg" href="#" external={true}>
+              Prenota la prima lezione
+            </Button>
+          </div>
+          <button id="quiz-reset"
+            class="group inline-flex items-center gap-1"
+            style="color:#9c9a66; font-size:14px; font-family:Inter,sans-serif; font-weight:400; background:none; border:none; cursor:pointer; padding:0;">
+            <span class="group-hover:underline">Rifai il test</span><span style="text-decoration:none;">‹</span>
+          </button>
+        </div>
+      </div>
+    </Container>
+  </div>
+
+  <!-- Nota finale -->
+  <Section background="default" size="compact">
+    <Container size="narrow" class="text-center">
+      <p class="text-sm text-text-secondary leading-relaxed max-w-[480px] mx-auto">
+        Questa è una bussola, non una sentenza. Il modo migliore di capire quale pratica fa per te è <LinkApple href="https://wa.me/393287675966?text=Ciao!%20Ho%20fatto%20il%20test%20sul%20sito%20ma%20vorrei%20un%20consiglio%20prima%20di%20scegliere%20la%20pratica%20giusta%20per%20me." external={true}>parlare direttamente con noi</LinkApple>.
+      </p>
+    </Container>
+  </Section>
+</BaseLayout>
+
+
+<script define:vars={{ domande, risultati, activeQuizKeys }}>
+  const risposteDate = {}; // { stepIndex: pesiObj } — sovrascritta se l'utente torna indietro e cambia risposta
+  let stepCorrente = 0;
+  const totaleStep = domande.length;
+
+  function aggiornaProgresso() {
+    const pct = Math.round((stepCorrente / totaleStep) * 100);
+    document.getElementById('progress-bar').style.width = `${pct}%`;
+    document.getElementById('counter-current').textContent = stepCorrente + 1;
+    document.getElementById('counter-pct').textContent = `${pct}%`;
+    const backBtn = document.getElementById('quiz-back');
+    if (backBtn) backBtn.style.display = stepCorrente > 0 ? 'inline-flex' : 'none';
+  }
+
+  function mostraRisultato() {
+    document.getElementById('quiz-domande').style.display = 'none';
+    document.getElementById('quiz-risultato').style.display = 'block';
+
+    // Calcola scores
+    const scores = { iyengar: 0, ashtanga: 0, flow: 0 };
+    Object.values(risposteDate).forEach((pesi) => {
+      Object.entries(pesi).forEach(([stile, valore]) => { scores[stile] += valore; });
+    });
+
+    // Considera solo le chiavi delle pratiche attive; tie-break: iyengar > ashtanga > flow
+    const keysAttive = activeQuizKeys.length > 0 ? activeQuizKeys : ['iyengar', 'ashtanga', 'flow'];
+    const scoresAttivi = Object.fromEntries(keysAttive.map(k => [k, scores[k] ?? 0]));
+    const maxScore = Math.max(0, ...Object.values(scoresAttivi));
+    const vincitore = keysAttive.find(p => scoresAttivi[p] === maxScore) ?? keysAttive[0] ?? 'iyengar';
+    const res = risultati[vincitore];
+
+    document.getElementById('res-headline').textContent = res.titolo;
+    document.getElementById('res-descrizione').textContent = res.descrizione;
+
+    const linkCorso = document.getElementById('res-link-corso');
+    linkCorso.href = res.link;
+    linkCorso.textContent = `Scopri ${res.titolo}`;
+
+    const waMsg = encodeURIComponent(`Ciao! Ho appena fatto il test sul sito e la pratica più adatta a me è ${res.titolo}. Vorrei prenotare una prima lezione di prova.`);
+    document.getElementById('res-wa-cta').href = `https://wa.me/393287675966?text=${waMsg}`;
+  }
+
+  function reset() {
+    Object.keys(risposteDate).forEach(k => delete risposteDate[k]);
+    stepCorrente = 0;
+    document.getElementById('quiz-risultato').style.display = 'none';
+    document.getElementById('quiz-domande').style.display = 'block';
+    domande.forEach((_, i) => {
+      const el = document.getElementById(`domanda-${i}`);
+      if (el) {
+        el.style.display = i === 0 ? '' : 'none';
+        el.querySelectorAll('.quiz-option').forEach(btn => btn.classList.remove('border-primary', 'bg-primary/5'));
+      }
+    });
+    aggiornaProgresso();
+    document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.quiz-option');
+    if (!btn) return;
+
+    const step = parseInt(btn.dataset.step);
+    const pesi = JSON.parse(btn.dataset.pesi);
+
+    // Salva la risposta (sovrascrive se l'utente era tornato indietro e ri-risponde)
+    risposteDate[step] = pesi;
+
+    const container = document.getElementById(`domanda-${step}`);
+    container.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('border-primary', 'bg-primary/5'));
+    btn.classList.add('border-primary', 'bg-primary/5');
+
+    setTimeout(() => {
+      if (step + 1 >= totaleStep) {
+        mostraRisultato();
+      } else {
+        container.style.display = 'none';
+        stepCorrente = step + 1;
+        const prossima = document.getElementById(`domanda-${stepCorrente}`);
+        if (prossima) prossima.style.display = '';
+        aggiornaProgresso();
+        document.getElementById('quiz-domande').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 250);
+  });
+
+  document.getElementById('quiz-back')?.addEventListener('click', () => {
+    if (stepCorrente === 0) return;
+    document.getElementById(`domanda-${stepCorrente}`).style.display = 'none';
+    stepCorrente--;
+    document.getElementById(`domanda-${stepCorrente}`).style.display = '';
+    aggiornaProgresso();
+    document.getElementById('quiz-domande').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('quiz-reset')?.addEventListener('click', reset);
+
+  aggiornaProgresso();
+</script>

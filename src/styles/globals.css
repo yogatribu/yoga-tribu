@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'New York';
+    src: url('/fonts/NewYork.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Inter self-hosted — latin-ext (accented chars, Italian diacritics) */
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-latin-ext.woff2') format('woff2');
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+      U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+      U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+      U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  /* Inter self-hosted — latin */
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-latin.woff2') format('woff2');
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+      U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+      U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-text-main font-sans;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Nasconde il testo alt visibile su immagini rotte — accessibile ai screen reader */
+  img {
+    color: transparent;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif text-text-main;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: #9c9a66;
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid #9c9a66;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+}
+
+@layer utilities {
+  /* Task 9 — Custom scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #9c9a66; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #bf9d70; }
+
+  /* Task 6 — Link underline animation (apply class .text-link) */
+  .text-link {
+    position: relative;
+    text-decoration: none;
+  }
+  .text-link::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 200ms ease;
+  }
+  .text-link:hover::after { width: 100%; }
+
+  /* Task 2 — Scroll reveal */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 600ms ease-out, transform 600ms ease-out;
+  }
+  [data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Task 4 — Button shimmer on primary CTAs */
+  .btn-shimmer {
+    background-image: linear-gradient(90deg, #9c9a66 0%, #b8b69a 40%, #9c9a66 80%);
+    background-size: 200% 100%;
+    transition: background-position 400ms ease, transform 100ms ease;
+  }
+  .btn-shimmer:hover { background-position: -50% 0; }
+  .btn-shimmer:active { transform: scale(0.98); }
+}
+
+/* Firefox scrollbar */
+* { scrollbar-width: thin; scrollbar-color: #9c9a66 transparent; }
+
+@layer utilities {
+  .container-narrow {
+    @apply max-w-narrow mx-auto px-6 md:px-8;
+  }
+
+  .container-default {
+    @apply max-w-container mx-auto px-6 md:px-12;
+  }
+
+  .container-wide {
+    @apply max-w-wide mx-auto px-6 md:px-12;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .section-padding-large {
+    @apply py-24 md:py-40;
+  }
+}
