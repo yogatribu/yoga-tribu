@@ -1,0 +1,46 @@
+{
+  "redirects": [
+    {
+      "source": "/privacy-policy",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/cookie-policy",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/cookie",
+      "permanent": true
+    },
+    {
+      "source": "/cookie-policy/",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/cookie",
+      "permanent": true
+    },
+    {
+      "source": "/dati-generali",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/contatti",
+      "permanent": true
+    },
+    {
+      "source": "/dati-generali/",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/contatti",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "^(www\\.)?tribuyoga\\.it$" }],
+      "destination": "https://yogatribu.it/",
+      "permanent": true
+    }
+  ]
+}

@@ -21,3 +21,6 @@ node_modules/
 # tooling locale Claude Code
 .claude/
 __pycache__/
+
+# materiali marketing (volantini/storie/caroselli) — non fanno parte del sito
+volantini/

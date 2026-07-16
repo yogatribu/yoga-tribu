@@ -13,7 +13,7 @@ descrizione_breve: "Quattro giorni immersi nella macchia mediterranea, sopra Pos
 wa_testo: "Ciao! Ho visto che il ritiro in Costiera Amalfitana è sold out. Vorrei essere inserito nella lista d'attesa."
 descrizione:
   - "La Selva è un'oasi selvatica aggrappata alla scogliera sopra Positano, raggiungibile solo a piedi, circa 15 minuti di sentiero da Montepertuso. Per i bagagli è disponibile una teleferica dal Vallone Porto. Ulivi secolari, profumi mediterranei, vista sul mare. Un posto che non concede distrazioni."
-  - "Quattro giorni di pratica Iyengar con Glenda e Mattia, entrambi certificati Iyengar livello 1, in un contesto naturale unico. La struttura produce olio, limoni, marmellate e verdure dal proprio orto, e una linea di cosmetici naturali all'aromaterapia da scoprire e acquistare sul posto."
+  - "Quattro giorni di pratica Iyengar con Glenda e Mattia in un contesto naturale unico. La struttura produce olio, limoni, marmellate e verdure dal proprio orto, e una linea di cosmetici naturali all'aromaterapia da scoprire e acquistare sul posto."
   - "Aperto a tutti i livelli. La pratica viene adattata al gruppo."
 foto_principale: "/images/costiera_amalfitana/positano.webp"
 programma:

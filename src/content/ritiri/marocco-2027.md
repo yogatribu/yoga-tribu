@@ -13,7 +13,7 @@ descrizione_breve: "Un centro Iyengar immerso nel verde a mezz'ora da Marrakesh.
 wa_testo: "Ciao! Sono interessato al ritiro in Marocco (29 maggio-3 giugno 2027). Vorrei avere più informazioni."
 descrizione:
   - "Bab Zouina è un centro interamente dedicato all'Iyengar Yoga, a circa 30 minuti da Marrakesh. Due sale pratica completamente attrezzate, giardini, piscina, hammam, cucina vegetariana e vegana di qualità."
-  - "Sei giorni di pratica con Glenda e Mattia, entrambi certificati Iyengar livello 1. Le mattinate sono dedicate alla pratica. I pomeriggi sono liberi tra Marrakesh, il deserto e l'hammam. Tutto a portata di mano, tutto prenotabile tramite Bab Zouina. Aperto a tutti i livelli."
+  - "Sei giorni di pratica con Glenda e Mattia. Le mattinate sono dedicate alla pratica. I pomeriggi sono liberi tra Marrakesh, il deserto e l'hammam. Tutto a portata di mano, tutto prenotabile tramite Bab Zouina. Aperto a tutti i livelli."
 foto_principale: "/images/marocco/casa_marocco.webp"
 programma:
   - giorno: "Sabato 29 maggio"
