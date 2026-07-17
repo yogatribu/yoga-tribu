@@ -86,7 +86,7 @@ const eventSchema = {
       <div class="flex flex-wrap gap-6 mb-8">
         <div>
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Date</p>
-          <p class="text-white text-sm">{formatData(r.date_inizio)} – {formatData(r.date_fine)}</p>
+          <p class="text-white text-sm">{formatData(r.date_inizio)} - {formatData(r.date_fine)}</p>
         </div>
         <div>
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Durata</p>
@@ -100,7 +100,7 @@ const eventSchema = {
       {esaurito ? (
         <Button
           variant="secondary-dark" size="lg" external={true}
-          href={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? `Ciao! Il ritiro "${r.title}" è esaurito — posso essere messo in lista d'attesa?`)}`}
+          href={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? `Ciao! Il ritiro "${r.title}" è esaurito · posso essere messo in lista d'attesa?`)}`}
         >
           Lista d'attesa
         </Button>
@@ -183,7 +183,7 @@ const eventSchema = {
               )}
               <img
                 src={r.foto_affiancata}
-                alt={`${r.title} — dettaglio`}
+                alt={`${r.title} · dettaglio`}
                 class="w-full h-[280px] object-cover rounded-[18px]"
                 loading="lazy"
               />
@@ -302,14 +302,14 @@ const eventSchema = {
               {esaurito ? (
                 <Button
                   variant="primary" size="md" external={true}
-                  href={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? `Ciao! Il ritiro "${r.title}" è esaurito — posso essere messo in lista d'attesa?`)}`}
+                  href={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? `Ciao! Il ritiro "${r.title}" è esaurito · posso essere messo in lista d'attesa?`)}`}
                 >
                   Lista d'attesa
                 </Button>
               ) : (
                 <Button
                   variant="primary" size="md" external={true}
-                  href={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? `Ciao! Sono interessato al ritiro "${r.title}" — vorrei prenotare il mio posto.`)}`}
+                  href={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? `Ciao! Sono interessato al ritiro "${r.title}" · vorrei prenotare il mio posto.`)}`}
                 >
                   Prenota su WhatsApp
                 </Button>
@@ -359,7 +359,7 @@ const eventSchema = {
       ? 'Scrivici per essere inserito in lista d\'attesa.'
       : 'La prenotazione si fa su WhatsApp in meno di un minuto.'}
     ctaLabel={esaurito ? 'Lista d\'attesa su WhatsApp' : 'Prenota su WhatsApp'}
-    ctaHref={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? (esaurito ? `Ciao! Il ritiro "${r.title}" è esaurito — lista d'attesa?` : `Voglio prenotare il ritiro "${r.title}".`))}`}
+    ctaHref={`https://wa.me/393287675966?text=${encodeURIComponent(r.wa_testo ?? (esaurito ? `Ciao! Il ritiro "${r.title}" è esaurito · lista d'attesa?` : `Voglio prenotare il ritiro "${r.title}".`))}`}
     linkLabel="Vedi tutti gli eventi"
     linkHref="/eventi"
   />

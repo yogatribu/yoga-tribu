@@ -52,9 +52,12 @@ interface Props {
   tagLezioni?: string;
   titoloLezioni?: string;
   ctaHeadline?: string;
+  ctaSubtitle?: string;
+  ctaLabel?: string;
   ctaLinkLabel?: string;
   ctaLinkHref?: string;
   waTestoCustom?: string;
+  waNumero?: string;
 }
 
 const {
@@ -83,12 +86,15 @@ const {
   tagLezioni = 'Quando trovarmi',
   titoloLezioni = 'Le mie lezioni in studio.',
   ctaHeadline = 'Vieni a una mia lezione.',
+  ctaSubtitle,
+  ctaLabel,
   ctaLinkLabel = 'Vedi gli orari',
   ctaLinkHref = '/orari',
   waTestoCustom,
+  waNumero = '393287675966',
 } = Astro.props;
 
-const waHref = `https://wa.me/393287675966?text=${encodeURIComponent(waTestoCustom ?? `Ciao! Vorrei prenotare una prima lezione di prova con ${nome}.`)}`;
+const waHref = `https://wa.me/${waNumero}?text=${encodeURIComponent(waTestoCustom ?? `Ciao! Vorrei prenotare una prima lezione di prova con ${nome}.`)}`;
 const hasFilosofia = filosofiaSinistra.length > 0 && filosofiaDestra.length > 0;
 ---
 
@@ -116,7 +122,7 @@ const hasFilosofia = filosofiaSinistra.length > 0 && filosofiaDestra.length > 0;
           <div class="aspect-[3/4] rounded-md overflow-hidden mb-8">
             <img
               src={fotoSidebar}
-              alt={altFor(fotoSidebar, `${nome} — Yoga Tribù`)}
+              alt={altFor(fotoSidebar, `${nome} · Yoga Tribù`)}
               class="w-full h-full object-cover"
               loading="lazy"
             />
@@ -198,6 +204,8 @@ const hasFilosofia = filosofiaSinistra.length > 0 && filosofiaDestra.length > 0;
   <!-- 5. CTA finale -->
   <CTAFinal
     headline={ctaHeadline}
+    subtitle={ctaSubtitle}
+    ctaLabel={ctaLabel}
     ctaHref={waHref}
     linkLabel={ctaLinkLabel}
     linkHref={ctaLinkHref}

@@ -75,7 +75,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
     </div>
   </div>
 
-  <!-- Estate in Villa — featured -->
+  <!-- Estate in Villa · featured -->
   <Section background="default" size="large">
     <Container>
       <a href="/eventi/estate-in-villa" class="block group cursor-pointer transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
@@ -83,7 +83,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
           <div class="aspect-[4/3] rounded-[22px] overflow-hidden">
             <img
               src="/images/estate_in_villa.webp"
-              alt="Estate in Villa — Yoga Tribù"
+              alt="Estate in Villa · Yoga Tribù"
               class="w-full h-full object-cover group-hover:scale-[1.01] transition duration-[400ms]"
               loading="lazy"
             />
@@ -97,11 +97,11 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
             <div class="flex flex-wrap gap-6 text-sm">
               <div>
                 <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Periodo</p>
-                <p class="text-text-main font-medium">Giugno – Settembre 2026</p>
+                <p class="text-text-main font-medium">Giugno - Settembre 2026</p>
               </div>
               <div>
                 <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Durata</p>
-                <p class="text-text-main font-medium">Lun – Gio · 4 lezioni a settimana</p>
+                <p class="text-text-main font-medium">Lun - Gio · 4 lezioni a settimana</p>
               </div>
               <div>
                 <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Posti</p>
@@ -121,7 +121,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
         <Tag class="mb-5">Ritiri</Tag>
         <Heading level={2} class="mb-4">Pratiche immersive.</Heading>
         <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
-          Più giorni insieme, lontano dalla routine. I ritiri sono il modo più efficace per fare un salto di qualità nella pratica.
+          Più giorni insieme, lontano dalla routine. I ritiri sono il modo più efficace per fare un salto di qualità nella pratica. Ma sono anche l'occasione per rilassarsi, fare nuove amicizie e visitare posti nuovi.
         </p>
         <div class="space-y-6">
           {ritiriConStato.map(({ entry: ritiro, slug, postiRimasti, esaurito, scarsita }) => (
@@ -155,7 +155,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
                     <div class="flex flex-wrap gap-6 text-sm">
                       <div>
                         <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Date</p>
-                        <p class="text-text-main">{formatDataBreve(ritiro.data.date_inizio)} – {formatData(ritiro.data.date_fine)}</p>
+                        <p class="text-text-main">{formatDataBreve(ritiro.data.date_inizio)} - {formatData(ritiro.data.date_fine)}</p>
                       </div>
                       <div>
                         <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Luogo</p>

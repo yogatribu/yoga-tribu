@@ -1,9 +1,10 @@
 ---
 interface Props {
   messaggioWhatsapp: string;
+  numero?: string;
 }
-const { messaggioWhatsapp } = Astro.props;
-const waUrl = `https://wa.me/393287675966?text=${encodeURIComponent(messaggioWhatsapp)}`;
+const { messaggioWhatsapp, numero = '393287675966' } = Astro.props;
+const waUrl = `https://wa.me/${numero}?text=${encodeURIComponent(messaggioWhatsapp)}`;
 ---
 
 <div

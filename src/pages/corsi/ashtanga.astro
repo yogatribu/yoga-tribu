@@ -26,7 +26,7 @@ const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "Ashtanga Vinyasa Yoga",
-  "description": "Pratica yoga sequenziale tradizionale — lezioni Guidate e Mysore. Per chi cerca disciplina, forza e silenzio interiore.",
+  "description": "Pratica yoga sequenziale tradizionale · lezioni Guidate e Mysore. Per chi cerca disciplina, forza e silenzio interiore.",
   "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
   "courseMode": "in-person",
   "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
@@ -71,7 +71,7 @@ const courseSchema = {
         <FeatureCard
           icon="Sunrise"
           title="Cerchi disciplina e costanza"
-          body="L'Ashtanga è una pratica che si costruisce ogni giorno. Non c'è 'ho fatto la mia lezione', c'è 'sono qui ancora una volta'."
+          body="L'Ashtanga è una pratica che si costruisce ogni giorno, con la costanza di chi torna sul tappetino ancora e ancora. Non conta la singola lezione, ma il presentarsi ogni volta."
         />
         <FeatureCard
           icon="TrendingUp"
@@ -80,8 +80,8 @@ const courseSchema = {
         />
         <FeatureCard
           icon="Users"
-          title="Cerchi una comunità"
-          body="La tribù della pratica del mattino, gli stessi volti che si ritrovano, un senso di appartenenza che non si trova altrove."
+          title="Vuoi far parte di una comunità"
+          body="La tribù della pratica, gli stessi volti che si ritrovano, un senso di appartenenza che non si trova altrove."
         />
       </div>
     </Container>
@@ -94,7 +94,7 @@ const courseSchema = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
         <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 mese</p>
-          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">La mattina diventa il tuo momento.</p>
+          <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Cominci a vedere i primi risultati.</p>
         </div>
         <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 6 mesi</p>
@@ -144,9 +144,9 @@ const courseSchema = {
             <p class="text-base text-text-secondary leading-relaxed mb-6">L'insegnante chiama le posizioni e i passaggi con la voce. Tutto il gruppo pratica insieme, allo stesso ritmo.</p>
             <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Adatto a:</p>
             <ul class="flex flex-col gap-1.5 mb-6">
-              {['Chi inizia con l\'Ashtanga', 'Chi vuole imparare la sequenza', 'Chi cerca una pratica condotta dal vivo', 'Chi pratica saltuariamente'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
+              {['Chi inizia con l\'Ashtanga', 'Chi vuole imparare la sequenza', 'Chi cerca una pratica condotta'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
             </ul>
-            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede in lezione:</p>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede a lezione:</p>
             <p class="text-sm text-text-secondary leading-relaxed">Si segue la prima serie (Yoga Chikitsa) o parti di essa, sotto la guida dell'insegnante. Il ritmo è dato dal respiro contato in sanscrito (vinyasa).</p>
           </div>
           <aside class="order-1 lg:order-2 lg:sticky" style="top: 100px; background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
@@ -188,11 +188,11 @@ const courseSchema = {
             <p class="text-base text-text-secondary leading-relaxed mb-6">Tu conosci la sequenza a memoria e la pratichi da solo, al tuo ritmo. L'insegnante passa tra gli allievi e ti aggiusta singolarmente.</p>
             <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Adatto a:</p>
             <ul class="flex flex-col gap-1.5 mb-6">
-              {['Chi conosce già la pratica e vuole approfondire', 'Chi cerca un\'esperienza più meditativa', 'Chi vuole sviluppare autonomia nella pratica', 'Chi pratica regolarmente (4-6x/settimana)'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
+              {['Chi conosce già la pratica e vuole approfondire', 'Chi cerca un\'esperienza più meditativa', 'Chi vuole sviluppare autonomia nella pratica', 'Chi vuole iniziare da un livello personalizzato'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
             </ul>
-            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede in lezione:</p>
-            <p class="text-sm text-text-secondary leading-relaxed mb-4">Arrivi quando vuoi nell'arco dell'orario stabilito, inizi la tua pratica. Niente musica, niente istruzione collettiva.</p>
-            <p class="text-sm text-error bg-error/5 border border-error/20 rounded-sm px-4 py-3">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede a lezione:</p>
+            <p class="text-sm text-text-secondary leading-relaxed mb-4">Arrivi quando vuoi nell'arco dell'orario stabilito, inizi la tua pratica. Niente istruzione collettiva.</p>
+            <p class="text-sm text-error bg-error/5 border border-error/20 rounded-lg px-4 py-3">
               ⚠ Per chi è alla prima esperienza, consigliamo di iniziare con la Guidata per imparare la sequenza.
             </p>
           </div>
@@ -204,7 +204,7 @@ const courseSchema = {
             </div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
               <span style="font-size: 14px; color: #6b6b6b;">Durata</span>
-              <span style="font-size: 14px; color: #2a2a2a;">60–90 min</span>
+              <span style="font-size: 14px; color: #2a2a2a;">~90 min</span>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
               <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
@@ -291,8 +291,7 @@ const courseSchema = {
     items={[
       { question: 'Devo conoscere la sequenza per iniziare?', answer: 'No. Si inizia dalla Guidata, dove l\'insegnante chiama ogni posizione. Imparerai la sequenza naturalmente, lezione dopo lezione.' },
       { question: 'Quanto è impegnativo fisicamente?', answer: 'È una pratica intensa. Ma si entra gradualmente: nessuno fa la prima serie completa al primo giorno. Si parte da una versione ridotta e si cresce nel tempo.' },
-      { question: "Cos'è la Mysore? Posso iniziare da lì?", answer: 'La Mysore è la pratica autonoma. Sconsigliamo di iniziare dalla Mysore: prima impari con la Guidata.' },
-      { question: 'Ashtanga fa per chi ha più di 50 anni?', answer: 'Sì, ma con adattamenti. La sequenza è la stessa, ma le varianti permettono di praticare a qualsiasi età.' },
+      { question: "Cos'è la Mysore? Posso iniziare da lì?", answer: 'La Mysore è la pratica autonoma, in cui ognuno pratica al proprio ritmo. Va bene anche se stai iniziando: l\'insegnante ti segue individualmente e costruisce con te un percorso su misura.' },
       { question: 'Devo essere flessibile?', answer: 'No. La flessibilità arriva con la pratica. Ciò che serve è costanza, respiro lungo, e voglia di tornare.' },
       { question: 'Ashtanga è uno sport o una pratica spirituale?', answer: 'Entrambe le cose. La parte fisica è chiarissima. Ma c\'è anche una dimensione meditativa. Decidi tu quanto approfondire.' },
     ]}
@@ -309,10 +308,10 @@ const courseSchema = {
       <Heading level={2} class="mb-16">Quando praticare Ashtanga.</Heading>
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[800px] mx-auto text-left">
         {[
-          { tag: 'GUIDATA', orario: 'Martedì 19:00' },
-          { tag: 'GUIDATA', orario: 'Giovedì 19:00' },
           { tag: 'MYSORE', orario: 'Martedì 17:30' },
+          { tag: 'GUIDATA', orario: 'Martedì 19:00' },
           { tag: 'MYSORE', orario: 'Giovedì 17:30' },
+          { tag: 'GUIDATA', orario: 'Giovedì 19:00' },
           { tag: 'MYSORE', orario: 'Venerdì 7:00' },
           { tag: 'MYSORE', orario: 'Sabato 8:30' },
         ].map(({ tag, orario }) => (

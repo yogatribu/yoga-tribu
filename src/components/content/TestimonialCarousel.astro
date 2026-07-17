@@ -244,7 +244,7 @@ const {
     init() {
       this.cloneCards();
       // setTimeout 150ms garantisce che font e CSS siano applicati prima di misurare
-      // Un singolo RAF non è sufficiente — le card potrebbero avere offsetWidth = 0
+      // Un singolo RAF non è sufficiente · le card potrebbero avere offsetWidth = 0
       setTimeout(() => {
         this.calculateWidth();
         this.bindEvents();

@@ -76,7 +76,7 @@ if (schemaJsonLd) {
   <head>
     <script type="text/javascript" src="https://embeds.iubenda.com/widgets/b08dcb14-11d1-4566-b1a6-16621b119ceb.js" defer></script>
 
-    <!-- Google Analytics 4 — attivato solo dopo consenso Iubenda -->
+    <!-- Google Analytics 4 · attivato solo dopo consenso Iubenda -->
     <script type="text/plain" class="_iub_cs_activate" async src="https://www.googletagmanager.com/gtag/js?id=G-0GKQSD86CG"></script>
     <script type="text/plain" class="_iub_cs_activate">
       window.dataLayer = window.dataLayer || [];
@@ -113,7 +113,7 @@ if (schemaJsonLd) {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
 
-    <!-- Font preload — solo above-the-fold -->
+    <!-- Font preload · solo above-the-fold -->
     <link rel="preload" href="/fonts/NewYork.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
@@ -140,7 +140,7 @@ if (schemaJsonLd) {
 </html>
 
 <script>
-  // Task 2 — Scroll reveal (Intersection Observer)
+  // Task 2 · Scroll reveal (Intersection Observer)
   function initScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -157,7 +157,7 @@ if (schemaJsonLd) {
     document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
   }
 
-  // Task 15 — Counter animation
+  // Task 15 · Counter animation
   function initCounters() {
     const counterObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {

@@ -21,7 +21,7 @@ const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Posso provare prima di abbonarmi?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Puoi iniziare con una lezione singola a 20€ e poi scegliere il pacchetto che preferisci." } },
+    { "@type": "Question", "name": "Posso provare prima di abbonarmi?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. La prima lezione di prova costa 10€: vieni, provi, e poi decidi con calma se e quale abbonamento fa per te." } },
     { "@type": "Question", "name": "Devo per forza comprare un pacchetto?", "acceptedAnswer": { "@type": "Answer", "text": "No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti." } },
     { "@type": "Question", "name": "Cosa succede se non finisco le lezioni in tempo?", "acceptedAnswer": { "@type": "Answer", "text": "I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione." } },
     { "@type": "Question", "name": "I workshop sono inclusi nell'abbonamento?", "acceptedAnswer": { "@type": "Answer", "text": "No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€." } },
@@ -110,7 +110,7 @@ const faqSchema = {
         <Heading level={2} class="mb-12">Trasparenza prima di tutto.</Heading>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { title: 'Tutti gli stili, una sola tariffa', body: 'I tuoi pacchetti valgono per Iyengar, Ashtanga e Salute Femminile. Cambi quando vuoi.' },
+            { title: 'Tutti gli stili, una sola tariffa', body: 'I tuoi pacchetti valgono per tutte le pratiche di yoga. Cambi quando vuoi.' },
             { title: 'Nessun vincolo annuale', body: 'Nessun rinnovo automatico, nessuna penale di uscita. Decidi tu quando smettere.' },
             { title: 'Sospendibile in qualsiasi momento', body: 'Hai un imprevisto? Sospendi il pacchetto fino a 30 giorni. Le lezioni rimanenti restano valide.' },
             { title: 'Workshop sempre scontati', body: 'I workshop mensili Deep Dive sono scontati per chi ha un abbonamento attivo.' },
@@ -126,6 +126,9 @@ const faqSchema = {
             </div>
           ))}
         </div>
+        <p class="text-sm text-text-secondary leading-relaxed max-w-[700px] mt-8">
+          I percorsi di Salute Femminile (ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita, cerchi di cura) hanno tariffe proprie e non rientrano negli abbonamenti e nei pacchetti lezioni.
+        </p>
       </Container>
     </Section>
   </div>
@@ -146,7 +149,7 @@ const faqSchema = {
             nome="Privata individuale"
             prezzo="45€"
             descrizione="Lezione personalizzata."
-            bullets={['Stile a scelta (Iyengar, Ashtanga, Salute Femminile)', '~60 minuti', 'Adattata alle tue necessità']}
+            bullets={['Stile a scelta (Iyengar, Ashtanga)', '~60 minuti', 'Adattata alle tue necessità']}
             ctaLabel="Richiedi"
             messaggioWa="Ciao! Vorrei richiedere una lezione privata individuale."
           />
@@ -183,13 +186,13 @@ const faqSchema = {
           />
         </div>
         <p class="text-small text-text-secondary text-center mt-10 max-w-[700px] mx-auto">
-          Le sessioni durano circa 60 minuti. Lo stile (Iyengar, Ashtanga, Salute Femminile) si concorda con l'insegnante.
+          Le sessioni durano circa 60 minuti. Lo stile (Iyengar, Ashtanga) si concorda con l'insegnante.
         </p>
       </Container>
     </Section>
   </div>
 
-  <!-- SEZIONE TEEN — visibile solo se 'teen-yoga' è in PRATICHE_ATTIVE -->
+  <!-- SEZIONE TEEN · visibile solo se 'teen-yoga' è in PRATICHE_ATTIVE -->
   {teenAttivo && (
   <div class="bg-background-alt py-24">
     <div style="max-width: 800px; margin: 0 auto; padding: 0 24px; text-align: center;">
@@ -254,7 +257,7 @@ const faqSchema = {
     title="Domande frequenti."
     background={faqBg}
     items={[
-      { question: 'Posso provare prima di abbonarmi?', answer: 'Sì. Puoi iniziare con una lezione singola a 20€ e poi scegliere il pacchetto che preferisci.' },
+      { question: 'Posso provare prima di abbonarmi?', answer: 'Sì. La prima lezione di prova costa 10€: vieni, provi, e poi decidi con calma se e quale abbonamento fa per te.' },
       { question: 'Devo per forza comprare un pacchetto?', answer: 'No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti.' },
       { question: 'Cosa succede se non finisco le lezioni in tempo?', answer: 'I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione.' },
       { question: 'I workshop sono inclusi nell\'abbonamento?', answer: 'No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€.' },

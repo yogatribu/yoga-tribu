@@ -17,7 +17,7 @@ import { testimonials } from '../../data/testimonials';
 import FeatureCard from '../../components/content/FeatureCard.astro';
 import { altFor } from '../../config/imageAlt.js';
 
-const WA_BASE = 'https://wa.me/393287675966?text=';
+const WA_BASE = 'https://wa.me/393471098694?text=';
 const COLOR = '#c89797';
 
 const courseSchema = {
@@ -26,8 +26,7 @@ const courseSchema = {
   "name": "Salute Femminile",
   "description": "Percorsi dedicati alla salute femminile: ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita, cerchi di cura.",
   "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
-  "courseMode": "in-person",
-  "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
+  "courseMode": "in-person"
 };
 
 const tabs = [
@@ -36,12 +35,10 @@ const tabs = [
     label: 'Ginnastica Pelvica',
     headline: 'Il pavimento pelvico: il muscolo più ignorato del corpo.',
     body: [
-      'Ogni donna ha un pavimento pelvico. Poche lo conoscono. Ancora meno lo allenano consapevolmente, finché non comincia a dare problemi.',
+      'Ogni donna ha un pavimento pelvico. Poche lo conoscono. Ancora meno lo allenano consapevolmente, pur essendo centrale per il benessere in ogni fase della vita.',
       "La ginnastica pelvica con Sara non è solo Kegel. È un lavoro profondo di consapevolezza, rinforzo e rilascio del gruppo muscolare più importante per la salute femminile in ogni fase della vita: gravidanza, post-parto, menopausa.",
       'Sia che tu stia cercando un bambino, sia che tu sia già in gravidanza, sia che tu stia recuperando dopo il parto, questo è il punto da cui partire.',
     ],
-    orario: 'Lunedì 10:00',
-    durata: '~60 minuti',
     per: 'Tutte le donne, a qualsiasi età',
   },
   {
@@ -50,12 +47,10 @@ const tabs = [
     headline: 'Il primo linguaggio tra mamma e bambino.',
     body: [
       'Il massaggio neonatale è una delle pratiche più antiche di cura del bambino, e una delle più potenti per costruire il legame madre-figlio nei primi mesi di vita.',
-      'Sara insegna le tecniche di massaggio seguendo la metodologia internazionale IAIM (International Association of Infant Massage): movimenti dolci, rispettosi del ritmo del bambino, pensati per rafforzare il sistema immunitario, migliorare il sonno e calmare le coliche.',
-      "Il corso è pensato per mamme (e papà) con bambini tra le 6 settimane e i 6 mesi. Si impara a leggere i segnali del bambino, a rispettare il suo consenso, a trasformare il momento del massaggio in un momento di connessione vera.",
+      'Sara insegna le tecniche di massaggio con movimenti dolci, rispettosi del ritmo del bambino, pensati per rafforzare il sistema immunitario, migliorare il sonno e calmare le coliche.',
+      "Il corso è pensato per mamme (e papà) e i loro bambini nei primi mesi di vita. Si impara a leggere i segnali del bambino, a rispettare il suo consenso, a trasformare il momento del massaggio in un momento di connessione vera.",
     ],
-    orario: 'Giovedì 10:00',
-    durata: '~60 minuti',
-    per: 'Mamme (e papà) con bambini 0 - 6 mesi',
+    per: 'Mamme (e papà) con bambini nei primi mesi',
   },
   {
     id: 'nascita',
@@ -64,24 +59,20 @@ const tabs = [
     body: [
       "L'accompagnamento alla nascita con Sara non è il classico corso pre-parto ospedaliero. È un percorso più lento, più personale, pensato per aiutarti a capire cosa sta succedendo nel tuo corpo e cosa ti aspetta, in modo da arrivare al parto con fiducia invece che con ansia.",
       'Si lavora sulla respirazione, sulle posizioni per il travaglio, sulle aspettative realistiche, sul ruolo del partner, sui piani di nascita. Si parla di dolore, non per spaventare, ma per smettere di temerlo.',
-      "Il corso si svolge in piccoli gruppi (massimo 6 coppie) per garantire spazio alla relazione e alle domande di ognuna. Ideale tra la 28ª e la 34ª settimana.",
+      "Il corso si svolge in piccoli gruppi, per garantire spazio alla relazione e alle domande di ognuna.",
     ],
-    orario: 'Mercoledì 10:00',
-    durata: '~75 minuti · 6 incontri',
-    per: 'Donne in gravidanza (28ª - 34ª settimana)',
+    per: 'Donne in gravidanza',
   },
   {
     id: 'cerchi',
     label: 'Cerchi di Cura',
-    headline: 'Perché il post-parto non si affronta da soli.',
+    headline: 'Uno spazio di cura, tra donne.',
     body: [
-      'I Cerchi di Cura sono incontri di gruppo per mamme nel post-parto. Non corsi. Non lezioni. Cerchi, dove si porta quello che c\'è: stanchezza, confusione, gioia, dubbi, momenti in cui non ci si riconosce più.',
-      "L'isolamento del post-parto è uno dei temi meno discussi ma più diffusi. Le donne che ne parlano spesso scoprono di non essere le sole. Il gruppo diventa lo spazio in cui ci si trova, ci si riconosce, ci si sostiene.",
-      "Si parla di allattamento, sonno, relazione di coppia, identità materna, ritorno alla vita di prima. Non ci sono risposte giuste, ci sono domande accolte. Sara facilita lo spazio; le mamme costruiscono il contenuto.",
+      "Un cerchio di cura tra donne, uno spazio semplice e accogliente dove prendersi del tempo per sé. Un'occasione per risvegliare i cinque sensi attraverso piccoli gesti amorevoli, pratiche leggere ma profonde che aiutano a ritrovare energia, centratura e presenza.",
+      "Ci si occupa di sé donando nuova linfa al corpo e alla mente, con momenti di ascolto, movimento dolce e condivisione autentica.",
+      "Puoi scegliere di vivere questo momento da sola oppure insieme a una o più donne della tua vita: un'amica, una sorella, una madre, una figlia. Condividere il cerchio rende l'esperienza ancora più ricca e significativa.",
     ],
-    orario: 'Venerdì 10:00',
-    durata: '~90 minuti',
-    per: 'Mamme nel post-parto (0 - 18 mesi)',
+    per: 'Ogni donna, sola o in compagnia',
   },
 ];
 ---
@@ -246,10 +237,9 @@ const tabs = [
     background="alt"
     items={[
       { question: 'Posso partecipare se non sono in gravidanza?', answer: 'Sì. La ginnastica pelvica è pensata per tutte le donne, in gravidanza, dopo il parto, o semplicemente per prendersi cura della propria salute pelvica in qualsiasi fase della vita.' },
-      { question: 'Da che settimana posso iniziare i corsi in gravidanza?', answer: 'La ginnastica pelvica è indicata dalla 12ª settimana in poi, con adattamenti. L\'accompagnamento alla nascita è ideale dalla 28ª alla 34ª settimana. Sara valuta ogni caso individualmente.' },
+      { question: 'Da che momento posso iniziare i corsi in gravidanza?', answer: 'Dipende dal percorso e dalla fase della gravidanza. Sara valuta ogni caso individualmente: scrivici e ti dice qual è il momento giusto per iniziare.' },
       { question: 'Il massaggio neonatale è solo per mamme?', answer: 'No. I papà sono benvenuti, e spesso il massaggio diventa il loro spazio privilegiato per creare un legame fisico col bambino nelle prime settimane.' },
       { question: 'I Cerchi di Cura richiedono iscrizione anticipata?', answer: 'Sì, il numero di posti è limitato per mantenere l\'atmosfera raccolta che li caratterizza. Scrivici per verificare disponibilità.' },
-      { question: 'Sara è disponibile per incontri privati?', answer: 'Sì, su richiesta. Utile per situazioni specifiche o per chi preferisce un percorso personalizzato. Scrivici per organizzarlo.' },
     ]}
   />
 
@@ -284,7 +274,7 @@ const tabs = [
     linkHref="/orari"
   />
 
-  <StickyCTA messaggioWhatsapp="Ciao! Vorrei informazioni sui percorsi di Salute Femminile." />
+  <StickyCTA messaggioWhatsapp="Ciao! Vorrei informazioni sui percorsi di Salute Femminile." numero="393471098694" />
 </BaseLayout>
 
 <script>

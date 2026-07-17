@@ -8,7 +8,7 @@ posti_disponibili: 20
 prezzo: 300
 insegnanti: ["Glenda", "Mattia"]
 foto_hero: "/images/marocco/hero_marocco.webp"
-foto_hero_alt: "Atlante, Valle dell'Ourika — Marrakech"
+foto_hero_alt: "Atlante, Valle dell'Ourika · Marrakech"
 descrizione_breve: "Un centro Iyengar immerso nel verde a mezz'ora da Marrakesh. Pratiche mattutine, pomeriggi liberi per esplorare il Marocco."
 wa_testo: "Ciao! Sono interessato al ritiro in Marocco (29 maggio-3 giugno 2027). Vorrei avere più informazioni."
 descrizione:
@@ -22,7 +22,7 @@ programma:
         cosa: "Arrivo in struttura"
       - ora: "20:00"
         cosa: "Cena"
-  - giorno: "Domenica 30 – Mercoledì 2 giugno"
+  - giorno: "Domenica 30 - Mercoledì 2 giugno"
     attivita:
       - ora: "7:30"
         cosa: "Breakfast"

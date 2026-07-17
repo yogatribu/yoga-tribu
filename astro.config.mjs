@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 const pagesExcludedFromSitemap = new Set([
   '/cookie/',
   '/privacy/',
+  '/termini/',
   '/links/',
   '/quiz/',
   '/corsi/donna/',

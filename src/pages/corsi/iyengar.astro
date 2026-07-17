@@ -125,10 +125,10 @@ const courseSchema = {
         <div class="iyengar-seg-container" style="position: relative; display: inline-flex; background: #e8e4df; border-radius: 9999px; padding: 4px; gap: 2px;" role="tablist">
           <div id="iyengar-indicator" style="position: absolute; top: 4px; bottom: 4px; background: #9c9a66; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65,0,0.35,1), width 300ms cubic-bezier(0.65,0,0.35,1); pointer-events: none;"></div>
           {[
-            { id: 'livello-1', label: 'Livello 1 (Base)' },
-            { id: 'livello-2', label: 'Livello 2 (Intermedio)' },
-            { id: 'livello-3', label: 'Livello 3 (Avanzato)' },
-            { id: 'soft', label: 'Soft (Ristorativo)' },
+            { id: 'livello-1', label: 'Livello 1' },
+            { id: 'livello-2', label: 'Livello 2' },
+            { id: 'livello-3', label: 'Livello 3' },
+            { id: 'soft', label: 'Restorative' },
           ].map(({ id, label }, i) => (
             <button
               class="tab-btn"
@@ -150,7 +150,7 @@ const courseSchema = {
           nome: 'Livello 1', sub: 'Base',
           intro: 'Per chi inizia o riprende dopo molto.',
           adatto: ['Principianti assoluti', 'Chi non pratica da molto tempo', 'Chi vuole costruire fondamenta solide', 'Chi ha dolori cronici e cerca un approccio strutturato'],
-          cosa: 'Posizioni in piedi (Tadasana, Trikonasana, Virabhadrasana), allineamenti precisi, introduzione all\'uso di mattoncini e cinture. L\'insegnante spiega il perché di ogni posizione.',
+          cosa: 'Si affrontano ad ogni lezione gruppi diversi (posizioni in piedi, archi, estensioni avanti), con allineamenti precisi. Si impara ad usare gli attrezzi che aiutano a eseguire meglio le posizioni. L\'insegnante spiega il perché di ogni posizione.',
           quando: 'Lunedì 8:45 · Mercoledì 8:45',
           wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 1.',
         },
@@ -158,8 +158,8 @@ const courseSchema = {
           id: 'livello-2',
           nome: 'Livello 2', sub: 'Intermedio',
           intro: 'Per chi pratica da almeno 6 mesi e conosce le posizioni di base.',
-          adatto: ['Chi ha completato almeno 6 mesi di L1', 'Chi conosce la nomenclatura sanscrita base', 'Chi è pronto a lavorare su precisione e allungamenti più profondi'],
-          cosa: 'Posizioni di equilibrio, primi piegamenti indietro, lavoro più profondo sulla rotazione e l\'apertura del torace. Sequenze costruite, non improvvisate.',
+          adatto: ['Chi ha completato almeno 6 mesi di L1', 'Chi è pronto a lavorare su precisione e allungamenti più profondi'],
+          cosa: 'Il lavoro diventa più profondo e le sequenze diventano più complesse. Sequenze costruite, non improvvisate.',
           quando: 'Lunedì 7:00, 18:00, 19:30 · Mercoledì 18:00, 19:30',
           wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 2.',
         },
@@ -168,16 +168,16 @@ const courseSchema = {
           nome: 'Livello 3', sub: 'Avanzato',
           intro: 'Per praticanti esperti.',
           adatto: ['Chi pratica costantemente da almeno 2 anni', 'Chi ha familiarità con tutte le inversioni', 'Chi vuole approfondire pranayama e asana complesse'],
-          cosa: 'Asana avanzate, inversioni complete, pranayama (tecniche di respirazione), approfondimenti su filosofia e metodo. Lezione più meditativa, ritmo lento.',
+          cosa: 'Asana avanzate, inversioni complete, pranayama (tecniche di respirazione), approfondimenti su filosofia e metodo. Anche se la pratica è impegnativa fisicamente, si raggiunge comunque una vicinanza alla meditazione.',
           quando: 'Martedì 13:00 · Giovedì 13:00',
           wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 3.',
           warning: 'Riservato a chi pratica da almeno 2 anni. Se hai dubbi sul tuo livello, scrivici prima.',
         },
         {
           id: 'soft',
-          nome: 'Iyengar Soft', sub: 'Ristorativo',
+          nome: 'Restorative', sub: 'Ristorativo',
           intro: 'Per chi cerca rigenerazione, recupero o pratica delicata.',
-          adatto: ['Chi ha più di 65 anni', 'Chi sta recuperando da un infortunio', 'Chi ha limitazioni fisiche specifiche', 'Chi è alla prima esperienza con lo yoga'],
+          adatto: ['Chi sta recuperando da un infortunio', 'Chi ha bisogno di rallentare', 'Chi vuole lavorare profondamente sul sistema nervoso e la respirazione', 'Chi è alla prima esperienza con lo yoga'],
           cosa: 'Posizioni mantenute a lungo, con uso intenso di supporti (coperte, mattoncini, cinture). Pratica passiva, recupero del sistema nervoso, rilascio profondo delle tensioni.',
           quando: 'Martedì 8:45',
           wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Soft.',
@@ -194,10 +194,10 @@ const courseSchema = {
               <ul class="flex flex-col gap-1.5 mb-6">
                 {adatto.map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
               </ul>
-              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede in lezione:</p>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede a lezione:</p>
               <p class="text-sm text-text-secondary leading-relaxed mb-4">{cosa}</p>
               {warning && (
-                <p class="text-sm text-error bg-error/5 border border-error/20 rounded-sm px-4 py-3">
+                <p class="text-sm text-error bg-error/5 border border-error/20 rounded-lg px-4 py-3">
                   ⚠ {warning}
                 </p>
               )}
@@ -323,7 +323,7 @@ const courseSchema = {
                     hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]" data-reveal>
           <h3 class="font-serif text-xl font-medium mb-5" style="font-family:'New York',serif; color:#2a2a2a;">Cosa lasciare a casa</h3>
           <ul class="space-y-3">
-            {['Tappetino', 'Mattoncini, cinture', 'Coperte', 'Vestiti firmati'].map(item => (
+            {['Tappetino', 'Mattoncini, cinture', 'Coperte', 'Ansie'].map(item => (
               <li class="flex items-center gap-3 text-sm text-[#2a2a2a]">
                 <span class="text-[#c89797] flex-shrink-0">✕</span>{item}
               </li>
@@ -355,7 +355,7 @@ const courseSchema = {
     title="Domande frequenti."
     background="alt"
     items={[
-      { question: 'Posso fare Iyengar se ho un\'ernia/scoliosi/problema specifico?', answer: 'La maggior parte dei nostri allievi viene proprio per questo. Iyengar nasce con applicazioni terapeutiche reali. Prima della lezione, parla con l\'insegnante delle tue condizioni: adatterà la pratica a te.' },
+      { question: 'Posso fare Iyengar se ho dei problemi fisici?', answer: 'La maggior parte dei nostri allievi viene proprio per questo. Iyengar nasce con applicazioni terapeutiche reali. Prima della lezione, parla con l\'insegnante delle tue condizioni: adatterà la pratica a te.' },
       { question: 'Devo essere flessibile per iniziare?', answer: 'No. La flessibilità è il risultato della pratica, non il prerequisito. I nostri allievi più rigidi diventano i più consapevoli del loro corpo nei primi mesi.' },
       { question: 'Dopo quanto tempo vedo i primi risultati?', answer: 'Dipende da cosa cerchi, ma prima di quanto pensi. Sulle tensioni quotidiane bastano 2-3 settimane di pratica regolare. Sui dolori cronici, come il mal di schiena, di solito servono 1-2 mesi. Sulla flessibilità e la trasformazione più profonda, dai 6 mesi in su. La costante è una: la pratica regolare, una o due volte a settimana.' },
       { question: 'Come capisco il mio livello?', answer: 'Se sei alla prima volta o non pratichi da anni → Livello 1 (Base) o Soft. Se conosci le posizioni base → Livello 2. Se hai dubbi, scrivici e ti aiutiamo a scegliere.' },
@@ -373,16 +373,16 @@ const courseSchema = {
       <Heading level={2} class="mb-16">Quando praticare Iyengar.</Heading>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-[1040px] mx-auto text-left">
         {[
-          { tag: 'LIVELLO 1', orario: 'Lunedì 8:45' },
-          { tag: 'LIVELLO 1', orario: 'Mercoledì 8:45' },
           { tag: 'LIVELLO 2', orario: 'Lunedì 7:00' },
+          { tag: 'LIVELLO 1', orario: 'Lunedì 8:45' },
           { tag: 'LIVELLO 2', orario: 'Lunedì 18:00' },
           { tag: 'LIVELLO 2', orario: 'Lunedì 19:30' },
+          { tag: 'SOFT', orario: 'Martedì 8:45' },
+          { tag: 'LIVELLO 3', orario: 'Martedì 13:00' },
+          { tag: 'LIVELLO 1', orario: 'Mercoledì 8:45' },
           { tag: 'LIVELLO 2', orario: 'Mercoledì 18:00' },
           { tag: 'LIVELLO 2', orario: 'Mercoledì 19:30' },
-          { tag: 'LIVELLO 3', orario: 'Martedì 13:00' },
           { tag: 'LIVELLO 3', orario: 'Giovedì 13:00' },
-          { tag: 'SOFT', orario: 'Martedì 8:45' },
         ].map(({ tag, orario }) => (
           <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
             <p class="text-tiny uppercase tracking-widest" style="color: #9c9a66;">{tag}</p>
