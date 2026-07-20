@@ -19,6 +19,7 @@ interface TileCorso {
   waMsg: string;
   foto: string;
   overlay: string;
+  posizione?: string;
 }
 
 const tilesCorsi: TileCorso[] = [
@@ -33,6 +34,7 @@ const tilesCorsi: TileCorso[] = [
     waMsg: 'https://wa.me/393287675966?text=Ciao!%20Vorrei%20prenotare%20una%20prima%20lezione%20di%20Iyengar%20Yoga.',
     foto: '/images/iyengar.webp',
     overlay: 'rgba(0,0,0,0.28)',
+    posizione: '30% 35%',
   },
   {
     slug: 'ashtanga',
@@ -63,7 +65,7 @@ const tilesCorsi: TileCorso[] = [
 const tilesAttivi = tilesCorsi.filter(t => PRATICHE_ATTIVE.includes(t.slug));
 
 const siamoCards = [
-  'Insegnanti formati per anni nel metodo specifico',
+  'Insegnanti qualificati e con esperienza',
   'Pratica tradizionale che dà risultati reali',
   'Una tribù che resta negli anni',
 ];
@@ -101,7 +103,7 @@ const siamoCards = [
           Esci diverso da come sei entrato.
         </h1>
         <p class="text-white/80 text-[17px] md:text-lg max-w-xl mx-auto leading-relaxed mb-10">
-          Iyengar, Ashtanga e Salute Femminile con insegnanti formati per anni. Per chi cerca una pratica seria e duratura.
+          Iyengar, Ashtanga e Salute Femminile con insegnanti qualificati e con esperienza. Per chi cerca una pratica seria e duratura.
         </p>
         <div class="flex flex-wrap gap-4 items-center justify-center">
           <Button
@@ -126,6 +128,7 @@ const siamoCards = [
         src={tile.foto}
         alt={altFor(tile.foto, `Pratica di ${tile.nome} allo studio Yoga Tribù`)}
         class="absolute inset-0 w-full h-full object-cover"
+        style={tile.posizione ? `object-position: ${tile.posizione};` : undefined}
         loading="lazy"
       />
       <div class="absolute inset-0" style={`background: ${tile.overlay};`}></div>

@@ -104,7 +104,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
                 <p class="text-text-main font-medium">Lun - Gio · 4 lezioni a settimana</p>
               </div>
               <div>
-                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Posti</p>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Prezzi</p>
                 <p class="text-text-main font-medium">75€ / 5 lezioni · 20€ a lezione</p>
               </div>
             </div>
@@ -131,18 +131,18 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
             >
               <div class="bg-background rounded-[22px] overflow-hidden border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200">
                 <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-0">
-                  <div class="h-[280px] overflow-hidden">
+                  <div class="h-[280px] md:h-full overflow-hidden">
                     <img
                       src={ritiro.data.foto_hero || 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80'}
                       alt={ritiro.data.title}
-                      class="w-full h-[280px] object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                      class="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500"
                       loading="lazy"
                     />
                   </div>
                   <div class="p-8 flex flex-col justify-between">
                     <div>
                       <div class="flex items-start justify-between gap-4 mb-3">
-                        <h3 class="font-serif text-[26px] text-text-main leading-tight">{ritiro.data.title}</h3>
+                        <h3 class="font-serif text-[26px] text-text-main leading-tight md:min-h-[2.5em]">{ritiro.data.title}</h3>
                         {esaurito && (
                           <span class="bg-[#2a2a2a] text-white text-[11px] font-semibold uppercase tracking-[0.1em] px-3 py-1 rounded-full whitespace-nowrap">Sold out</span>
                         )}

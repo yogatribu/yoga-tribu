@@ -24,8 +24,7 @@ const faqSchema = {
     { "@type": "Question", "name": "Posso provare prima di abbonarmi?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. La prima lezione di prova costa 10€: vieni, provi, e poi decidi con calma se e quale abbonamento fa per te." } },
     { "@type": "Question", "name": "Devo per forza comprare un pacchetto?", "acceptedAnswer": { "@type": "Answer", "text": "No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti." } },
     { "@type": "Question", "name": "Cosa succede se non finisco le lezioni in tempo?", "acceptedAnswer": { "@type": "Answer", "text": "I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione." } },
-    { "@type": "Question", "name": "I workshop sono inclusi nell'abbonamento?", "acceptedAnswer": { "@type": "Answer", "text": "No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€." } },
-    { "@type": "Question", "name": "Come pago?", "acceptedAnswer": { "@type": "Answer", "text": "Con bonifico o in contanti in studio. Nessun rinnovo automatico, nessun addebito a sorpresa." } }
+    { "@type": "Question", "name": "I workshop sono inclusi nell'abbonamento?", "acceptedAnswer": { "@type": "Answer", "text": "No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€." } }
   ]
 };
 ---
@@ -108,11 +107,10 @@ const faqSchema = {
       <Container>
         <Tag class="mb-5">Come funziona</Tag>
         <Heading level={2} class="mb-12">Trasparenza prima di tutto.</Heading>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { title: 'Tutti gli stili, una sola tariffa', body: 'I tuoi pacchetti valgono per tutte le pratiche di yoga. Cambi quando vuoi.' },
             { title: 'Nessun vincolo annuale', body: 'Nessun rinnovo automatico, nessuna penale di uscita. Decidi tu quando smettere.' },
-            { title: 'Sospendibile in qualsiasi momento', body: 'Hai un imprevisto? Sospendi il pacchetto fino a 30 giorni. Le lezioni rimanenti restano valide.' },
             { title: 'Workshop sempre scontati', body: 'I workshop mensili Deep Dive sono scontati per chi ha un abbonamento attivo.' },
           ].map(({ title, body }) => (
             <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-6 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
@@ -261,7 +259,6 @@ const faqSchema = {
       { question: 'Devo per forza comprare un pacchetto?', answer: 'No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti.' },
       { question: 'Cosa succede se non finisco le lezioni in tempo?', answer: 'I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione.' },
       { question: 'I workshop sono inclusi nell\'abbonamento?', answer: 'No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato: 30€ invece di 40€.' },
-      { question: 'Come pago?', answer: 'Con bonifico o in contanti in studio. Nessun rinnovo automatico, nessun addebito a sorpresa.' },
     ]}
   />
 
