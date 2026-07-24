@@ -421,6 +421,14 @@
     }
 
     initScrollReveal();
+
+    // Tracciamento clic WhatsApp · invia evento a Vercel Analytics (cookieless)
+    document.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement).closest('a[href*="wa.me"], a[href*="api.whatsapp"]');
+      if (!link) return;
+      const label = (link.getAttribute('aria-label') || link.textContent || '').trim().slice(0, 80);
+      if (typeof (window as any).va === 'function') (window as any).va('event', { name: 'whatsapp_click', link_label: label, page_path: '/links' });
+    });
   </script>
 </body>
 </html>
