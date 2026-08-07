@@ -77,29 +77,35 @@ import Button from '../ui/Button.astro';
     ashtanga: '/corsi/ashtanga',
     flow: '/corsi/vinyasa',
     teen: '/corsi/teen-yoga',
+    workshop: '/eventi#workshop',
   };
 
   const stileColors: Record<string, string> = {
-    iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0',
+    iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0', workshop: '#bf9d70',
   };
 
   const descrizioni: Record<string, string> = {
-    'iyengar-Livello 1': 'Per chi inizia o riprende dopo molto. Posizioni in piedi, allineamenti, uso di mattoncini e cinture.',
-    'iyengar-Livello 2': 'Per chi pratica da almeno 6 mesi. Lavoro più profondo su precisione e allungamento.',
-    'iyengar-Livello 3': 'Per praticanti esperti. Asana complesse, inversioni, pranayama.',
-    'iyengar-Soft': 'Pratica delicata per chi cerca rigenerazione o ha limitazioni fisiche.',
+    'iyengar-Flessibilità': 'Lavoro su mobilità e apertura articolare, con uso di supporti per accedere alla posizione in sicurezza.',
+    'iyengar-Restorative': 'Pratica delicata e rigenerativa, per chi cerca recupero o ha limitazioni fisiche.',
+    'iyengar-Avanzato · Flessibilità': 'Per praticanti esperti. Lavoro approfondito sulla mobilità, asana complesse.',
+    'iyengar-Forza': 'Lavoro di forza e stabilità, per costruire una base solida nella pratica.',
+    'iyengar-SOS Dolori': 'Lezione mirata a chi convive con tensioni o dolori specifici: schiena, spalle, ginocchia.',
+    'iyengar-Avanzato · Forza': 'Per praticanti esperti. Lavoro approfondito sulla forza, asana complesse, inversioni.',
     'ashtanga-Mysore': 'Pratica autonoma: conosci la sequenza, la pratichi al tuo ritmo. L\'insegnante ti aggiusta individualmente.',
     'ashtanga-Guidata': 'L\'insegnante chiama le posizioni con la voce. Tutto il gruppo pratica insieme.',
+    'ashtanga-Respiro & Movimento': 'Il collegamento tra respiro e movimento al centro della pratica, in stile Ashtanga.',
     'flow-Vinyasa': 'Sequenza fluida, sempre diversa. Movimento, respiro, presenza.',
     'teen-Teen Yoga': 'Pratica pensata per ragazzi 12-17 anni. Postura, gestione dello stress, concentrazione.',
+    'workshop-Approfondimenti': 'Una mattinata con più tempo del solito per entrare nel dettaglio delle posizioni e delle tecniche. Il tema viene comunicato a ridosso della data.',
   };
 
   function openModal(lezione: { giorno: string; ora: string; stile: string; tipo: string; insegnante: string; durata: string }) {
+    const isAvanzato = lezione.tipo.startsWith('Avanzato · ');
     const stileEl = document.getElementById('modal-stile')!;
-    stileEl.textContent = lezione.stile.toUpperCase();
+    stileEl.textContent = (isAvanzato ? `${lezione.stile} avanzato` : lezione.stile).toUpperCase();
     stileEl.style.color = stileColors[lezione.stile] ?? '#9c9a66';
 
-    (document.getElementById('modal-tipo')!).textContent = lezione.tipo;
+    (document.getElementById('modal-tipo')!).textContent = isAvanzato ? lezione.tipo.replace('Avanzato · ', '') : lezione.tipo;
     (document.getElementById('modal-giorno-ora')!).textContent = `${giorniLabel[lezione.giorno] ?? lezione.giorno} · ${lezione.ora}`;
     (document.getElementById('modal-insegnante')!).textContent = lezione.insegnante;
     (document.getElementById('modal-durata')!).textContent = lezione.durata;
@@ -110,7 +116,10 @@ import Button from '../ui/Button.astro';
     const linkEl = document.getElementById('modal-link-corso') as HTMLAnchorElement;
     const href = stileLinks[lezione.stile] ?? '/corsi';
     linkEl.href = href;
-    linkEl.textContent = `Scopri ${lezione.stile.charAt(0).toUpperCase() + lezione.stile.slice(1)}`;
+    const stileLabel = lezione.stile === 'workshop'
+      ? 'gli Approfondimenti'
+      : lezione.stile.charAt(0).toUpperCase() + lezione.stile.slice(1);
+    linkEl.textContent = `Scopri ${stileLabel}`;
 
     modal!.classList.remove('hidden');
     modal!.classList.add('flex');

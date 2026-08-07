@@ -11,7 +11,7 @@
     font-display: swap;
   }
 
-  /* Inter self-hosted — latin-ext (accented chars, Italian diacritics) */
+  /* Inter self-hosted, latin-ext (accented chars, Italian diacritics) */
   @font-face {
     font-family: 'Inter';
     src: url('/fonts/Inter-latin-ext.woff2') format('woff2');
@@ -24,7 +24,7 @@
       U+2C60-2C7F, U+A720-A7FF;
   }
 
-  /* Inter self-hosted — latin */
+  /* Inter self-hosted, latin */
   @font-face {
     font-family: 'Inter';
     src: url('/fonts/Inter-latin.woff2') format('woff2');
@@ -48,7 +48,7 @@
     line-height: 1.6;
   }
 
-  /* Nasconde il testo alt visibile su immagini rotte — accessibile ai screen reader */
+  /* Nasconde il testo alt visibile su immagini rotte, accessibile ai screen reader */
   img {
     color: transparent;
   }
@@ -81,13 +81,13 @@
 }
 
 @layer utilities {
-  /* Task 9 — Custom scrollbar */
+  /* Task 9: Custom scrollbar */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #9c9a66; border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: #bf9d70; }
 
-  /* Task 6 — Link underline animation (apply class .text-link) */
+  /* Task 6: Link underline animation (apply class .text-link) */
   .text-link {
     position: relative;
     text-decoration: none;
@@ -104,7 +104,7 @@
   }
   .text-link:hover::after { width: 100%; }
 
-  /* Task 2 — Scroll reveal */
+  /* Task 2: Scroll reveal */
   [data-reveal] {
     opacity: 0;
     transform: translateY(24px);
@@ -115,7 +115,7 @@
     transform: translateY(0);
   }
 
-  /* Task 4 — Button shimmer on primary CTAs */
+  /* Task 4: Button shimmer on primary CTAs */
   .btn-shimmer {
     background-image: linear-gradient(90deg, #9c9a66 0%, #b8b69a 40%, #9c9a66 80%);
     background-size: 200% 100%;

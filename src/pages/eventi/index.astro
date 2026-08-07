@@ -11,14 +11,32 @@ import { getCollection } from 'astro:content';
 
 const ritiri = await getCollection('ritiri');
 const workshops = await getCollection('workshops', ({ data }) => data.draft !== true);
+const seminari = await getCollection('seminari', ({ data }) => data.draft !== true);
+const incontri = await getCollection('incontri', ({ data }) => data.draft !== true);
+
+// Gli eventi passati spariscono da soli: confronto a mezzanotte di oggi,
+// così un evento resta visibile per tutta la sua giornata.
+const oggi = new Date();
+oggi.setHours(0, 0, 0, 0);
+const nonPassato = (d: string) => new Date(d).getTime() >= oggi.getTime();
+
+const seminariOrdinati = seminari
+  .filter((s) => nonPassato(s.data.data_fine ?? s.data.data_inizio))
+  .sort((a, b) => new Date(a.data.data_inizio).getTime() - new Date(b.data.data_inizio).getTime());
+
+const incontriOrdinati = incontri
+  .filter((i) => nonPassato(i.data.data))
+  .sort((a, b) => new Date(a.data.data).getTime() - new Date(b.data.data).getTime());
 
 // Sort by date
-const ritiriOrdinati = ritiri.sort((a, b) =>
+const ritiriOrdinati = ritiri
+  .filter((r) => nonPassato(r.data.date_fine))
+  .sort((a, b) =>
   new Date(a.data.date_inizio).getTime() - new Date(b.data.date_inizio).getTime()
 );
-const workshopsOrdinati = workshops.sort((a, b) =>
-  new Date(a.data.data).getTime() - new Date(b.data.data).getTime()
-);
+const workshopsOrdinati = workshops
+  .filter((ws) => nonPassato(ws.data.data))
+  .sort((a, b) => new Date(a.data.data).getTime() - new Date(b.data.data).getTime());
 
 function formatData(dataStr: string) {
   const d = new Date(dataStr);
@@ -28,6 +46,22 @@ function formatData(dataStr: string) {
 function formatDataBreve(dataStr: string) {
   const d = new Date(dataStr);
   return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' });
+}
+
+// Intervallo compatto: "28-30 agosto 2026" se stesso mese,
+// "28 agosto - 3 settembre 2026" se a cavallo di due mesi.
+function formatIntervallo(inizio: string, fine?: string) {
+  if (!fine) return formatData(inizio);
+  const a = new Date(inizio);
+  const b = new Date(fine);
+  if (a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear()) {
+    return `${a.getDate()}-${formatData(fine)}`;
+  }
+  if (a.getFullYear() === b.getFullYear()) {
+    const mese = a.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' });
+    return `${mese} - ${formatData(fine)}`;
+  }
+  return `${formatData(inizio)} - ${formatData(fine)}`;
 }
 
 const ritiriConStato = ritiriOrdinati.map((r) => ({
@@ -43,7 +77,9 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
   slug: ws.slug,
   postiRimasti: ws.data.posti_disponibili,
   esaurito: ws.data.posti_disponibili === 0,
-  scarsita: ws.data.posti_disponibili > 0 && ws.data.posti_disponibili <= 3,
+  scarsita: ws.data.posti_disponibili != null
+    && ws.data.posti_disponibili > 0
+    && ws.data.posti_disponibili <= 3,
 }));
 ---
 
@@ -70,7 +106,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
         Oltre la lezione settimanale.
       </h1>
       <p class="text-white/80 text-lg max-w-lg mt-6 leading-relaxed">
-        Workshop di approfondimento, ritiri immersi nella natura, e l'estate in villa. Momenti per andare più a fondo nella pratica e nella tribù.
+        Ritiri, seminari con insegnanti ospiti, approfondimenti della domenica e serate insieme. Momenti per andare più a fondo nella pratica e nella tribù.
       </p>
     </div>
   </div>
@@ -123,19 +159,21 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
         <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
           Più giorni insieme, lontano dalla routine. I ritiri sono il modo più efficace per fare un salto di qualità nella pratica. Ma sono anche l'occasione per rilassarsi, fare nuove amicizie e visitare posti nuovi.
         </p>
-        <div class="space-y-6">
+        <div class="grid gap-6 auto-rows-fr">
           {ritiriConStato.map(({ entry: ritiro, slug, postiRimasti, esaurito, scarsita }) => (
             <a
               href={`/eventi/ritiri/${slug}`}
-              class="block group"
+              class="block group h-full"
             >
-              <div class="bg-background rounded-[22px] overflow-hidden border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200">
-                <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-0">
-                  <div class="h-[280px] md:h-full overflow-hidden">
+              <div class="h-full bg-background rounded-[22px] overflow-hidden border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200">
+                <div class="h-full grid grid-cols-1 md:grid-cols-[280px_1fr] gap-0">
+                  {/* Su desktop l'immagine è fuori flusso: così è il contenuto a
+                      determinare l'altezza della card, anche con foto verticali. */}
+                  <div class="relative h-[280px] md:h-auto overflow-hidden">
                     <img
                       src={ritiro.data.foto_hero || 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80'}
                       alt={ritiro.data.title}
-                      class="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                      class="md:absolute md:inset-0 w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500"
                       loading="lazy"
                     />
                   </div>
@@ -180,6 +218,134 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
     </Section>
   )}
 
+  <!-- Seminari -->
+  {seminariOrdinati.length > 0 && (
+    <Section background="default" id="seminari">
+      <Container>
+        <Tag class="mb-5">Seminari</Tag>
+        <Heading level={2} class="mb-4">Insegnanti ospiti.</Heading>
+        <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
+          Più giorni di pratica intensiva con insegnanti che vengono da fuori. L'occasione per confrontarsi con un altro sguardo sul metodo.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {seminariOrdinati.map((s) => (
+            <a
+              href={`/eventi/seminari/${s.slug}`}
+              class="group h-full flex flex-col bg-background-alt border border-border rounded-[22px] p-8 hover:border-primary/30 hover:shadow-md transition-all duration-200"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">
+                Con {s.data.ospite}
+              </p>
+              <h3 class="font-serif text-[26px] text-text-main leading-tight mb-3">{s.data.title}</h3>
+              <p class="text-text-secondary text-sm leading-relaxed mb-6">{s.data.descrizione_breve}</p>
+              <Divider class="mb-5" />
+              <div class="flex flex-wrap gap-6 text-sm mb-5">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Date</p>
+                  <p class="text-text-main">{formatIntervallo(s.data.data_inizio, s.data.data_fine)}</p>
+                </div>
+                {s.data.luogo && (
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Luogo</p>
+                    <p class="text-text-main">{s.data.luogo}</p>
+                  </div>
+                )}
+                {s.data.prezzo != null && (
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Quota</p>
+                    <p class="text-text-main font-medium">€{s.data.prezzo}</p>
+                  </div>
+                )}
+              </div>
+              {s.data.giorni && s.data.giorni.length > 0 && (
+                <div class="space-y-2 text-sm">
+                  {s.data.giorni.map((g) => (
+                    <div class="flex justify-between gap-4">
+                      <span class="text-text-secondary">{g.giorno}</span>
+                      <span class="text-text-main">{g.orario}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div class="mt-auto pt-5">
+                <span class="inline-flex items-center justify-center bg-primary text-white font-semibold text-sm rounded-full px-7 py-3.5">
+                  Scopri il seminario
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  )}
+
+  <!-- Incontri -->
+  {incontriOrdinati.length > 0 && (
+    <Section background="alt" id="incontri">
+      <Container>
+        <Tag class="mb-5">Incontri</Tag>
+        <Heading level={2} class="mb-4">Non solo tappetino.</Heading>
+        <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
+          Cene, conferenze, serate. Momenti per stare insieme e conoscere la tribù anche fuori dalla sala.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {incontriOrdinati.map((i) => (
+            <div class="bg-background border border-border rounded-[22px] p-6">
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">{i.data.tipo}</span>
+                {i.data.prenotazione_obbligatoria && (
+                  <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white bg-[#9c9a66] px-3 py-1 rounded-full whitespace-nowrap">
+                    Su prenotazione
+                  </span>
+                )}
+              </div>
+              <h3 class="font-serif text-[22px] text-text-main leading-tight mb-3">{i.data.title}</h3>
+              <p class="text-text-secondary text-sm leading-relaxed mb-6">{i.data.descrizione_breve}</p>
+              <Divider class="mb-5" />
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Data</p>
+                  <p class="text-text-main">{formatData(i.data.data)}</p>
+                </div>
+                {i.data.con && (
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Con</p>
+                    <p class="text-text-main">{i.data.con}</p>
+                  </div>
+                )}
+                {i.data.luogo && (
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Luogo</p>
+                    <p class="text-text-main">{i.data.luogo}</p>
+                  </div>
+                )}
+                {i.data.prezzo != null && (
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Quota</p>
+                    <p class="text-text-main font-medium">€{i.data.prezzo}</p>
+                  </div>
+                )}
+              </div>
+              <div class="mt-6">
+                <Button
+                  variant="primary"
+                  external={true}
+                  href={`https://wa.me/39${(i.data.telefono ?? '328 7675966').replace(/\s/g, '')}?text=${encodeURIComponent(
+                    i.data.prenotazione_obbligatoria
+                      ? `Ciao! Vorrei prenotare un posto per "${i.data.title}" del ${formatData(i.data.data)}.`
+                      : `Ciao! Vorrei informazioni su "${i.data.title}" del ${formatData(i.data.data)}.`
+                  )}`}
+                >
+                  {i.data.prenotazione_obbligatoria ? 'Prenota su WhatsApp' : 'Scrivici su WhatsApp'}
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  )}
+
   <!-- Workshop -->
   <Section background="default" id="workshop">
     <Container>
@@ -216,14 +382,24 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
                       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Orario</p>
                       <p class="text-text-main">{ws.data.orario}</p>
                     </div>
-                    <div>
-                      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Insegnante</p>
-                      <p class="text-text-main">{ws.data.insegnante}</p>
-                    </div>
-                    <div>
-                      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Quota</p>
-                      <p class="text-text-main font-medium">€{ws.data.prezzo_iscritti ?? ws.data.prezzo} iscritti</p>
-                    </div>
+                    {ws.data.luogo && (
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Luogo</p>
+                        <p class="text-text-main">{ws.data.luogo}</p>
+                      </div>
+                    )}
+                    {ws.data.insegnante && (
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Insegnante</p>
+                        <p class="text-text-main">{ws.data.insegnante}</p>
+                      </div>
+                    )}
+                    {(ws.data.prezzo_iscritti ?? ws.data.prezzo) != null && (
+                      <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Quota</p>
+                        <p class="text-text-main font-medium">€{ws.data.prezzo_iscritti ?? ws.data.prezzo}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </a>

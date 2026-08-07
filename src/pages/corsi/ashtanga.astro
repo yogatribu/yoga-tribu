@@ -26,7 +26,7 @@ const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "Ashtanga Vinyasa Yoga",
-  "description": "Pratica yoga sequenziale tradizionale · lezioni Guidate e Mysore. Per chi cerca disciplina, forza e silenzio interiore.",
+  "description": "Pratica yoga sequenziale tradizionale · lezioni Guidata, Mysore e Respiro & Movimento. Per chi cerca disciplina, forza e silenzio interiore.",
   "provider": { "@type": "Organization", "name": "Yoga Tribù", "sameAs": "https://yogatribu.it" },
   "courseMode": "in-person",
   "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
@@ -35,7 +35,7 @@ const courseSchema = {
 
 <BaseLayout
   title="Ashtanga Yoga a Bassano del Grappa · Yoga Tribù"
-  description="Ashtanga Vinyasa Yoga, Guidata e Mysore. Pratica costante per disciplina, forza e silenzio interiore."
+  description="Ashtanga Vinyasa Yoga, Guidata, Mysore e Respiro & Movimento. Pratica costante per disciplina, forza e silenzio interiore."
   schemaJsonLd={courseSchema}
 >
   <HeroSection
@@ -111,10 +111,10 @@ const courseSchema = {
   <!-- I 2 stili tab -->
   <Section background="default">
     <Container>
-      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">I due stili</p>
-      <Heading level={2} class="mb-4">Due modi di praticare la stessa serie.</Heading>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">I tre stili</p>
+      <Heading level={2} class="mb-4">Tre modi di praticare Ashtanga.</Heading>
       <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12">
-        L'Ashtanga si insegna in due forme diverse: ognuna ha il suo valore, e si possono alternare.
+        L'Ashtanga si insegna in tre forme diverse: ognuna ha il suo valore, e si possono alternare.
       </p>
 
       <div class="mb-10">
@@ -123,6 +123,7 @@ const courseSchema = {
           {[
             { id: 'guidata', label: 'Guidata' },
             { id: 'mysore', label: 'Mysore' },
+            { id: 'respiro-movimento', label: 'Respiro & Movimento' },
           ].map(({ id, label }, i) => (
             <button
               class="tab-btn"
@@ -227,6 +228,50 @@ const courseSchema = {
           </aside>
         </div>
       </div>
+
+      <div class="tab-panel" data-panel="respiro-movimento" style="display:none;">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
+          <div class="order-2 lg:order-1">
+            <h3 class="font-serif text-3xl text-text-main mb-5">Ashtanga Respiro & Movimento</h3>
+            <p class="text-base text-text-secondary leading-relaxed mb-6">La porta d'ingresso all'Ashtanga: si impara a collegare un movimento a un respiro, senza la pressione di seguire subito la sequenza a memoria. L'insegnante guida passo passo.</p>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Adatto a:</p>
+            <ul class="flex flex-col gap-1.5 mb-6">
+              {['Chi non ha mai fatto Ashtanga', 'Chi non ha mai fatto yoga', 'Chi vuole partire dalle basi prima di passare a Guidata o Mysore', 'Chi cerca un ritmo dolce, senza fretta di imparare la sequenza'].map(a => <li class="text-sm text-text-secondary">· {a}</li>)}
+            </ul>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">Cosa succede a lezione:</p>
+            <p class="text-sm text-text-secondary leading-relaxed">L'insegnante spiega e guida ogni passaggio con calma, costruendo pian piano il collegamento tra respiro e movimento. Nessuna posizione data per scontata, nessuna sequenza da ricordare a memoria: è il punto di partenza più semplice per avvicinarsi all'Ashtanga.</p>
+          </div>
+          <aside class="order-1 lg:order-2 lg:sticky" style="top: 100px; background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+            <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #7a6b5f; margin-bottom: 16px;">Respiro & Movimento</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Orario</span>
+              <span style="font-size: 14px; color: #2a2a2a; text-align: right;">Mercoledì 7:00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Durata</span>
+              <span style="font-size: 14px; color: #2a2a2a;">~75 min</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+              <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
+              <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">Chi parte da zero con l'Ashtanga</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0;">
+              <span style="font-size: 14px; color: #6b6b6b;">Insegnante</span>
+              <span style="font-size: 14px; color: #2a2a2a;">Daniela</span>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 24px;">
+              <Button
+                variant="primary"
+                size="md"
+                href={WA_BASE + encodeURIComponent('Ciao! Vorrei prenotare una lezione di Ashtanga Respiro & Movimento.')}
+                external={true}
+              >
+                Prenota una lezione
+              </Button>
+            </div>
+          </aside>
+        </div>
+      </div>
     </Container>
   </Section>
 
@@ -289,7 +334,7 @@ const courseSchema = {
   <FAQAccordion
     background="alt"
     items={[
-      { question: 'Devo conoscere la sequenza per iniziare?', answer: 'No. Si inizia dalla Guidata, dove l\'insegnante chiama ogni posizione. Imparerai la sequenza naturalmente, lezione dopo lezione.' },
+      { question: 'Devo conoscere la sequenza per iniziare?', answer: 'No. Se non hai mai fatto Ashtanga si inizia da Respiro & Movimento, pensata proprio per chi parte da zero. Da lì si passa alla Guidata, dove l\'insegnante chiama ogni posizione, e la sequenza si impara naturalmente, lezione dopo lezione.' },
       { question: 'Quanto è impegnativo fisicamente?', answer: 'È una pratica intensa. Ma si entra gradualmente: nessuno fa la prima serie completa al primo giorno. Si parte da una versione ridotta e si cresce nel tempo.' },
       { question: "Cos'è la Mysore? Posso iniziare da lì?", answer: 'La Mysore è la pratica autonoma, in cui ognuno pratica al proprio ritmo. Va bene anche se stai iniziando: l\'insegnante ti segue individualmente e costruisce con te un percorso su misura.' },
       { question: 'Devo essere flessibile?', answer: 'No. La flessibilità arriva con la pratica. Ciò che serve è costanza, respiro lungo, e voglia di tornare.' },
@@ -308,6 +353,7 @@ const courseSchema = {
       <Heading level={2} class="mb-16">Quando praticare Ashtanga.</Heading>
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[800px] mx-auto text-left">
         {[
+          { tag: 'RESPIRO & MOVIMENTO', orario: 'Mercoledì 7:00' },
           { tag: 'MYSORE', orario: 'Martedì 17:30' },
           { tag: 'GUIDATA', orario: 'Martedì 19:00' },
           { tag: 'MYSORE', orario: 'Giovedì 17:30' },

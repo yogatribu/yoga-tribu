@@ -1,0 +1,21 @@
+name: Rebuild giornaliero
+
+# Ripubblica il sito ogni notte così gli eventi con la data scaduta
+# (ritiri, workshop, seminari, incontri) spariscono da soli dalla
+# pagina /eventi entro 24 ore, senza bisogno di un commit.
+on:
+  schedule:
+    - cron: '0 3 * * *' # ogni giorno alle 03:00 UTC (le 04:00/05:00 in Italia)
+  workflow_dispatch: {} # permette di lanciarlo a mano da GitHub → Actions → Run workflow
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chiama il Deploy Hook di Vercel
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}" ]; then
+            echo "Secret VERCEL_DEPLOY_HOOK_URL non configurato. Vedi istruzioni nel README del workflow."
+            exit 1
+          fi
+          curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"

@@ -45,11 +45,74 @@ const workshopsCollection = defineCollection({
     data: z.string(),
     orario: z.string(),
     durata: z.number(),
-    insegnante: z.string(),
-    prezzo: z.number(),
+    // Opzionali: gli approfondimenti domenicali non hanno posti contingentati
+    // né un prezzo/insegnante fissi come i workshop tematici.
+    luogo: z.string().optional(),
+    insegnante: z.string().optional(),
+    prezzo: z.number().optional(),
     prezzo_iscritti: z.number().optional(),
-    posti_totali: z.number(),
-    posti_disponibili: z.number(),
+    posti_totali: z.number().optional(),
+    posti_disponibili: z.number().optional(),
+    descrizione_breve: z.string(),
+    // Scaletta dell'incontro. Se assente, il blocco "Programma" non viene mostrato.
+    programma: z.array(z.object({
+      durata: z.string(),
+      cosa: z.string(),
+    })).optional(),
+    programma_intro: z.string().optional(),
+    nota: z.string().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
+// Seminari intensivi con insegnanti ospiti, su più giorni.
+const seminariCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    ospite: z.string(),
+    data_inizio: z.string(),
+    data_fine: z.string().optional(),
+    giorni: z.array(z.object({
+      giorno: z.string(),
+      orario: z.string(),
+    })).optional(),
+    luogo: z.string().optional(),
+    // `prezzo` è la quota intera; `prezzi` elenca le formule parziali.
+    prezzo: z.number().optional(),
+    prezzi: z.array(z.object({
+      label: z.string(),
+      prezzo: z.number(),
+    })).optional(),
+    telefono: z.string().optional(),
+    descrizione_breve: z.string(),
+    // Pagina di dettaglio
+    foto_hero: z.string().optional(),
+    foto_secondaria: z.string().optional(),
+    occhiello: z.string().optional(),
+    titolo_sezione: z.string().optional(),
+    descrizione: z.array(z.string()).optional(),
+    bio_ospite: z.array(z.string()).optional(),
+    per_chi: z.array(z.string()).optional(),
+    portare: z.array(z.string()).optional(),
+    nota: z.string().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
+// Incontri non di pratica: cene, conferenze, serate.
+const incontriCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    tipo: z.string(),
+    data: z.string(),
+    orario: z.string().optional(),
+    luogo: z.string().optional(),
+    con: z.string().optional(),
+    prezzo: z.number().optional(),
+    prenotazione_obbligatoria: z.boolean().optional(),
+    telefono: z.string().optional(),
     descrizione_breve: z.string(),
     draft: z.boolean().optional(),
   }),
@@ -58,4 +121,6 @@ const workshopsCollection = defineCollection({
 export const collections = {
   ritiri: ritiriCollection,
   workshops: workshopsCollection,
+  seminari: seminariCollection,
+  incontri: incontriCollection,
 };

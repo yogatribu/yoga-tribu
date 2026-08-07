@@ -111,13 +111,14 @@ const courseSchema = {
     </div>
   </section>
 
-  <!-- I 4 livelli (tabs) -->
+  <!-- Le pratiche (tabs) -->
   <Section background="default">
     <Container>
-      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">I livelli</p>
-      <Heading level={2} class="mb-4">Tre livelli più una pratica ristorativa.</Heading>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Le pratiche</p>
+      <Heading level={2} class="mb-4">Tre pratiche, non tre livelli di difficoltà.</Heading>
       <p class="text-text-secondary text-base max-w-[700px] leading-relaxed mb-12">
-        Iyengar non è uno stile unico, è un percorso. Ogni livello è pensato per una fase specifica.
+        Iyengar e Iyengar Avanzato alternano, giorno per giorno, un focus su forza e uno su flessibilità.
+        SOS Dolori è un lavoro a parte, mirato su una zona specifica.
       </p>
 
       <!-- Segmented control tabs -->
@@ -125,10 +126,9 @@ const courseSchema = {
         <div class="iyengar-seg-container" style="position: relative; display: inline-flex; background: #e8e4df; border-radius: 9999px; padding: 4px; gap: 2px;" role="tablist">
           <div id="iyengar-indicator" style="position: absolute; top: 4px; bottom: 4px; background: #9c9a66; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65,0,0.35,1), width 300ms cubic-bezier(0.65,0,0.35,1); pointer-events: none;"></div>
           {[
-            { id: 'livello-1', label: 'Livello 1' },
-            { id: 'livello-2', label: 'Livello 2' },
-            { id: 'livello-3', label: 'Livello 3' },
-            { id: 'soft', label: 'Restorative' },
+            { id: 'iyengar', label: 'Iyengar' },
+            { id: 'avanzato', label: 'Iyengar Avanzato' },
+            { id: 'corpo-dolori', label: 'SOS Dolori' },
           ].map(({ id, label }, i) => (
             <button
               class="tab-btn"
@@ -146,43 +146,42 @@ const courseSchema = {
       <!-- Panels -->
       {[
         {
-          id: 'livello-1',
-          nome: 'Livello 1', sub: 'Base',
-          intro: 'Per chi inizia o riprende dopo molto.',
-          adatto: ['Principianti assoluti', 'Chi non pratica da molto tempo', 'Chi vuole costruire fondamenta solide', 'Chi ha dolori cronici e cerca un approccio strutturato'],
-          cosa: 'Si affrontano ad ogni lezione gruppi diversi (posizioni in piedi, archi, estensioni avanti), con allineamenti precisi. Si impara ad usare gli attrezzi che aiutano a eseguire meglio le posizioni. L\'insegnante spiega il perché di ogni posizione.',
-          quando: 'Lunedì 8:45 · Mercoledì 8:45',
-          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 1.',
+          id: 'iyengar',
+          nome: 'Iyengar', sub: 'La pratica di base',
+          intro: 'Per chi inizia o riprende dopo molto, e per chi pratica già da almeno 6 mesi e conosce le posizioni di base.',
+          adatto: ['Principianti assoluti', 'Chi non pratica da molto tempo', 'Chi vuole costruire fondamenta solide', 'Chi ha dolori cronici e cerca un approccio strutturato', 'Chi ha completato almeno 6 mesi di pratica ed è pronto a lavorare su precisione e allungamenti più profondi'],
+          cosa: 'Si affrontano ad ogni lezione gruppi diversi (posizioni in piedi, archi, estensioni avanti), con allineamenti precisi. Si impara ad usare gli attrezzi che aiutano a eseguire meglio le posizioni. L\'insegnante spiega il perché di ogni posizione. Con la pratica, il lavoro diventa più profondo e le sequenze più complesse: sequenze costruite, non improvvisate. Nell\'incontro Restorative, le posizioni sono mantenute a lungo con uso intenso di supporti (coperte, mattoncini, cinture): pratica passiva, recupero del sistema nervoso, rilascio profondo delle tensioni.',
+          varianti: [
+            { label: 'Flessibilità', quando: 'Lunedì 7:00 · 8:45 · 17:00 · 19:00' },
+            { label: 'Forza', quando: 'Mercoledì 8:45 · 17:00 · 19:00' },
+            { label: 'Restorative', quando: 'Martedì 8:45' },
+          ],
+          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar.',
         },
         {
-          id: 'livello-2',
-          nome: 'Livello 2', sub: 'Intermedio',
-          intro: 'Per chi pratica da almeno 6 mesi e conosce le posizioni di base.',
-          adatto: ['Chi ha completato almeno 6 mesi di L1', 'Chi è pronto a lavorare su precisione e allungamenti più profondi'],
-          cosa: 'Il lavoro diventa più profondo e le sequenze diventano più complesse. Sequenze costruite, non improvvisate.',
-          quando: 'Lunedì 7:00, 18:00, 19:30 · Mercoledì 18:00, 19:30',
-          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 2.',
-        },
-        {
-          id: 'livello-3',
-          nome: 'Livello 3', sub: 'Avanzato',
+          id: 'avanzato',
+          nome: 'Iyengar Avanzato', sub: 'Per praticanti esperti',
           intro: 'Per praticanti esperti.',
-          adatto: ['Chi pratica costantemente da almeno 2 anni', 'Chi ha familiarità con tutte le inversioni', 'Chi vuole approfondire pranayama e asana complesse'],
+          adatto: ['Chi ha familiarità con tutte le inversioni', 'Chi vuole approfondire pranayama e asana complesse'],
           cosa: 'Asana avanzate, inversioni complete, pranayama (tecniche di respirazione), approfondimenti su filosofia e metodo. Anche se la pratica è impegnativa fisicamente, si raggiunge comunque una vicinanza alla meditazione.',
-          quando: 'Martedì 13:00 · Giovedì 13:00',
-          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Livello 3.',
-          warning: 'Riservato a chi pratica da almeno 2 anni. Se hai dubbi sul tuo livello, scrivici prima.',
+          varianti: [
+            { label: 'Flessibilità', quando: 'Martedì 13:00' },
+            { label: 'Forza', quando: 'Giovedì 13:00' },
+          ],
+          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Avanzato.',
         },
         {
-          id: 'soft',
-          nome: 'Restorative', sub: 'Ristorativo',
-          intro: 'Per chi cerca rigenerazione, recupero o pratica delicata.',
-          adatto: ['Chi sta recuperando da un infortunio', 'Chi ha bisogno di rallentare', 'Chi vuole lavorare profondamente sul sistema nervoso e la respirazione', 'Chi è alla prima esperienza con lo yoga'],
-          cosa: 'Posizioni mantenute a lungo, con uso intenso di supporti (coperte, mattoncini, cinture). Pratica passiva, recupero del sistema nervoso, rilascio profondo delle tensioni.',
-          quando: 'Martedì 8:45',
-          wa: 'Ciao! Vorrei prenotare una lezione di Iyengar Soft.',
+          id: 'corpo-dolori',
+          nome: 'SOS Dolori', sub: 'Lavoro mirato',
+          intro: 'Una lezione pensata per chi convive con un dolore specifico (cervicale, schiena, spalle, anche, dolori mestruali) e vuole lavorarci con un metodo.',
+          adatto: ['Chi ha un dolore ricorrente in una zona precisa (cervicale, schiena, spalle, anche)', 'Chi convive con dolori mestruali', 'Chi ha già provato altri approcci senza risultati duraturi', 'Chi vuole capire la causa del dolore, non solo alleviarlo per un momento'],
+          cosa: 'Si lavora su una zona del corpo alla volta, con sequenze pensate per decomprimere, rinforzare e riallineare. Molto uso di supporti, per raggiungere la posizione corretta senza forzare oltre il proprio limite. Non è una lezione generica: l\'insegnante adatta il lavoro alla persona che ha davanti.',
+          varianti: [
+            { label: 'SOS Dolori', quando: 'Giovedì 8:45' },
+          ],
+          wa: 'Ciao! Vorrei prenotare una lezione di SOS Dolori.',
         },
-      ].map(({ id, nome, sub, intro, adatto, cosa, quando, wa, warning }, i) => (
+      ].map(({ id, nome, sub, intro, adatto, cosa, varianti, wa, warning }, i) => (
         <div class="tab-panel" data-panel={id} style={i !== 0 ? 'display:none;' : ''}>
           <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
             <!-- Testo descrittivo: order-2 su mobile, order-1 su desktop -->
@@ -205,17 +204,15 @@ const courseSchema = {
             <!-- Box info: order-1 su mobile (priorità), order-2 su desktop -->
             <aside class="order-1 lg:order-2 lg:sticky" style="top: 100px; background: white; border: 1px solid #e8e4df; border-radius: 18px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
               <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">{sub}</p>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
-                <span style="font-size: 14px; color: #6b6b6b;">Orario</span>
-                <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">{quando}</span>
-              </div>
+              {varianti.map((v) => (
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
+                  <span style="font-size: 14px; color: #6b6b6b;">{v.label}</span>
+                  <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 60%;">{v.quando}</span>
+                </div>
+              ))}
               <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
                 <span style="font-size: 14px; color: #6b6b6b;">Durata</span>
                 <span style="font-size: 14px; color: #2a2a2a;">~75 min</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #e8e4df;">
-                <span style="font-size: 14px; color: #6b6b6b;">Per chi</span>
-                <span style="font-size: 14px; color: #2a2a2a; text-align: right; max-width: 55%;">{intro}</span>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0;">
                 <span style="font-size: 14px; color: #6b6b6b;">Insegnante</span>
@@ -358,7 +355,8 @@ const courseSchema = {
       { question: 'Posso fare Iyengar se ho dei problemi fisici?', answer: 'La maggior parte dei nostri allievi viene proprio per questo. Iyengar nasce con applicazioni terapeutiche reali. Prima della lezione, parla con l\'insegnante delle tue condizioni: adatterà la pratica a te.' },
       { question: 'Devo essere flessibile per iniziare?', answer: 'No. La flessibilità è il risultato della pratica, non il prerequisito. I nostri allievi più rigidi diventano i più consapevoli del loro corpo nei primi mesi.' },
       { question: 'Dopo quanto tempo vedo i primi risultati?', answer: 'Dipende da cosa cerchi, ma prima di quanto pensi. Sulle tensioni quotidiane bastano 2-3 settimane di pratica regolare. Sui dolori cronici, come il mal di schiena, di solito servono 1-2 mesi. Sulla flessibilità e la trasformazione più profonda, dai 6 mesi in su. La costante è una: la pratica regolare, una o due volte a settimana.' },
-      { question: 'Come capisco il mio livello?', answer: 'Se sei alla prima volta o non pratichi da anni → Livello 1 (Base) o Soft. Se conosci le posizioni base → Livello 2. Se hai dubbi, scrivici e ti aiutiamo a scegliere.' },
+      { question: 'Come scelgo tra Iyengar e Iyengar Avanzato?', answer: 'Iyengar va bene per chi inizia, riprende dopo una pausa, o pratica da almeno 6 mesi e conosce le posizioni di base. Iyengar Avanzato è per chi ha familiarità con tutte le inversioni e vuole approfondire pranayama e asana complesse. Se hai dubbi, scrivici e ti aiutiamo a scegliere.' },
+      { question: 'Cosa cambia tra le lezioni di forza e quelle di flessibilità?', answer: 'Stesso metodo, focus diverso: le lezioni di flessibilità lavorano su apertura e mobilità articolare, quelle di forza su stabilità e tenuta. Nell\'arco della settimana puoi frequentare entrambe.' },
     ]}
   />
 
@@ -373,16 +371,17 @@ const courseSchema = {
       <Heading level={2} class="mb-16">Quando praticare Iyengar.</Heading>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-[1040px] mx-auto text-left">
         {[
-          { tag: 'LIVELLO 2', orario: 'Lunedì 7:00' },
-          { tag: 'LIVELLO 1', orario: 'Lunedì 8:45' },
-          { tag: 'LIVELLO 2', orario: 'Lunedì 18:00' },
-          { tag: 'LIVELLO 2', orario: 'Lunedì 19:30' },
-          { tag: 'SOFT', orario: 'Martedì 8:45' },
-          { tag: 'LIVELLO 3', orario: 'Martedì 13:00' },
-          { tag: 'LIVELLO 1', orario: 'Mercoledì 8:45' },
-          { tag: 'LIVELLO 2', orario: 'Mercoledì 18:00' },
-          { tag: 'LIVELLO 2', orario: 'Mercoledì 19:30' },
-          { tag: 'LIVELLO 3', orario: 'Giovedì 13:00' },
+          { tag: 'FLESSIBILITÀ', orario: 'Lunedì 7:00' },
+          { tag: 'FLESSIBILITÀ', orario: 'Lunedì 8:45' },
+          { tag: 'FLESSIBILITÀ', orario: 'Lunedì 17:00' },
+          { tag: 'FLESSIBILITÀ', orario: 'Lunedì 19:00' },
+          { tag: 'RESTORATIVE', orario: 'Martedì 8:45' },
+          { tag: 'AVANZATO · FLESSIBILITÀ', orario: 'Martedì 13:00' },
+          { tag: 'FORZA', orario: 'Mercoledì 8:45' },
+          { tag: 'FORZA', orario: 'Mercoledì 17:00' },
+          { tag: 'FORZA', orario: 'Mercoledì 19:00' },
+          { tag: 'CORPO & DOLORI', orario: 'Giovedì 8:45' },
+          { tag: 'AVANZATO · FORZA', orario: 'Giovedì 13:00' },
         ].map(({ tag, orario }) => (
           <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
             <p class="text-tiny uppercase tracking-widest" style="color: #9c9a66;">{tag}</p>
@@ -442,7 +441,7 @@ const courseSchema = {
   });
 
   requestAnimationFrame(() => {
-    const first = document.querySelector<HTMLElement>('.tab-btn[data-tab="livello-1"]');
+    const first = document.querySelector<HTMLElement>('.tab-btn[data-tab="iyengar"]');
     if (first) positionIndicator(first);
   });
 

@@ -22,8 +22,9 @@ const { Content } = await entry.render();
 const ws = entry.data;
 
 const postiRimasti = ws.posti_disponibili;
+const haPosti = postiRimasti != null && ws.posti_totali != null;
 const esaurito = postiRimasti === 0;
-const scarsita = postiRimasti <= 3 && postiRimasti > 0;
+const scarsita = postiRimasti != null && postiRimasti <= 3 && postiRimasti > 0;
 
 function formatData(dataStr: string) {
   return new Date(dataStr).toLocaleDateString('it-IT', {
@@ -65,12 +66,14 @@ const eventSchema = {
     }
   },
   "organizer": { "@type": "Organization", "name": "Yoga Tribù", "url": "https://yogatribu.it" },
-  "offers": {
-    "@type": "Offer",
-    "price": String(ws.prezzo),
-    "priceCurrency": "EUR",
-    "availability": esaurito ? "https://schema.org/SoldOut" : "https://schema.org/InStock"
-  }
+  ...(ws.prezzo != null && {
+    "offers": {
+      "@type": "Offer",
+      "price": String(ws.prezzo),
+      "priceCurrency": "EUR",
+      "availability": esaurito ? "https://schema.org/SoldOut" : "https://schema.org/InStock"
+    }
+  })
 };
 ---
 
@@ -79,61 +82,33 @@ const eventSchema = {
   description={ws.descrizione_breve}
   schemaJsonLd={eventSchema}
 >
-  <!-- Hero -->
-  <div
-    data-hero
-    class="relative flex items-end overflow-hidden bg-[#2a2a2a]"
-    style="min-height: 80vh;"
-  >
-    <img
-      src="https://images.unsplash.com/photo-1601925228008-6f0a7effc3d7?w=1600&q=80"
-      alt={ws.title}
-      class="absolute inset-0 w-full h-full object-cover opacity-40"
-      loading="eager"
-    />
-    <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%);"></div>
-    <div class="relative container-default pb-16 pt-32">
-      <p class="text-[12px] font-semibold uppercase tracking-[0.1em] text-white/70 mb-4">Workshop · Yoga Tribù</p>
-      <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight max-w-3xl mb-4">
+  <!-- Intestazione (senza foto: gli approfondimenti cambiano ogni settimana
+       e non abbiamo una fotografia dedicata) -->
+  <div class="bg-background pt-28 pb-12 md:pt-32 md:pb-14">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Approfondimento</p>
+      <h1 class="font-serif text-h1-mobile md:text-display text-text-main leading-tight max-w-3xl mb-4">
         {ws.title}
       </h1>
-      <p class="text-white/80 text-base max-w-xl leading-relaxed mb-8">
+      <p class="text-text-secondary text-lg max-w-xl leading-relaxed mb-8">
         {ws.descrizione_breve}
       </p>
-      <div class="flex flex-wrap gap-6 mb-8">
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Data</p>
-          <p class="text-white text-sm">{formatDataBreve(ws.data)}</p>
-        </div>
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Orario</p>
-          <p class="text-white text-sm">{ws.orario}</p>
-        </div>
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Durata</p>
-          <p class="text-white text-sm">{durataLabel(ws.durata)}</p>
-        </div>
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 mb-1">Luogo</p>
-          <p class="text-white text-sm">Studio Yoga Tribù, Bassano del Grappa</p>
-        </div>
-      </div>
       {esaurito ? (
         <Button
-          variant="secondary-dark" size="lg" external={true}
+          variant="secondary" size="lg" external={true}
           href={`https://wa.me/393287675966?text=Ciao!%20Il%20workshop%20%22${encodeURIComponent(ws.title)}%22%20%C3%A8%20esaurito%20%E2%80%94%20posso%20essere%20avvisato%20se%20si%20libera%20un%20posto%3F`}
         >
           Lista d'attesa
         </Button>
       ) : (
         <Button
-          variant="secondary-dark" size="lg" external={true}
+          variant="primary" size="lg" external={true}
           href={`https://wa.me/393287675966?text=Ciao!%20Vorrei%20iscrivermi%20al%20workshop%20%22${encodeURIComponent(ws.title)}%22.%20Sono%20%5Biscritto%20%2F%20non%20iscritto%5D%20a%20Yoga%20Trib%C3%B9.`}
         >
           Iscriviti su WhatsApp
         </Button>
       )}
-    </div>
+    </Container>
   </div>
 
   <!-- Dettagli rapidi -->
@@ -141,23 +116,47 @@ const eventSchema = {
     <Container>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
         <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Insegnanti</p>
-          <p class="text-text-main text-sm font-medium">{ws.insegnante}</p>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Data</p>
+          <p class="text-text-main text-sm font-medium">{formatDataBreve(ws.data)}</p>
         </div>
         <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Posti totali</p>
-          <p class="text-text-main text-sm font-medium">{ws.posti_totali} persone</p>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Orario</p>
+          <p class="text-text-main text-sm font-medium">{ws.orario}</p>
         </div>
         <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Posti disponibili</p>
-          <p class={`text-sm font-medium ${esaurito ? 'text-text-secondary' : scarsita ? 'text-[#c95a4a]' : 'text-text-main'}`}>
-            {esaurito ? 'Esauriti' : `${postiRimasti} / ${ws.posti_totali}`}
-          </p>
+          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Durata</p>
+          <p class="text-text-main text-sm font-medium">{durataLabel(ws.durata)}</p>
         </div>
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Quota</p>
-          <p class="text-text-main text-sm font-medium">30€ iscritti · 40€ non iscritti</p>
-        </div>
+        {ws.insegnante && (
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Insegnanti</p>
+            <p class="text-text-main text-sm font-medium">{ws.insegnante}</p>
+          </div>
+        )}
+        {haPosti && (
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Posti totali</p>
+            <p class="text-text-main text-sm font-medium">{ws.posti_totali} persone</p>
+          </div>
+        )}
+        {haPosti && (
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Posti disponibili</p>
+            <p class={`text-sm font-medium ${esaurito ? 'text-text-secondary' : scarsita ? 'text-[#c95a4a]' : 'text-text-main'}`}>
+              {esaurito ? 'Esauriti' : `${postiRimasti} / ${ws.posti_totali}`}
+            </p>
+          </div>
+        )}
+        {ws.prezzo != null && (
+          <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Quota</p>
+            <p class="text-text-main text-sm font-medium">
+              {ws.prezzo_iscritti != null
+                ? `${ws.prezzo_iscritti}€ iscritti · ${ws.prezzo}€ non iscritti`
+                : `${ws.prezzo}€`}
+            </p>
+          </div>
+        )}
       </div>
     </Container>
   </Section>
@@ -173,26 +172,28 @@ const eventSchema = {
             <Content />
           </article>
 
+          {ws.nota && (
+            <p class="text-sm text-[#9b9b9b] italic mt-2">{ws.nota}</p>
+          )}
+
           <!-- Programma: fuori dal prose-workshop per non perdere gli stili card -->
+          {ws.programma && ws.programma.length > 0 && (
           <div class="mt-12">
             <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Come si svolge</p>
             <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Programma</h2>
-            <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6">3 ore di pratica intensiva, suddivise in:</p>
+            {ws.programma_intro && (
+              <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6">{ws.programma_intro}</p>
+            )}
             <div class="space-y-3">
-              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">45 min</p>
-                <p class="text-sm text-[#2a2a2a]">Riscaldamento e preparazione del corpo</p>
-              </div>
-              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">90 min</p>
-                <p class="text-sm text-[#2a2a2a]">Asana principali con varianti</p>
-              </div>
-              <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">45 min</p>
-                <p class="text-sm text-[#2a2a2a]">Approfondimento e riposo</p>
-              </div>
+              {ws.programma.map((p) => (
+                <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">{p.durata}</p>
+                  <p class="text-sm text-[#2a2a2a]">{p.cosa}</p>
+                </div>
+              ))}
             </div>
           </div>
+          )}
 
         </div>
 
@@ -200,16 +201,22 @@ const eventSchema = {
         <div class="sticky top-24 space-y-4">
           <!-- Card quota -->
           <div class="bg-background-alt border border-border rounded-[18px] p-6">
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <div>
-                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Iscritti</p>
-                <p class="font-serif text-[32px] text-text-main leading-none">30€</p>
+            {ws.prezzo != null && (
+              <div class="grid grid-cols-2 gap-4 mb-4">
+                {ws.prezzo_iscritti != null && (
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Iscritti</p>
+                    <p class="font-serif text-[32px] text-text-main leading-none">{ws.prezzo_iscritti}€</p>
+                  </div>
+                )}
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">
+                    {ws.prezzo_iscritti != null ? 'Non iscritti' : 'Quota'}
+                  </p>
+                  <p class="font-serif text-[32px] text-text-main leading-none">{ws.prezzo}€</p>
+                </div>
               </div>
-              <div>
-                <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-2">Non iscritti</p>
-                <p class="font-serif text-[32px] text-text-main leading-none">40€</p>
-              </div>
-            </div>
+            )}
             {scarsita && (
               <span class="inline-block text-[11px] font-semibold uppercase tracking-[0.1em] text-white bg-[#c95a4a] px-3 py-1 rounded-full mb-3">
                 Ultimi {postiRimasti}!
@@ -236,18 +243,22 @@ const eventSchema = {
               </div>
               <div class="flex justify-between gap-4">
                 <span class="text-text-secondary">Luogo</span>
-                <span class="text-text-main text-right">Studio Yoga Tribù,<br/>Bassano del Grappa</span>
+                <span class="text-text-main text-right" set:html={ws.luogo ?? 'Studio Yoga Tribù,<br/>Via Mazzini 1, San Giuseppe di Cassola (VI)'}></span>
               </div>
-              <div class="flex justify-between gap-4">
-                <span class="text-text-secondary">Insegnante</span>
-                <span class="text-text-main">{ws.insegnante}</span>
-              </div>
-              <div class="flex justify-between gap-4">
-                <span class="text-text-secondary">Posti rimasti</span>
-                <span class={`font-medium ${esaurito ? 'text-text-secondary' : scarsita ? 'text-[#c95a4a]' : 'text-text-main'}`}>
-                  {esaurito ? '·' : `${postiRimasti} / ${ws.posti_totali}`}
-                </span>
-              </div>
+              {ws.insegnante && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Insegnante</span>
+                  <span class="text-text-main">{ws.insegnante}</span>
+                </div>
+              )}
+              {haPosti && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Posti rimasti</span>
+                  <span class={`font-medium ${esaurito ? 'text-text-secondary' : scarsita ? 'text-[#c95a4a]' : 'text-text-main'}`}>
+                    {esaurito ? '·' : `${postiRimasti} / ${ws.posti_totali}`}
+                  </span>
+                </div>
+              )}
             </div>
             {esaurito ? (
               <div class="text-center">

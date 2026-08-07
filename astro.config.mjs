@@ -8,15 +8,12 @@ const pagesExcludedFromSitemap = new Set([
   '/termini/',
   '/links/',
   '/quiz/',
-  '/corsi/donna/',
-  '/corsi/donna-e-gravidanza/',
   '/corsi/flow/',
   '/corsi/teen-yoga/',
   '/corsi/vinyasa/',
   '/insegnanti/asia/',
   '/insegnanti/giulia/',
   '/insegnanti/mattia/',
-  '/insegnanti/teen/',
 ]);
 
 export default defineConfig({
@@ -29,7 +26,6 @@ export default defineConfig({
   site: 'https://yogatribu.it',
   redirects: {
     '/quiz': '/trova-la-tua-pratica',
-    '/corsi/donna': '/corsi/salute-femminile',
     '/corsi/flow': '/corsi/vinyasa',
   },
 });

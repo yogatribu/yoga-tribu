@@ -14,39 +14,37 @@ const domande = [
     id: 'q1',
     testo: 'Perché vuoi fare yoga?',
     opzioni: [
-      { id: 'a', testo: 'Ho dolori fisici o limitazioni che voglio risolvere', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
-      { id: 'b', testo: 'Voglio costruire una pratica seria e costante', peso: { iyengar: 0, ashtanga: 1, flow: 0 } },
-      { id: 'c', testo: 'Voglio muovermi di più, sentirmi meglio nel corpo', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
-      { id: 'd', testo: 'Voglio ridurre lo stress e trovare calma', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
+      { id: 'a', testo: 'Ho un dolore specifico che voglio affrontare con metodo', peso: { iyengar: 1, ashtanga: 0 } },
+      { id: 'b', testo: 'Voglio costruire una disciplina quotidiana, un posto fisso a cui tornare', peso: { iyengar: 0, ashtanga: 1 } },
+      { id: 'c', testo: 'Voglio capire il mio corpo e correggere abitudini scorrette', peso: { iyengar: 1, ashtanga: 0 } },
+      { id: 'd', testo: 'Voglio una pratica fisica che mi metta alla prova e cresca nel tempo', peso: { iyengar: 0, ashtanga: 1 } },
     ],
   },
   {
     id: 'q2',
-    testo: 'Come ti rapporti con la disciplina e la ripetizione?',
+    testo: 'Come preferisci essere seguito durante la lezione?',
     opzioni: [
-      { id: 'a', testo: 'Mi piace la struttura: sapere cosa mi aspetta mi aiuta', peso: { iyengar: 0, ashtanga: 1, flow: 0 } },
-      { id: 'b', testo: 'Preferisco varietà, non la stessa cosa ogni volta', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
-      { id: 'c', testo: 'Ho bisogno di capire il perché di ogni cosa che faccio', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
-      { id: 'd', testo: 'Non ho ancora capito cosa funziona per me', peso: { iyengar: 0, ashtanga: 0, flow: 0 } },
+      { id: 'a', testo: "Voglio che l'insegnante mi corregga nel dettaglio, spiegandomi il perché", peso: { iyengar: 1, ashtanga: 0 } },
+      { id: 'b', testo: 'Preferisco imparare una sequenza fissa e poi praticarla sempre più in autonomia', peso: { iyengar: 0, ashtanga: 1 } },
+      { id: 'c', testo: 'Ho bisogno di supporti per lavorare senza forzare', peso: { iyengar: 1, ashtanga: 0 } },
+      { id: 'd', testo: 'Mi piace il ritmo dato dal respiro, senza tante pause a spiegare', peso: { iyengar: 0, ashtanga: 1 } },
     ],
   },
   {
     id: 'q3',
     testo: 'Qual è la tua relazione con il corpo in questo momento?',
     opzioni: [
-      { id: 'a', testo: 'Ho aree di dolore o rigidità che mi limitano', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
-      { id: 'b', testo: 'Mi sento abbastanza a mio agio, voglio migliorare la forza', peso: { iyengar: 0, ashtanga: 1, flow: 0 } },
-      { id: 'c', testo: 'Voglio ritrovare il piacere del movimento', peso: { iyengar: 0, ashtanga: 0, flow: 1 } },
-      { id: 'd', testo: 'Non ho una relazione intenzionale con il corpo', peso: { iyengar: 1, ashtanga: 0, flow: 0 } },
+      { id: 'a', testo: 'Ho aree di rigidità o dolore che limitano i movimenti di tutti i giorni', peso: { iyengar: 1, ashtanga: 0 } },
+      { id: 'b', testo: 'Mi sento abbastanza in forma, voglio aumentare forza e resistenza con costanza', peso: { iyengar: 0, ashtanga: 1 } },
+      { id: 'c', testo: 'Convivo con una condizione che richiede attenzione mirata', peso: { iyengar: 1, ashtanga: 0 } },
+      { id: 'd', testo: 'Cerco una disciplina fisica e mentale, anche quando è impegnativa', peso: { iyengar: 0, ashtanga: 1 } },
     ],
   },
 ];
 
-// Chiavi quiz attive (flow = vinyasa)
-const activeQuizKeys = (['iyengar', 'ashtanga', 'flow'] as const).filter(k => {
-  if (k === 'flow') return PRATICHE_ATTIVE.includes('vinyasa');
-  return PRATICHE_ATTIVE.includes(k);
-});
+// Le uniche due pratiche generali attive sul sito (Salute Femminile è un percorso
+// a parte, non un esito del quiz; Vinyasa e Teen Yoga non sono attualmente attivi).
+const activeQuizKeys = (['iyengar', 'ashtanga'] as const).filter(k => PRATICHE_ATTIVE.includes(k));
 
 const risultati = {
   iyengar: {
@@ -58,11 +56,6 @@ const risultati = {
     titolo: 'Ashtanga Yoga',
     descrizione: 'Una pratica costante e strutturata, che ti dà disciplina e un posto a cui tornare ogni giorno.',
     link: '/corsi/ashtanga',
-  },
-  flow: {
-    titolo: 'Vinyasa',
-    descrizione: 'Un movimento fluido e sempre diverso, per ritrovare leggerezza e piacere nel corpo.',
-    link: '/corsi/vinyasa',
   },
 };
 ---
@@ -189,13 +182,13 @@ const risultati = {
     document.getElementById('quiz-risultato').style.display = 'block';
 
     // Calcola scores
-    const scores = { iyengar: 0, ashtanga: 0, flow: 0 };
+    const scores = { iyengar: 0, ashtanga: 0 };
     Object.values(risposteDate).forEach((pesi) => {
       Object.entries(pesi).forEach(([stile, valore]) => { scores[stile] += valore; });
     });
 
-    // Considera solo le chiavi delle pratiche attive; tie-break: iyengar > ashtanga > flow
-    const keysAttive = activeQuizKeys.length > 0 ? activeQuizKeys : ['iyengar', 'ashtanga', 'flow'];
+    // Considera solo le chiavi delle pratiche attive; tie-break: iyengar > ashtanga
+    const keysAttive = activeQuizKeys.length > 0 ? activeQuizKeys : ['iyengar', 'ashtanga'];
     const scoresAttivi = Object.fromEntries(keysAttive.map(k => [k, scores[k] ?? 0]));
     const maxScore = Math.max(0, ...Object.values(scoresAttivi));
     const vincitore = keysAttive.find(p => scoresAttivi[p] === maxScore) ?? keysAttive[0] ?? 'iyengar';

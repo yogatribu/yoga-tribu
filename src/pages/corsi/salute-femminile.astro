@@ -20,6 +20,56 @@ import { altFor } from '../../config/imageAlt.js';
 const WA_BASE = 'https://wa.me/393471098694?text=';
 const COLOR = '#c89797';
 
+// Percorsi attivi: quando l'ultima data di ognuno passa, spariscono da soli
+// e la sezione torna a mostrare il messaggio generico "scrivici per sapere
+// quando parte il prossimo percorso" (vedi più sotto).
+const oggi = new Date();
+oggi.setHours(0, 0, 0, 0);
+
+const percorsi = [
+  {
+    slug: 'massaggio-neonatale',
+    title: 'Massaggio neonatale',
+    nota: 'Per bambini da 0 a 7 mesi',
+    quando: 'Lunedì 10:15',
+    durata: "1h 15'",
+    incontri: ['2026-09-14', '2026-09-21', '2026-09-28', '2026-10-05'],
+  },
+  {
+    slug: 'pavimento-pelvico-post-parto',
+    title: 'Pavimento pelvico post parto',
+    nota: 'Metodo De Gasquet · puoi partecipare con il tuo bambino',
+    quando: 'Lunedì 10:15',
+    durata: '1 ora',
+    incontri: ['2026-10-12', '2026-10-19', '2026-10-26', '2026-11-02'],
+  },
+  {
+    slug: 'pavimento-pelvico-per-tutti-autunno',
+    title: 'Pavimento pelvico per tutti',
+    nota: 'Metodo De Gasquet',
+    quando: 'Sabato 8:45',
+    durata: '1 ora',
+    incontri: ['2026-09-05', '2026-09-12', '2026-09-26', '2026-10-03'],
+  },
+  {
+    slug: 'pavimento-pelvico-per-tutti-inverno',
+    title: 'Pavimento pelvico per tutti',
+    nota: 'Metodo De Gasquet',
+    quando: 'Sabato 8:45',
+    durata: '1 ora',
+    incontri: ['2026-11-21', '2026-11-28', '2026-12-05', '2026-12-12'],
+  },
+];
+
+function formatDataBreve(iso: string) {
+  return new Date(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'long' });
+}
+
+const percorsiAttivi = percorsi.filter((p) => {
+  const ultima = new Date(p.incontri[p.incontri.length - 1]);
+  return ultima.getTime() >= oggi.getTime();
+});
+
 const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
@@ -243,19 +293,67 @@ const tabs = [
     ]}
   />
 
-  <!-- Come funziona -->
-  <Section background="default">
-    <Container size="narrow" class="text-center">
-      <Tag class="mb-5 inline-block" style={`color: ${COLOR};`}>Come funziona</Tag>
-      <Heading level={2} class="mb-6">I percorsi partono a gruppi.</Heading>
-      <p class="text-text-secondary text-base leading-relaxed mb-10 max-w-[560px] mx-auto">
-        I percorsi di Salute Femminile non seguono un calendario fisso. Sara apre piccoli gruppi in base alle fasi e alle esigenze di chi partecipa. Scrivile su WhatsApp per sapere quando parte il prossimo percorso adatto a te.
-      </p>
-      <Button variant="primary" size="lg" href={WA_BASE + encodeURIComponent('Ciao! Vorrei sapere quando parte il prossimo percorso di Salute Femminile.')} external={true}>
-        Scrivici su WhatsApp
-      </Button>
-    </Container>
-  </Section>
+  <!-- Percorsi attivi -->
+  {percorsiAttivi.length > 0 ? (
+    <Section background="default">
+      <Container>
+        <Tag class="mb-5" style={`color: ${COLOR};`}>Come funziona</Tag>
+        <Heading level={2} class="mb-4">I percorsi attivi in questo momento.</Heading>
+        <p class="text-text-secondary text-base max-w-[600px] leading-relaxed mb-12">
+          Piccoli gruppi, incontri fissati in anticipo. Scrivi a Sara per sapere se c'è ancora posto.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {percorsiAttivi.map((p) => (
+            <div class="bg-background-alt border border-border rounded-[22px] p-8">
+              <h3 class="font-serif text-[24px] text-text-main leading-tight mb-2">{p.title}</h3>
+              <p class="text-text-secondary text-sm leading-relaxed mb-6">{p.nota}</p>
+              <div class="flex flex-wrap gap-6 mb-6 text-sm">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] mb-1" style={`color: ${COLOR};`}>Giorno e ora</p>
+                  <p class="text-text-main font-medium">{p.quando}</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] mb-1" style={`color: ${COLOR};`}>Durata</p>
+                  <p class="text-text-main font-medium">{p.durata}</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.1em] mb-1" style={`color: ${COLOR};`}>Incontri</p>
+                  <p class="text-text-main font-medium">{p.incontri.length}</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2 mb-6">
+                {p.incontri.map((d) => (
+                  <span class="text-xs font-medium border border-border rounded-full px-3 py-1.5 text-text-main">
+                    {formatDataBreve(d)}
+                  </span>
+                ))}
+              </div>
+              <Button
+                variant="primary"
+                href={WA_BASE + encodeURIComponent(`Ciao! Vorrei iscrivermi al percorso "${p.title}".`)}
+                external={true}
+              >
+                Scrivici per iscriverti
+              </Button>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  ) : (
+    <Section background="default">
+      <Container size="narrow" class="text-center">
+        <Tag class="mb-5 inline-block" style={`color: ${COLOR};`}>Come funziona</Tag>
+        <Heading level={2} class="mb-6">I percorsi partono a gruppi.</Heading>
+        <p class="text-text-secondary text-base leading-relaxed mb-10 max-w-[560px] mx-auto">
+          I percorsi di Salute Femminile non seguono un calendario fisso. Sara apre piccoli gruppi in base alle fasi e alle esigenze di chi partecipa. Scrivile su WhatsApp per sapere quando parte il prossimo percorso adatto a te.
+        </p>
+        <Button variant="primary" size="lg" href={WA_BASE + encodeURIComponent('Ciao! Vorrei sapere quando parte il prossimo percorso di Salute Femminile.')} external={true}>
+          Scrivici su WhatsApp
+        </Button>
+      </Container>
+    </Section>
+  )}
 
   <TestimonialCarousel
     testimonials={testimonials}

@@ -25,7 +25,7 @@ const giorniShort: Record<string, string> = {
 };
 
 const colori: Record<string, string> = {
-  iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0',
+  iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0', workshop: '#bf9d70',
 };
 
 const today = new Date().getDay();
@@ -66,8 +66,8 @@ const defaultDay = giorni[dayMap[today]] ?? 'lun';
                   class="schedule-cell w-full text-left rounded-[10px] p-4 bg-white border border-[#e8e4df]"
                   data-lezione={JSON.stringify(l)}
                 >
-                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.stile}</p>
-                  <p class="text-base text-text-main font-medium">{l.tipo}</p>
+                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.tipo.startsWith('Avanzato · ') ? `${l.stile} avanzato` : l.stile}</p>
+                  <p class="font-serif text-[19px] font-normal text-text-main leading-tight">{l.tipo.replace('Avanzato · ', '')}</p>
                   <p class="text-small text-text-secondary">{l.ora}</p>
                   <p class="text-[11px] text-text-secondary mt-1 font-sans">con {l.insegnante}</p>
                 </button>
@@ -85,8 +85,8 @@ const defaultDay = giorni[dayMap[today]] ?? 'lun';
                   class="schedule-cell w-full text-left rounded-[10px] p-4 bg-white border border-[#e8e4df]"
                   data-lezione={JSON.stringify(l)}
                 >
-                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.stile}</p>
-                  <p class="text-base text-text-main font-medium">{l.tipo}</p>
+                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.tipo.startsWith('Avanzato · ') ? `${l.stile} avanzato` : l.stile}</p>
+                  <p class="font-serif text-[19px] font-normal text-text-main leading-tight">{l.tipo.replace('Avanzato · ', '')}</p>
                   <p class="text-small text-text-secondary">{l.ora}</p>
                   <p class="text-[11px] text-text-secondary mt-1 font-sans">con {l.insegnante}</p>
                 </button>
@@ -104,8 +104,8 @@ const defaultDay = giorni[dayMap[today]] ?? 'lun';
                   class="schedule-cell w-full text-left rounded-[10px] p-4 bg-white border border-[#e8e4df]"
                   data-lezione={JSON.stringify(l)}
                 >
-                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.stile}</p>
-                  <p class="text-base text-text-main font-medium">{l.tipo}</p>
+                  <p class="text-tiny uppercase tracking-widest font-semibold" style={`color: ${colori[l.stile]};`}>{l.tipo.startsWith('Avanzato · ') ? `${l.stile} avanzato` : l.stile}</p>
+                  <p class="font-serif text-[19px] font-normal text-text-main leading-tight">{l.tipo.replace('Avanzato · ', '')}</p>
                   <p class="text-small text-text-secondary">{l.ora}</p>
                   <p class="text-[11px] text-text-secondary mt-1 font-sans">con {l.insegnante}</p>
                 </button>

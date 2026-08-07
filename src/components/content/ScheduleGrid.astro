@@ -15,13 +15,14 @@ interface Props {
 const { lezioni } = Astro.props;
 
 const giorni = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
-const giorniLabel = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+const giorniLabel = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
 
 const colori: Record<string, string> = {
   iyengar: '#9c9a66',
   ashtanga: '#7a6b5f',
   flow: '#b8a68e',
   teen: '#d4b5a0',
+  workshop: '#bf9d70',
 };
 
 const orari = [...new Set(lezioni.map(l => l.ora))].sort((a, b) => {
@@ -37,7 +38,7 @@ const orari = [...new Set(lezioni.map(l => l.ora))].sort((a, b) => {
       <tr>
         <th class="w-16 text-left pb-4 pr-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary font-sans"></th>
         {giorniLabel.map(g => (
-          <th class="pb-4 px-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-text-secondary font-sans text-left">
+          <th class="pb-4 px-2 font-serif text-[22px] font-normal text-text-main text-left" style="letter-spacing:-0.01em;">
             {g}
           </th>
         ))}
@@ -63,9 +64,9 @@ const orari = [...new Set(lezioni.map(l => l.ora))].sort((a, b) => {
                       class="text-[11px] font-semibold uppercase tracking-[0.1em] font-semibold leading-none mb-1"
                       style={`color: ${colori[lezione.stile]};`}
                     >
-                      {lezione.stile}
+                      {lezione.tipo.startsWith('Avanzato · ') ? `${lezione.stile} avanzato` : lezione.stile}
                     </p>
-                    <p class="text-small text-text-main leading-tight">{lezione.tipo}</p>
+                    <p class="font-serif text-[18px] font-normal text-text-main leading-tight">{lezione.tipo.replace('Avanzato · ', '')}</p>
                     <p class="text-tiny text-text-secondary mt-0.5">{lezione.ora}</p>
                     <p class="text-[11px] text-text-secondary mt-1 font-sans">con {lezione.insegnante}</p>
                   </button>

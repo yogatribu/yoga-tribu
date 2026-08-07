@@ -20,35 +20,42 @@ const STILE_TO_SLUG: Record<string, string> = {
   'flow': 'vinyasa',
   'teen': 'teen-yoga',
   'donna': 'salute-femminile',
+  'workshop': 'workshop',
 };
 
+// Allineato al volantino orari (da settembre 2026). Flow e Teen Yoga non
+// sono nel volantino (copre solo Iyengar/Ashtanga/Approfondimenti): restano
+// come prima, sono comunque nascosti finché non sono in PRATICHE_ATTIVE.
 const tutteLeLezioni = [
   // LUNEDÌ
-  { giorno: 'lun', ora: '7:00',  stile: 'iyengar',  tipo: 'Livello 2', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'lun', ora: '8:45',  stile: 'iyengar',  tipo: 'Livello 1', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'lun', ora: '18:00', stile: 'iyengar',  tipo: 'Livello 2', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'lun', ora: '19:30', stile: 'iyengar',  tipo: 'Livello 2', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'lun', ora: '7:00',  stile: 'iyengar',  tipo: 'Flessibilità', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'lun', ora: '8:45',  stile: 'iyengar',  tipo: 'Flessibilità', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'lun', ora: '17:00', stile: 'iyengar',  tipo: 'Flessibilità', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'lun', ora: '19:00', stile: 'iyengar',  tipo: 'Flessibilità', insegnante: 'Glenda', durata: '~75 min' },
   // MARTEDÌ
-  { giorno: 'mar', ora: '8:45',  stile: 'iyengar',  tipo: 'Soft',      insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'mar', ora: '13:00', stile: 'iyengar',  tipo: 'Livello 3', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'mar', ora: '17:30', stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
+  { giorno: 'mar', ora: '8:45',  stile: 'iyengar',  tipo: 'Restorative',           insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'mar', ora: '13:00', stile: 'iyengar',  tipo: 'Avanzato · Flessibilità', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'mar', ora: '17:00', stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
   { giorno: 'mar', ora: '19:00', stile: 'ashtanga', tipo: 'Guidata',   insegnante: 'Victor', durata: '~75 min' },
   // MERCOLEDÌ
+  { giorno: 'mer', ora: '7:00',  stile: 'ashtanga', tipo: 'Respiro & Movimento', insegnante: 'Victor', durata: '~75 min' },
   { giorno: 'mer', ora: '7:30',  stile: 'flow',     tipo: 'Vinyasa',   insegnante: 'Giulia', durata: '~60 min' },
-  { giorno: 'mer', ora: '8:45',  stile: 'iyengar',  tipo: 'Livello 1', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'ven', ora: '17:00', stile: 'teen',     tipo: 'Teen Yoga', insegnante: 'Asia',   durata: '~60 min' },
-  { giorno: 'mer', ora: '18:00', stile: 'iyengar',  tipo: 'Livello 2', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'mer', ora: '19:30', stile: 'iyengar',  tipo: 'Livello 2', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'mer', ora: '8:45',  stile: 'iyengar',  tipo: 'Forza', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'mer', ora: '17:00', stile: 'iyengar',  tipo: 'Forza', insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'mer', ora: '19:00', stile: 'iyengar',  tipo: 'Forza', insegnante: 'Glenda', durata: '~75 min' },
   // GIOVEDÌ
-  { giorno: 'gio', ora: '13:00', stile: 'iyengar',  tipo: 'Livello 3', insegnante: 'Glenda', durata: '~75 min' },
-  { giorno: 'gio', ora: '17:30', stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
+  { giorno: 'gio', ora: '8:45',  stile: 'iyengar',  tipo: 'SOS Dolori',    insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'gio', ora: '13:00', stile: 'iyengar',  tipo: 'Avanzato · Forza',  insegnante: 'Glenda', durata: '~75 min' },
+  { giorno: 'gio', ora: '17:00', stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
   { giorno: 'gio', ora: '19:00', stile: 'ashtanga', tipo: 'Guidata',   insegnante: 'Victor', durata: '~75 min' },
   // VENERDÌ
   { giorno: 'ven', ora: '7:00',  stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
+  { giorno: 'ven', ora: '17:00', stile: 'teen',     tipo: 'Teen Yoga', insegnante: 'Asia',   durata: '~60 min' },
   // SABATO
   { giorno: 'sab', ora: '8:30',  stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
   { giorno: 'sab', ora: '10:30', stile: 'flow',     tipo: 'Vinyasa',   insegnante: 'Giulia', durata: '~60 min' },
   // DOMENICA
+  { giorno: 'dom', ora: '9:00',  stile: 'workshop', tipo: 'Approfondimenti', insegnante: 'Glenda e Mattia', durata: '2h 30min' },
   { giorno: 'dom', ora: '17:30', stile: 'flow',     tipo: 'Vinyasa',   insegnante: 'Giulia', durata: '~60 min' },
 ];
 
@@ -60,6 +67,7 @@ const tuttiStiliLegenda = [
   { stile: 'ashtanga', label: 'Ashtanga', color: '#7a6b5f' },
   { stile: 'flow',     label: 'Vinyasa',  color: '#b8a68e' },
   { stile: 'teen',     label: 'Teen Yoga', color: '#d4b5a0' },
+  { stile: 'workshop', label: 'Approfondimenti', color: '#bf9d70' },
 ];
 const legendaAttiva = tuttiStiliLegenda.filter(s => PRATICHE_ATTIVE.includes(STILE_TO_SLUG[s.stile] ?? s.stile));
 ---

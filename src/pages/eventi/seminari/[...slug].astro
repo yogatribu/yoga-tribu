@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Button from '../../../components/ui/Button.astro';
+import CTAFinal from '../../../components/content/CTAFinal.astro';
+import Section from '../../../components/ui/Section.astro';
+import Container from '../../../components/ui/Container.astro';
+import Divider from '../../../components/ui/Divider.astro';
+import MapLink from '../../../components/ui/MapLink.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const seminari = await getCollection('seminari', ({ data }) => data.draft !== true);
+  return seminari.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const s = entry.data;
+
+const WA = (s.telefono ?? '328 7675966').replace(/\s/g, '');
+const waHref = `https://wa.me/39${WA}?text=${encodeURIComponent(
+  `Ciao! Vorrei informazioni sul seminario "${s.title}" con ${s.ospite}.`
+)}`;
+
+function formatData(dataStr: string) {
+  return new Date(dataStr).toLocaleDateString('it-IT', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+}
+
+// "28-30 agosto 2026" se stesso mese, altrimenti estesa su entrambe le date.
+function formatIntervallo(inizio: string, fine?: string) {
+  if (!fine) return formatData(inizio);
+  const a = new Date(inizio);
+  const b = new Date(fine);
+  if (a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear()) {
+    return `${a.getDate()}-${formatData(fine)}`;
+  }
+  if (a.getFullYear() === b.getFullYear()) {
+    return `${a.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })} - ${formatData(fine)}`;
+  }
+  return `${formatData(inizio)} - ${formatData(fine)}`;
+}
+
+const eventSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: s.title,
+  description: s.descrizione_breve,
+  startDate: s.data_inizio,
+  ...(s.data_fine && { endDate: s.data_fine }),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  performer: { '@type': 'Person', name: s.ospite },
+  location: {
+    '@type': 'Place',
+    name: s.luogo ?? 'Yoga Tribù',
+    address: { '@type': 'PostalAddress', addressCountry: 'IT' },
+  },
+  organizer: { '@type': 'Organization', name: 'Yoga Tribù', url: 'https://yogatribu.it' },
+  ...(s.prezzo != null && {
+    offers: {
+      '@type': 'Offer',
+      price: String(s.prezzo),
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+    },
+  }),
+};
+
+const EYEBROW = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]';
+
+// Formule parziali = tutte tranne quella che vale il seminario intero.
+const parziali = (s.prezzi ?? []).filter((p) => p.prezzo !== s.prezzo);
+---
+
+<BaseLayout
+  title={`${s.title} · Yoga Tribù`}
+  description={s.descrizione_breve}
+  schemaJsonLd={eventSchema}
+>
+  <!-- Intestazione (senza foto: i seminari cambiano spesso e non abbiamo
+       una fotografia dell'ospite) -->
+  <div class="bg-background pt-28 pb-12 md:pt-32 md:pb-14">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Seminario</p>
+      <h1 class="font-serif text-h1-mobile md:text-display text-text-main leading-tight max-w-3xl mb-4">
+        {s.title}
+      </h1>
+      <p class="font-serif text-[26px] md:text-[32px] text-[#9c9a66] mb-6">con {s.ospite}</p>
+      <p class="text-text-secondary text-lg max-w-xl leading-relaxed">{s.descrizione_breve}</p>
+    </Container>
+  </div>
+
+  <!-- Dettagli rapidi -->
+  <Section background="alt" size="compact">
+    <Container>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+        <div>
+          <p class={`${EYEBROW} mb-2`}>Date</p>
+          <p class="text-text-main text-sm font-medium">{formatIntervallo(s.data_inizio, s.data_fine)}</p>
+        </div>
+        {s.giorni && (
+          <div>
+            <p class={`${EYEBROW} mb-2`}>Sessioni</p>
+            <p class="text-text-main text-sm font-medium">{s.giorni.length}</p>
+          </div>
+        )}
+        <div>
+          <p class={`${EYEBROW} mb-2`}>Insegnante</p>
+          <p class="text-text-main text-sm font-medium">{s.ospite}</p>
+        </div>
+        <div>
+          <p class={`${EYEBROW} mb-2`}>Quota</p>
+          <p class="text-text-main text-sm font-medium">
+            {s.prezzo != null ? `${s.prezzo}€` : 'Su richiesta'}
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Layout editoriale a due colonne -->
+  <Section background="default">
+    <Container>
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-16 items-start">
+
+        <!-- Colonna principale -->
+        <div>
+          {s.descrizione && s.descrizione[0] && (
+            <Fragment>
+              <p class={`${EYEBROW} mb-2`}>{s.occhiello ?? 'Il seminario'}</p>
+              <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-6" style="font-family:'New York',serif;">
+                {s.titolo_sezione ?? 'Di cosa si tratta.'}
+              </h2>
+              <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6 max-w-[620px]">{s.descrizione[0]}</p>
+            </Fragment>
+          )}
+
+          {s.descrizione && s.descrizione.slice(1).map((p: string) => (
+            <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6 max-w-[620px]">{p}</p>
+          ))}
+
+          {/* Programma */}
+          {s.giorni && s.giorni.length > 0 && (
+            <div class="mt-12">
+              <p class={`${EYEBROW} mb-2`}>Programma</p>
+              <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-6" style="font-family:'New York',serif;">
+                Sessione per sessione.
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {s.giorni.map((g) => (
+                  <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{g.giorno}</p>
+                    <p class="font-serif text-[24px] text-text-main leading-tight" style="font-family:'New York',serif;">{g.orario}</p>
+                  </div>
+                ))}
+              </div>
+              {s.nota && (
+                <p class="text-sm text-[#9b9b9b] italic mt-4">{s.nota}</p>
+              )}
+
+            </div>
+          )}
+
+          {/* Quote */}
+          {s.prezzi && s.prezzi.length > 0 && (
+            <div class="mt-12">
+              <p class={`${EYEBROW} mb-2`}>Quote</p>
+              <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-6" style="font-family:'New York',serif;">
+                Puoi venire anche a una giornata sola.
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {s.prezzi.map((p) => (
+                  <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">{p.label}</p>
+                    <p class="font-serif text-[40px] text-text-main leading-none mb-1" style="font-family:'New York',serif;">{p.prezzo}€</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Chi è l'ospite */}
+          {s.bio_ospite && s.bio_ospite.length > 0 && (
+            <div class="mt-12">
+              <p class={`${EYEBROW} mb-2`}>L'insegnante</p>
+              <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-6" style="font-family:'New York',serif;">
+                Chi è {s.ospite}.
+              </h2>
+              {s.bio_ospite.map((p: string) => (
+                <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6 max-w-[620px]">{p}</p>
+              ))}
+            </div>
+          )}
+
+          {/* Per chi + cosa portare */}
+          {(s.per_chi || s.portare) && (
+            <div class="mt-12">
+              {s.per_chi && s.per_chi.length > 0 && (
+                <div class="mb-8">
+                  <p class={`${EYEBROW} mb-2`}>A chi si rivolge</p>
+                  <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-6" style="font-family:'New York',serif;">
+                    Per chi è pensato.
+                  </h2>
+                  <ul class="space-y-2">
+                    {s.per_chi.map((item: string) => (
+                      <li class="flex gap-3 text-sm text-[#2a2a2a]">
+                        <span class="text-[#9c9a66] flex-shrink-0">·</span>{item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {s.portare && s.portare.length > 0 && (
+                <div>
+                  <p class={`${EYEBROW} mb-4`}>Cosa portare</p>
+                  <ul class="space-y-2">
+                    {s.portare.map((item: string) => (
+                      <li class="flex gap-3 text-sm text-[#2a2a2a]">
+                        <span class="text-[#9c9a66] flex-shrink-0">·</span>{item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sticky top-24">
+          <div class="bg-background-alt border border-border rounded-[22px] p-6">
+            {s.prezzo != null && (
+              <div class="mb-5">
+                <p class={`${EYEBROW} mb-2`}>{parziali.length > 0 ? 'Seminario intero' : 'Quota'}</p>
+                <p class="font-serif text-[32px] text-text-main leading-none">{s.prezzo}€</p>
+              </div>
+            )}
+            <Divider class="mb-5" />
+            <div class="space-y-3 text-sm mb-6">
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Date</span>
+                <span class="text-text-main text-right">{formatIntervallo(s.data_inizio, s.data_fine)}</span>
+              </div>
+              {s.giorni && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Sessioni</span>
+                  <span class="text-text-main">{s.giorni.length}</span>
+                </div>
+              )}
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Insegnante</span>
+                <span class="text-text-main text-right">{s.ospite}</span>
+              </div>
+              {s.luogo && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Luogo</span>
+                  <span class="text-text-main text-right max-w-[180px]">{s.luogo}</span>
+                </div>
+              )}
+            </div>
+            <div class="text-center mb-4">
+              <Button variant="primary" size="md" external={true} href={waHref}>
+                Scrivici su WhatsApp
+              </Button>
+            </div>
+            {s.luogo && (
+              <div class="text-center">
+                <MapLink address={s.luogo}>Vedi sulla mappa</MapLink>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- CTA finale -->
+  <CTAFinal
+    headline={`Vuoi partecipare al seminario con ${s.ospite}?`}
+    subtitle="Scrivici su WhatsApp: ti diciamo come iscriverti e rispondiamo a ogni dubbio."
+    ctaLabel="Scrivici su WhatsApp"
+    ctaHref={waHref}
+    linkLabel="Vedi tutti gli eventi"
+    linkHref="/eventi"
+  />
+</BaseLayout>
