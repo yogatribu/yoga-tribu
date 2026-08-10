@@ -185,6 +185,20 @@ if (schemaJsonLd) {
   initScrollReveal();
   initCounters();
 
+  // Esperimento 002 · codice di sessione, solo lato dati (invisibile).
+  // Non tocca il testo del messaggio WhatsApp: i testi sono già distinti
+  // per pagina/corso/evento, e restano così — più naturali da leggere.
+  // Il codice viaggia solo nell'evento GA, per uso statistico futuro.
+  function getRifCode(): string {
+    const KEY = 'yt_rif';
+    let code = sessionStorage.getItem(KEY);
+    if (!code) {
+      code = Math.random().toString(16).slice(2, 6);
+      sessionStorage.setItem(KEY, code);
+    }
+    return code;
+  }
+
   // Tracciamento clic "Prenota su WhatsApp" (Esperimento 001 · funnel).
   // Listener delegato su document: si registra una sola volta e sopravvive
   // alle view transitions. Invia l'evento a GA (dopo consenso) e a Vercel se presenti.
@@ -192,7 +206,7 @@ if (schemaJsonLd) {
     const link = (e.target as HTMLElement).closest('a[href*="wa.me"], a[href*="api.whatsapp"]');
     if (!link) return;
     const label = (link.getAttribute('aria-label') || link.textContent || '').trim().slice(0, 80);
-    const payload = { link_label: label, page_path: location.pathname };
+    const payload = { link_label: label, page_path: location.pathname, rif_code: getRifCode() };
     if (typeof (window as any).gtag === 'function') (window as any).gtag('event', 'whatsapp_click', payload);
     if (typeof (window as any).va === 'function') (window as any).va('event', { name: 'whatsapp_click', ...payload });
   });
