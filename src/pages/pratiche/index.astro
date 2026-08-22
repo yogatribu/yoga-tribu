@@ -10,13 +10,13 @@ import CTAFinal from '../../components/content/CTAFinal.astro';
 import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
 import { altFor } from '../../config/imageAlt.js';
 
-const tuttiCorsi = [
+const tuttePratiche = [
   {
     slug: 'iyengar',
     stile: 'Iyengar Yoga',
     headline: 'Per il corpo che ha bisogno di precisione.',
     sub: 'Una pratica tradizionale che risolve dolori reali con tecniche precise.',
-    link: '/corsi/iyengar',
+    link: '/pratiche/iyengar',
     foto: '/images/iyengar.webp',
     overlay: 'rgba(0,0,0,0.30)',
     posizione: '20% center',
@@ -26,7 +26,7 @@ const tuttiCorsi = [
     stile: 'Ashtanga Yoga',
     headline: 'Per chi cerca un posto a cui tornare ogni giorno.',
     sub: 'Una pratica costante che restituisce silenzio interiore e crescita mentale.',
-    link: '/corsi/ashtanga',
+    link: '/pratiche/ashtanga',
     foto: '/images/ashtanga.webp',
     overlay: 'rgba(0,0,0,0.38)',
     posizione: '35% center',
@@ -36,7 +36,7 @@ const tuttiCorsi = [
     stile: 'Vinyasa',
     headline: "Un'ora in cui smetti di pensare.",
     sub: 'Pratica fresca, sempre diversa. Movimento e respiro.',
-    link: '/corsi/vinyasa',
+    link: '/pratiche/vinyasa',
     foto: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80',
     overlay: 'rgba(0,0,0,0.28)',
   },
@@ -45,7 +45,7 @@ const tuttiCorsi = [
     stile: 'Teen Yoga',
     headline: 'Per chi sta diventando se stesso.',
     sub: 'Yoga per ragazzi tra i 12 e i 20 anni.',
-    link: '/corsi/teen-yoga',
+    link: '/pratiche/teen-yoga',
     foto: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80',
     overlay: 'rgba(0,0,0,0.32)',
   },
@@ -54,14 +54,14 @@ const tuttiCorsi = [
     stile: 'Salute Femminile',
     headline: 'Percorsi per la donna. In ogni fase.',
     sub: 'Ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita.',
-    link: '/corsi/salute-femminile',
+    link: '/pratiche/salute-femminile',
     foto: '/images/salute_femminile.webp',
     overlay: 'rgba(0,0,0,0.30)',
   },
 ];
 
-const corsiAttivi = tuttiCorsi.filter(c => PRATICHE_ATTIVE.includes(c.slug));
-const n = corsiAttivi.length;
+const praticheAttive = tuttePratiche.filter(c => PRATICHE_ATTIVE.includes(c.slug));
+const n = praticheAttive.length;
 
 // Layout: ≤3 → una riga; 4 → 2+2; ≥5 → 2+resto
 const singleRowClass = n === 1 ? 'md:grid-cols-1' : n === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
@@ -92,17 +92,17 @@ const secondRowClass = n === 4 ? 'md:grid-cols-2' : 'md:grid-cols-3';
       {n <= 3 ? (
         <!-- Una riga sola, n colonne uguali -->
         <div class={`grid grid-cols-1 ${singleRowClass} gap-8`}>
-          {corsiAttivi.map((corso) => (
+          {praticheAttive.map((pratica) => (
             <a
-              href={corso.link}
+              href={pratica.link}
               class="course-card-large relative overflow-hidden rounded-[22px]"
               style="height: 480px; display: block;"
             >
-              <img src={corso.foto} alt={altFor(corso.foto, `Corso di ${corso.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={corso.posizione ? `object-position: ${corso.posizione};` : undefined} loading="lazy" />
-              <div class="absolute inset-0" style={`background: ${corso.overlay};`}></div>
+              <img src={pratica.foto} alt={altFor(pratica.foto, `Corso di ${pratica.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={pratica.posizione ? `object-position: ${pratica.posizione};` : undefined} loading="lazy" />
+              <div class="absolute inset-0" style={`background: ${pratica.overlay};`}></div>
               <div class="absolute inset-0 flex flex-col justify-end p-10">
-                <h2 class="font-serif text-[36px] text-white leading-tight mb-3">{corso.stile}</h2>
-                <p class="text-white/80 text-[15px] leading-relaxed mb-6 max-w-[200px]">{corso.sub}</p>
+                <h2 class="font-serif text-[36px] text-white leading-tight mb-3">{pratica.stile}</h2>
+                <p class="text-white/80 text-[15px] leading-relaxed mb-6 max-w-[200px]">{pratica.sub}</p>
                 <span class="inline-flex items-center justify-center bg-primary text-white text-[14px] font-medium px-6 py-2.5 rounded-full w-fit transition-colors hover:bg-[#8a885a]">
                   Scopri
                 </span>
@@ -114,17 +114,17 @@ const secondRowClass = n === 4 ? 'md:grid-cols-2' : 'md:grid-cols-3';
         <>
           <!-- Prima riga: prime 2 card grandi -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-            {corsiAttivi.slice(0, 2).map((corso) => (
+            {praticheAttive.slice(0, 2).map((pratica) => (
               <a
-                href={corso.link}
+                href={pratica.link}
                 class="course-card-large relative overflow-hidden rounded-[22px]"
                 style="height: 480px; display: block;"
               >
-                <img src={corso.foto} alt={altFor(corso.foto, `Corso di ${corso.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={corso.posizione ? `object-position: ${corso.posizione};` : undefined} loading="lazy" />
-                <div class="absolute inset-0" style={`background: ${corso.overlay};`}></div>
+                <img src={pratica.foto} alt={altFor(pratica.foto, `Corso di ${pratica.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={pratica.posizione ? `object-position: ${pratica.posizione};` : undefined} loading="lazy" />
+                <div class="absolute inset-0" style={`background: ${pratica.overlay};`}></div>
                 <div class="absolute inset-0 flex flex-col justify-end p-10">
-                  <h2 class="font-serif text-[36px] text-white leading-tight mb-3">{corso.stile}</h2>
-                  <p class="text-white/80 text-[15px] leading-relaxed mb-6 max-w-[200px]">{corso.sub}</p>
+                  <h2 class="font-serif text-[36px] text-white leading-tight mb-3">{pratica.stile}</h2>
+                  <p class="text-white/80 text-[15px] leading-relaxed mb-6 max-w-[200px]">{pratica.sub}</p>
                   <span class="inline-flex items-center justify-center bg-primary text-white text-[14px] font-medium px-6 py-2.5 rounded-full w-fit transition-colors hover:bg-[#8a885a]">
                     Scopri
                   </span>
@@ -134,17 +134,17 @@ const secondRowClass = n === 4 ? 'md:grid-cols-2' : 'md:grid-cols-3';
           </div>
           <!-- Seconda riga: card medie -->
           <div class={`grid grid-cols-1 ${secondRowClass} gap-6`}>
-            {corsiAttivi.slice(2).map((corso) => (
+            {praticheAttive.slice(2).map((pratica) => (
               <a
-                href={corso.link}
+                href={pratica.link}
                 class="course-card-medium relative overflow-hidden rounded-[22px]"
                 style="height: 360px; display: block;"
               >
-                <img src={corso.foto} alt={altFor(corso.foto, `Corso di ${corso.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={corso.posizione ? `object-position: ${corso.posizione};` : undefined} loading="lazy" />
-                <div class="absolute inset-0" style={`background: ${corso.overlay};`}></div>
+                <img src={pratica.foto} alt={altFor(pratica.foto, `Corso di ${pratica.stile} allo studio Yoga Tribù`)} class="absolute inset-0 w-full h-full object-cover" style={pratica.posizione ? `object-position: ${pratica.posizione};` : undefined} loading="lazy" />
+                <div class="absolute inset-0" style={`background: ${pratica.overlay};`}></div>
                 <div class="absolute inset-0 flex flex-col justify-end p-8">
-                  <h2 class="font-serif text-[36px] text-white leading-tight mb-2">{corso.stile}</h2>
-                  <p class="text-white/80 text-[14px] leading-relaxed mb-5 max-w-[180px]">{corso.sub}</p>
+                  <h2 class="font-serif text-[36px] text-white leading-tight mb-2">{pratica.stile}</h2>
+                  <p class="text-white/80 text-[14px] leading-relaxed mb-5 max-w-[180px]">{pratica.sub}</p>
                   <span class="inline-flex items-center justify-center bg-primary text-white text-[14px] font-medium px-6 py-2.5 rounded-full w-fit transition-colors hover:bg-[#8a885a]">
                     Scopri
                   </span>

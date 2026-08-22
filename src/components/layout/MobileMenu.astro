@@ -2,11 +2,11 @@
 import { PRATICHE_ATTIVE, INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
 
 const tuttePratiche = [
-  { slug: 'iyengar',          label: 'Iyengar Yoga',     href: '/corsi/iyengar' },
-  { slug: 'ashtanga',         label: 'Ashtanga Yoga',    href: '/corsi/ashtanga' },
-  { slug: 'vinyasa',          label: 'Vinyasa Yoga',     href: '/corsi/vinyasa' },
-  { slug: 'teen-yoga',        label: 'Teen Yoga',        href: '/corsi/teen-yoga' },
-  { slug: 'salute-femminile', label: 'Salute Femminile', href: '/corsi/salute-femminile' },
+  { slug: 'iyengar',          label: 'Iyengar Yoga',     href: '/pratiche/iyengar' },
+  { slug: 'ashtanga',         label: 'Ashtanga Yoga',    href: '/pratiche/ashtanga' },
+  { slug: 'vinyasa',          label: 'Vinyasa Yoga',     href: '/pratiche/vinyasa' },
+  { slug: 'teen-yoga',        label: 'Teen Yoga',        href: '/pratiche/teen-yoga' },
+  { slug: 'salute-femminile', label: 'Salute Femminile', href: '/pratiche/salute-femminile' },
 ];
 const pratiche = tuttePratiche.filter(p => PRATICHE_ATTIVE.includes(p.slug));
 
@@ -62,7 +62,7 @@ const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug
       class="absolute inset-0 overflow-y-auto px-6 pt-2"
       style="transition: transform 250ms ease;"
     >
-      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="corsi" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
+      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="pratiche" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
         Pratiche
       </button>
       <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="chi-siamo" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
@@ -89,10 +89,10 @@ const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug
       style="transform: translateX(100%); transition: transform 250ms ease;"
     >
 
-      <!-- Sub-menu: Corsi -->
-      <nav id="mm-sub-corsi" class="mm-submenu px-6 pt-4" style="display: none;">
+      <!-- Sub-menu: Pratiche -->
+      <nav id="mm-sub-pratiche" class="mm-submenu px-6 pt-4" style="display: none;">
         <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">SCOPRI LE PRATICHE</p>
-        <a href="/corsi" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutti i corsi</a>
+        <a href="/pratiche" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutte le pratiche</a>
         {pratiche.map(p => (
           <a href={p.href} class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">{p.label}</a>
         ))}

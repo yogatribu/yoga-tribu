@@ -3,11 +3,11 @@ import MapLink from '../ui/MapLink.astro';
 import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
 
 const tuttePratiche = [
-  { slug: 'iyengar',          label: 'Iyengar Yoga',      href: '/corsi/iyengar' },
-  { slug: 'ashtanga',         label: 'Ashtanga Yoga',     href: '/corsi/ashtanga' },
-  { slug: 'vinyasa',          label: 'Vinyasa',           href: '/corsi/vinyasa' },
-  { slug: 'teen-yoga',        label: 'Teen Yoga',         href: '/corsi/teen-yoga' },
-  { slug: 'salute-femminile', label: 'Salute Femminile',  href: '/corsi/salute-femminile' },
+  { slug: 'iyengar',          label: 'Iyengar Yoga',      href: '/pratiche/iyengar' },
+  { slug: 'ashtanga',         label: 'Ashtanga Yoga',     href: '/pratiche/ashtanga' },
+  { slug: 'vinyasa',          label: 'Vinyasa',           href: '/pratiche/vinyasa' },
+  { slug: 'teen-yoga',        label: 'Teen Yoga',         href: '/pratiche/teen-yoga' },
+  { slug: 'salute-femminile', label: 'Salute Femminile',  href: '/pratiche/salute-femminile' },
 ];
 const pratiche = tuttePratiche.filter(p => PRATICHE_ATTIVE.includes(p.slug));
 const linksFooter = [
@@ -37,7 +37,7 @@ const linksFooter = [
         <p class="text-xs uppercase tracking-widest text-white font-sans font-semibold mb-6">Navigazione</p>
         <nav class="flex flex-col gap-3">
           {[
-            ['Pratiche', '/corsi'],
+            ['Pratiche', '/pratiche'],
             ['Chi Siamo', '/chi-siamo'],
             ['Abbonamenti', '/abbonamenti'],
             ['Orari', '/orari'],

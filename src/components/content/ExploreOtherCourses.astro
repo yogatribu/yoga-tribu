@@ -4,9 +4,10 @@ import { altFor } from '../../config/imageAlt.js';
 
 interface Props {
   excludeStile: 'iyengar' | 'ashtanga' | 'flow' | 'teen' | 'donna';
+  background?: 'default' | 'alt';
 }
 
-const { excludeStile } = Astro.props;
+const { excludeStile, background = 'default' } = Astro.props;
 
 // Mappa id interno → slug in visibilita.js
 const ID_TO_SLUG: Record<string, string> = {
@@ -23,7 +24,7 @@ const all = [
     stile: 'Iyengar Yoga',
     tag: 'PRATICA PRINCIPALE',
     sub: 'Una pratica tradizionale che risolve dolori reali con tecniche precise.',
-    href: '/corsi/iyengar',
+    href: '/pratiche/iyengar',
     foto: '/images/iyengar.webp',
     overlay: 'rgba(0,0,0,0.30)',
   },
@@ -32,7 +33,7 @@ const all = [
     stile: 'Ashtanga Yoga',
     tag: 'PRATICA PRINCIPALE',
     sub: 'Una pratica costante che restituisce silenzio interiore e crescita mentale.',
-    href: '/corsi/ashtanga',
+    href: '/pratiche/ashtanga',
     foto: '/images/ashtanga.webp',
     overlay: 'rgba(0,0,0,0.38)',
   },
@@ -41,7 +42,7 @@ const all = [
     stile: 'Vinyasa',
     tag: 'PRATICA COMPLEMENTARE',
     sub: 'Pratica fresca, sempre diversa. Movimento e respiro.',
-    href: '/corsi/vinyasa',
+    href: '/pratiche/vinyasa',
     foto: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80',
     overlay: 'rgba(0,0,0,0.28)',
   },
@@ -50,7 +51,7 @@ const all = [
     stile: 'Teen Yoga',
     tag: 'PRATICA COMPLEMENTARE',
     sub: 'Yoga per ragazzi tra i 12 e i 17 anni.',
-    href: '/corsi/teen-yoga',
+    href: '/pratiche/teen-yoga',
     foto: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80',
     overlay: 'rgba(0,0,0,0.32)',
   },
@@ -59,7 +60,7 @@ const all = [
     stile: 'Salute Femminile',
     tag: 'PRATICA COMPLEMENTARE',
     sub: 'Percorsi per la donna. In ogni fase.',
-    href: '/corsi/salute-femminile',
+    href: '/pratiche/salute-femminile',
     foto: '/images/salute_femminile.webp',
     overlay: 'rgba(0,0,0,0.30)',
   },
@@ -70,7 +71,7 @@ const shown = all
   .slice(0, 2);
 ---
 
-<section class="bg-background py-16 md:py-24">
+<section class={background === 'alt' ? 'bg-background-alt py-16 md:py-24' : 'bg-background py-16 md:py-24'}>
   <div class="container-default">
     <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-12">
       Esplora le altre pratiche.

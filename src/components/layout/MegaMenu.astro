@@ -2,16 +2,16 @@
 import { PRATICHE_ATTIVE, INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
 
 interface Props {
-  voce: 'corsi' | 'chi-siamo' | 'abbonamenti' | 'eventi';
+  voce: 'pratiche' | 'chi-siamo' | 'abbonamenti' | 'eventi';
 }
 const { voce } = Astro.props;
 
 const tuttePratiche = [
-  { slug: 'iyengar',          label: 'Iyengar Yoga',       href: '/corsi/iyengar' },
-  { slug: 'ashtanga',         label: 'Ashtanga Yoga',      href: '/corsi/ashtanga' },
-  { slug: 'vinyasa',          label: 'Vinyasa Yoga',       href: '/corsi/vinyasa' },
-  { slug: 'teen-yoga',        label: 'Teen Yoga',          href: '/corsi/teen-yoga' },
-  { slug: 'salute-femminile', label: 'Salute Femminile',   href: '/corsi/salute-femminile' },
+  { slug: 'iyengar',          label: 'Iyengar Yoga',       href: '/pratiche/iyengar' },
+  { slug: 'ashtanga',         label: 'Ashtanga Yoga',      href: '/pratiche/ashtanga' },
+  { slug: 'vinyasa',          label: 'Vinyasa Yoga',       href: '/pratiche/vinyasa' },
+  { slug: 'teen-yoga',        label: 'Teen Yoga',          href: '/pratiche/teen-yoga' },
+  { slug: 'salute-femminile', label: 'Salute Femminile',   href: '/pratiche/salute-femminile' },
 ];
 const pratiche = tuttePratiche.filter(p => PRATICHE_ATTIVE.includes(p.slug));
 
@@ -32,11 +32,11 @@ const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug
 -->
 <div class="mega-panel-inner">
 
-  {voce === 'corsi' && (
+  {voce === 'pratiche' && (
     <div class="mega-col">
       <p class="mega-label">Scopri le pratiche</p>
       <nav class="mega-nav">
-        <a href="/corsi" class="mega-link">Scopri le pratiche</a>
+        <a href="/pratiche" class="mega-link">Scopri le pratiche</a>
         {pratiche.map(p => (
           <a href={p.href} class="mega-link">{p.label}</a>
         ))}

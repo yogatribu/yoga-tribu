@@ -73,10 +73,10 @@ import Button from '../ui/Button.astro';
   };
 
   const stileLinks: Record<string, string> = {
-    iyengar: '/corsi/iyengar',
-    ashtanga: '/corsi/ashtanga',
-    flow: '/corsi/vinyasa',
-    teen: '/corsi/teen-yoga',
+    iyengar: '/pratiche/iyengar',
+    ashtanga: '/pratiche/ashtanga',
+    flow: '/pratiche/vinyasa',
+    teen: '/pratiche/teen-yoga',
     workshop: '/eventi#workshop',
   };
 
@@ -114,7 +114,7 @@ import Button from '../ui/Button.astro';
     (document.getElementById('modal-descrizione')!).textContent = descrizioni[key] ?? '';
 
     const linkEl = document.getElementById('modal-link-corso') as HTMLAnchorElement;
-    const href = stileLinks[lezione.stile] ?? '/corsi';
+    const href = stileLinks[lezione.stile] ?? '/pratiche';
     linkEl.href = href;
     const stileLabel = lezione.stile === 'workshop'
       ? 'gli Approfondimenti'

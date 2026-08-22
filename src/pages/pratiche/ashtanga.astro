@@ -18,6 +18,7 @@ import Tag from '../../components/ui/Tag.astro';
 import Heading from '../../components/ui/Heading.astro';
 import StickyCTA from '../../components/layout/StickyCTA.astro';
 import FeatureCard from '../../components/content/FeatureCard.astro';
+import SegmentedControl from '../../components/ui/SegmentedControl.astro';
 
 const WA_BASE = 'https://wa.me/393287675966?text=';
 const COLOR = '#7a6b5f';
@@ -92,15 +93,15 @@ const courseSchema = {
       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4 text-center">Cosa otterrai</p>
       <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-0 text-center" style="font-family:'New York',serif;">Quello che cambia, nel tempo.</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
-        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell card-shell--lg px-7 py-8">
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 mese</p>
           <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Cominci a vedere i primi risultati.</p>
         </div>
-        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell card-shell--lg px-7 py-8">
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 6 mesi</p>
           <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Disciplina, forza, silenzio interiore. Senza sforzo.</p>
         </div>
-        <div class="bg-white border border-[#e8e4df] rounded-[22px] px-7 py-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell card-shell--lg px-7 py-8">
           <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Dopo 1 anno</p>
           <p class="font-serif text-xl text-[#2a2a2a] leading-snug" style="font-family:'New York',serif;">Una pratica. Una vita diversa.</p>
         </div>
@@ -118,24 +119,16 @@ const courseSchema = {
       </p>
 
       <div class="mb-10">
-        <div class="ash-seg-container" style="position: relative; display: inline-flex; background: #e8e4df; border-radius: 9999px; padding: 4px; gap: 2px;" role="tablist">
-          <div id="ash-indicator" style="position: absolute; top: 4px; bottom: 4px; background: #7a6b5f; border-radius: 9999px; transition: transform 300ms cubic-bezier(0.65,0,0.35,1), width 300ms cubic-bezier(0.65,0,0.35,1); pointer-events: none;"></div>
-          {[
-            { id: 'guidata', label: 'Guidata' },
-            { id: 'mysore', label: 'Mysore' },
-            { id: 'respiro-movimento', label: 'Respiro & Movimento' },
-          ].map(({ id, label }, i) => (
-            <button
-              class="tab-btn"
-              role="tab"
-              aria-selected={i === 0 ? 'true' : 'false'}
-              data-tab={id}
-              style={`position: relative; z-index: 1; padding: 10px 24px; border-radius: 9999px; font-size: 14px; font-family: Inter, sans-serif; font-weight: 500; border: none; background: transparent; cursor: pointer; white-space: nowrap; transition: color 300ms ease; color: ${i === 0 ? 'white' : '#6b6b6b'};`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          scId="ashtanga-tabs"
+          defaultValue="guidata"
+          indicatorColor="#7a6b5f"
+          options={[
+            { value: 'guidata', label: 'Guidata' },
+            { value: 'mysore', label: 'Mysore' },
+            { value: 'respiro-movimento', label: 'Respiro & Movimento' },
+          ]}
+        />
       </div>
 
       <div class="tab-panel" data-panel="guidata">
@@ -295,34 +288,22 @@ const courseSchema = {
       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">La tua prima volta</p>
       <h2 class="font-serif text-h2-mobile md:text-h2 text-text-main mb-4">Cosa aspettarti in studio.</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
-        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
-                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell px-6 py-7">
           <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">01</p>
           <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Arrivi 10 min prima</h3>
           <p class="text-sm text-[#6b6b6b] leading-relaxed">Ti diamo il tempo di cambiarti e ambientarti prima che la lezione inizi.</p>
         </div>
-        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
-                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell px-6 py-7">
           <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">02</p>
           <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Ti accogliamo</h3>
           <p class="text-sm text-[#6b6b6b] leading-relaxed">Parliamo del tuo livello, della tua familiarità con la sequenza. Ti diciamo cosa aspettarti.</p>
         </div>
-        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
-                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell px-6 py-7">
           <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">03</p>
           <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Pratica intensa</h3>
           <p class="text-sm text-[#6b6b6b] leading-relaxed">Sequenza completa guidata dal respiro. Ritmo costante, movimenti che si concatenano.</p>
         </div>
-        <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-7
-                    shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-                    transition-all duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                    hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]">
+        <div class="card-shell px-6 py-7">
           <p class="text-xs font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">04</p>
           <h3 class="font-serif text-lg font-medium text-[#2a2a2a] mb-3" style="font-family:'New York',serif;">Rilassamento finale</h3>
           <p class="text-sm text-[#6b6b6b] leading-relaxed">Savasana, rilassamento profondo, chiusura della pratica.</p>
@@ -331,8 +312,40 @@ const courseSchema = {
     </div>
   </section>
 
+  <!-- Cosa portare -->
+  <Section background="alt">
+    <Container size="narrow">
+      <Heading level={2} class="text-center mb-12">Vieni leggero.</Heading>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[800px] mx-auto mt-10">
+        <div class="card-shell px-7 py-7" data-reveal>
+          <h3 class="font-serif text-xl font-medium mb-5" style="font-family:'New York',serif; color:#2a2a2a;">Cosa lasciare a casa</h3>
+          <ul class="space-y-3">
+            {['Tappetino', 'Mattoncini, cinture', 'Coperte', 'Ansie'].map(item => (
+              <li class="flex items-center gap-3 text-sm text-[#2a2a2a]">
+                <span class="text-[#c89797] flex-shrink-0">✕</span>{item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card-shell card-shell--accent px-7 py-7" data-reveal data-reveal-delay="100">
+          <h3 class="font-serif text-xl font-medium mb-5" style="font-family:'New York',serif; color:#2a2a2a;">Cosa trovi qui</h3>
+          <ul class="space-y-3">
+            {['Tappetini di qualità', 'Mattoncini, cinture', 'Coperte, sedie', 'Spogliatoio'].map(item => (
+              <li class="flex items-center gap-3 text-sm text-[#2a2a2a]">
+                <span class="text-[#9c9a66] flex-shrink-0">✓</span>{item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p class="text-sm text-[#9b9b9b] text-center mt-6">
+        Vieni con abiti comodi (leggings, t-shirt). A piedi nudi, ovviamente.
+      </p>
+    </Container>
+  </Section>
+
   <FAQAccordion
-    background="alt"
+    background="default"
     items={[
       { question: 'Devo conoscere la sequenza per iniziare?', answer: 'No. Se non hai mai fatto Ashtanga si inizia da Respiro & Movimento, pensata proprio per chi parte da zero. Da lì si passa alla Guidata, dove l\'insegnante chiama ogni posizione, e la sequenza si impara naturalmente, lezione dopo lezione.' },
       { question: 'Quanto è impegnativo fisicamente?', answer: 'È una pratica intensa. Ma si entra gradualmente: nessuno fa la prima serie completa al primo giorno. Si parte da una versione ridotta e si cresce nel tempo.' },
@@ -344,10 +357,11 @@ const courseSchema = {
 
   <TestimonialCarousel
     testimonials={testimonials}
+    backgroundColor="#faf8f5"
   />
 
   <!-- Orari -->
-  <Section background="alt">
+  <Section background="default">
     <Container class="text-center">
       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-5">Orari</p>
       <Heading level={2} class="mb-16">Quando praticare Ashtanga.</Heading>
@@ -361,7 +375,7 @@ const courseSchema = {
           { tag: 'MYSORE', orario: 'Venerdì 7:00' },
           { tag: 'MYSORE', orario: 'Sabato 8:30' },
         ].map(({ tag, orario }) => (
-          <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
+          <div class="card-shell px-6 py-5 cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
             <p class="text-tiny uppercase tracking-widest" style={`color: ${COLOR};`}>{tag}</p>
             <p class="font-serif text-xl text-text-main">{orario}</p>
           </div>
@@ -373,7 +387,7 @@ const courseSchema = {
     </Container>
   </Section>
 
-  <ExploreOtherCourses excludeStile="ashtanga" />
+  <ExploreOtherCourses excludeStile="ashtanga" background="alt" />
 
   <CTAFinal
     headline="Inizia da una sola lezione."
@@ -386,34 +400,36 @@ const courseSchema = {
 </BaseLayout>
 
 <script>
-  const tabs = document.querySelectorAll<HTMLElement>('.tab-btn');
-  const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
-  const indicator = document.getElementById('ash-indicator') as HTMLElement | null;
-  const segContainer = document.querySelector<HTMLElement>('.ash-seg-container');
-
-  function positionIndicator(activeBtn: HTMLElement) {
-    if (!indicator || !segContainer) return;
-    const cRect = segContainer.getBoundingClientRect();
-    const bRect = activeBtn.getBoundingClientRect();
-    indicator.style.width = bRect.width + 'px';
-    indicator.style.transform = `translateX(${bRect.left - cRect.left - 4}px)`;
-  }
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const id = tab.dataset.tab;
-      tabs.forEach(t => {
-        const active = t.dataset.tab === id;
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-        t.style.color = active ? 'white' : '#6b6b6b';
-        if (active) positionIndicator(t);
-      });
-      panels.forEach(p => { p.style.display = p.dataset.panel === id ? '' : 'none'; });
+  // Il componente SegmentedControl gestisce già bottoni e indicatore animato;
+  // qui basta ascoltare il suo evento per mostrare il pannello corrispondente.
+  document.addEventListener('sc-change', ((e: CustomEvent<{ value: string; scId: string }>) => {
+    if (e.detail.scId !== 'ashtanga-tabs') return;
+    document.querySelectorAll<HTMLElement>('.tab-panel').forEach(panel => {
+      panel.style.display = panel.dataset.panel === e.detail.value ? '' : 'none';
     });
-  });
-
-  requestAnimationFrame(() => {
-    const first = document.querySelector<HTMLElement>('.tab-btn[data-tab="guidata"]');
-    if (first) positionIndicator(first);
-  });
+  }) as EventListener);
 </script>
+
+<style>
+  /* Shell condivisa dalle card bianche della pagina: bordo, radius, ombra, hover. */
+  .card-shell {
+    background: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e8e4df;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: transform 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .card-shell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+  }
+  .card-shell--lg {
+    border-radius: 22px;
+  }
+  .card-shell--accent {
+    border-color: rgba(156, 154, 102, 0.3);
+  }
+</style>
