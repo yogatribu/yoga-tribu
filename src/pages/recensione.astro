@@ -1,20 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Tag from '../components/ui/Tag.astro';
+import Heading from '../components/ui/Heading.astro';
+import Button from '../components/ui/Button.astro';
+
 const href = "https://search.google.com/local/writereview?placeid=ChIJZ2dCAQDbeEcRp3RFb_K-YOw";
 ---
-<BaseLayout title="Lascia una recensione — Yoga Tribù" noindex={true}>
-  <section class="min-h-[70vh] flex flex-col items-center justify-center text-center px-6 py-24">
-    <h1 class="font-serif text-h1 text-text-main mb-4">
-      La tua opinione<br>conta per noi
-    </h1>
-    <p class="text-text-secondary text-lg max-w-sm mb-10 leading-relaxed">
-      Una recensione su Google ci aiuta a far conoscere lo studio a chi cerca yoga nella zona.
-    </p>
-    <a
-      href={href}
-      class="btn-shimmer inline-block bg-iyengar text-white text-sm font-medium tracking-wide px-8 py-3 rounded"
-    >
-      Scrivi una recensione
-    </a>
-  </section>
+
+<BaseLayout title="Lascia una recensione · Yoga Tribù" noindex={true}>
+  <Section background="default" size="large">
+    <Container size="narrow" class="text-center">
+      <Tag class="mb-5">Recensioni</Tag>
+      <Heading level={1} class="mb-5">
+        La tua opinione<br/>conta per noi
+      </Heading>
+      <p class="text-text-secondary text-base leading-relaxed max-w-[440px] mx-auto mb-10">
+        Se ti sei trovato bene, una recensione su Google ci aiuta a far conoscere lo studio a chi cerca yoga nella zona.
+      </p>
+      <Button variant="primary" size="lg" href={href} external={true}>
+        Scrivi una recensione
+      </Button>
+    </Container>
+  </Section>
 </BaseLayout>
