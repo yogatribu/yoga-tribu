@@ -6,7 +6,7 @@ import Tag from '../components/ui/Tag.astro';
 import Heading from '../components/ui/Heading.astro';
 import Button from '../components/ui/Button.astro';
 
-const href = "https://search.google.com/local/writereview?placeid=ChIJZ2dCAQDbeEcRp3RFb_K-YOw";
+const href = "https://www.google.com/maps/place/?q=place_id:ChIJZ2dCAQDbeEcRp3RFb_K-YOw";
 ---
 
 <BaseLayout title="Lascia una recensione · Yoga Tribù" noindex={true}>
@@ -16,12 +16,15 @@ const href = "https://search.google.com/local/writereview?placeid=ChIJZ2dCAQDbeE
       <Heading level={1} class="mb-5">
         La tua opinione<br/>conta per noi
       </Heading>
-      <p class="text-text-secondary text-base leading-relaxed max-w-[440px] mx-auto mb-10">
+      <p class="text-text-secondary text-base leading-relaxed max-w-[440px] mx-auto mb-6">
         Se ti sei trovato bene, una recensione su Google ci aiuta a far conoscere lo studio a chi cerca un posto in cui praticare yoga nella zona.
       </p>
       <Button variant="primary" size="lg" href={href} external={true}>
-        Scrivi una recensione
+        Apri la scheda su Google
       </Button>
+      <p class="text-text-secondary text-sm leading-relaxed max-w-[440px] mx-auto mt-6">
+        Una volta aperta, tocca "Recensioni" e poi l'icona della matita per scriverne una.
+      </p>
     </Container>
   </Section>
 </BaseLayout>
