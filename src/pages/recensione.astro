@@ -1,57 +1,20 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 const href = "https://search.google.com/local/writereview?placeid=ChIJZ2dCAQDbeEcRp3RFb_K-YOw";
 ---
-<html lang="it">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lascia una recensione — Yoga Tribù</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body {
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #f3efe4;
-        font-family: -apple-system, sans-serif;
-        padding: 48px 24px;
-        text-align: center;
-      }
-      img { height: 56px; margin-bottom: 40px; }
-      h1 {
-        font-size: 1.55rem;
-        font-weight: 400;
-        color: #2a2a2a;
-        margin-bottom: 12px;
-        line-height: 1.2;
-      }
-      p {
-        color: #6b6a5c;
-        font-size: 0.95rem;
-        line-height: 1.65;
-        margin-bottom: 40px;
-        max-width: 280px;
-      }
-      a {
-        display: inline-block;
-        background: #9c9a66;
-        color: #fff;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 500;
-        letter-spacing: .06em;
-        padding: 12px 28px;
-        border-radius: 6px;
-      }
-    </style>
-  </head>
-  <body>
-    <img src="/logo/logo-completo-ocra.svg" alt="Yoga Tribù">
-    <h1>La tua opinione<br>conta per noi</h1>
-    <p>Una recensione su Google ci aiuta a portare lo yoga a più persone.</p>
-    <a href={href}>Scrivi una recensione</a>
-  </body>
-</html>
+<BaseLayout title="Lascia una recensione — Yoga Tribù" noindex={true}>
+  <section class="min-h-[70vh] flex flex-col items-center justify-center text-center px-6 py-24">
+    <h1 class="font-serif text-h1 text-text-main mb-4">
+      La tua opinione<br>conta per noi
+    </h1>
+    <p class="text-text-secondary text-lg max-w-sm mb-10 leading-relaxed">
+      Una recensione su Google ci aiuta a far conoscere lo studio a chi cerca yoga nella zona.
+    </p>
+    <a
+      href={href}
+      class="btn-shimmer inline-block bg-iyengar text-white text-sm font-medium tracking-wide px-8 py-3 rounded"
+    >
+      Scrivi una recensione
+    </a>
+  </section>
+</BaseLayout>
