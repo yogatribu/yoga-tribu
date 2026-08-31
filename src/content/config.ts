@@ -114,6 +114,7 @@ const incontriCollection = defineCollection({
     prenotazione_obbligatoria: z.boolean().optional(),
     telefono: z.string().optional(),
     descrizione_breve: z.string(),
+    pagina_dettaglio: z.boolean().optional(),
     draft: z.boolean().optional(),
   }),
 });

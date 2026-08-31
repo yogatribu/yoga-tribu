@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Button from '../../../components/ui/Button.astro';
+import CTAFinal from '../../../components/content/CTAFinal.astro';
+import Section from '../../../components/ui/Section.astro';
+import Container from '../../../components/ui/Container.astro';
+import Divider from '../../../components/ui/Divider.astro';
+import MapLink from '../../../components/ui/MapLink.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const incontri = await getCollection('incontri', ({ data }) =>
+    data.draft !== true && data.pagina_dettaglio === true
+  );
+  return incontri.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const i = entry.data;
+
+const WA = (i.telefono ?? '328 7675966').replace(/\s/g, '');
+const waHref = `https://wa.me/39${WA}?text=${encodeURIComponent(
+  i.prenotazione_obbligatoria
+    ? `Ciao! Vorrei prenotare un posto per "${i.title}" del ${formatData(i.data)}.`
+    : `Ciao! Vorrei informazioni su "${i.title}" del ${formatData(i.data)}.`
+)}`;
+
+function formatData(dataStr: string) {
+  return new Date(dataStr).toLocaleDateString('it-IT', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+}
+
+const EYEBROW = 'text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]';
+---
+
+<BaseLayout
+  title={`${i.title} · Yoga Tribù`}
+  description={i.descrizione_breve}
+>
+  <!-- Intestazione -->
+  <div class="bg-background pt-28 pb-12 md:pt-32 md:pb-14">
+    <Container>
+      <p class={`${EYEBROW} mb-4`}>{i.tipo}</p>
+      <h1 class="font-serif text-h1-mobile md:text-display text-text-main leading-tight max-w-3xl mb-4">
+        {i.title}
+      </h1>
+      {i.con && (
+        <p class="font-serif text-[26px] md:text-[32px] text-[#9c9a66] mb-6">con {i.con}</p>
+      )}
+      <p class="text-text-secondary text-lg max-w-xl leading-relaxed">{i.descrizione_breve}</p>
+    </Container>
+  </div>
+
+  <!-- Dettagli rapidi -->
+  <Section background="alt" size="compact">
+    <Container>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+        <div>
+          <p class={`${EYEBROW} mb-2`}>Data</p>
+          <p class="text-text-main text-sm font-medium">{formatData(i.data)}</p>
+        </div>
+        {i.orario && (
+          <div>
+            <p class={`${EYEBROW} mb-2`}>Orario</p>
+            <p class="text-text-main text-sm font-medium">{i.orario}</p>
+          </div>
+        )}
+        {i.con && (
+          <div>
+            <p class={`${EYEBROW} mb-2`}>Con</p>
+            <p class="text-text-main text-sm font-medium">{i.con}</p>
+          </div>
+        )}
+        <div>
+          <p class={`${EYEBROW} mb-2`}>Quota</p>
+          <p class="text-text-main text-sm font-medium">
+            {i.prezzo != null ? `${i.prezzo}€` : 'Ingresso libero'}
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Contenuto + sidebar -->
+  <Section background="default">
+    <Container>
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-16 items-start">
+
+        <!-- Corpo -->
+        <div class="prose prose-neutral max-w-none
+          prose-p:text-base prose-p:text-[#2a2a2a] prose-p:leading-[1.7] prose-p:mb-6
+          prose-headings:font-serif prose-headings:font-normal prose-headings:text-text-main
+          prose-h2:text-[28px] prose-h2:mb-4 prose-h2:mt-10
+          prose-a:text-[#9c9a66] prose-a:underline">
+          <Content />
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sticky top-24">
+          <div class="bg-background-alt border border-border rounded-[22px] p-6">
+            {i.prezzo != null ? (
+              <div class="mb-5">
+                <p class={`${EYEBROW} mb-2`}>Quota</p>
+                <p class="font-serif text-[32px] text-text-main leading-none">{i.prezzo}€</p>
+              </div>
+            ) : (
+              <div class="mb-5">
+                <p class={`${EYEBROW} mb-2`}>Quota</p>
+                <p class="font-serif text-[32px] text-text-main leading-none">Libero</p>
+              </div>
+            )}
+            <Divider class="mb-5" />
+            <div class="space-y-3 text-sm mb-6">
+              <div class="flex justify-between gap-4">
+                <span class="text-text-secondary">Data</span>
+                <span class="text-text-main text-right">{formatData(i.data)}</span>
+              </div>
+              {i.orario && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Orario</span>
+                  <span class="text-text-main">{i.orario}</span>
+                </div>
+              )}
+              {i.con && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Con</span>
+                  <span class="text-text-main">{i.con}</span>
+                </div>
+              )}
+              {i.luogo && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Luogo</span>
+                  <span class="text-text-main text-right max-w-[180px]">{i.luogo}</span>
+                </div>
+              )}
+              {i.prenotazione_obbligatoria && (
+                <div class="flex justify-between gap-4">
+                  <span class="text-text-secondary">Prenotazione</span>
+                  <span class="text-text-main font-medium">Obbligatoria</span>
+                </div>
+              )}
+            </div>
+            <div class="text-center mb-4">
+              <Button variant="primary" size="md" external={true} href={waHref}>
+                {i.prenotazione_obbligatoria ? 'Prenota su WhatsApp' : 'Scrivici su WhatsApp'}
+              </Button>
+            </div>
+            {i.luogo && (
+              <div class="text-center">
+                <MapLink address={i.luogo}>Vedi sulla mappa</MapLink>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <CTAFinal
+    headline="Ti aspettiamo."
+    subtitle="Per qualsiasi informazione scrivici su WhatsApp."
+    ctaLabel="Scrivici su WhatsApp"
+    ctaHref={waHref}
+    linkLabel="Vedi tutti gli eventi"
+    linkHref="/eventi"
+  />
+</BaseLayout>

@@ -269,7 +269,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
               )}
               <div class="mt-auto pt-5">
                 <span class="inline-flex items-center justify-center bg-primary text-white font-semibold text-sm rounded-full px-7 py-3.5">
-                  Scopri il seminario
+                  Scopri di più
                 </span>
               </div>
             </a>
@@ -290,7 +290,10 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {incontriOrdinati.map((i) => (
-            <div class="bg-background border border-border rounded-[22px] p-6">
+            <a
+              href={i.data.pagina_dettaglio ? `/eventi/incontri/${i.slug}` : '#'}
+              class={`bg-background border border-border rounded-[22px] p-6 flex flex-col transition-shadow hover:shadow-md ${i.data.pagina_dettaglio ? 'cursor-pointer' : 'cursor-default'}`}
+            >
               <div class="flex items-start justify-between gap-3 mb-3">
                 <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">{i.data.tipo}</span>
                 {i.data.prenotazione_obbligatoria && (
@@ -302,7 +305,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
               <h3 class="font-serif text-[22px] text-text-main leading-tight mb-3">{i.data.title}</h3>
               <p class="text-text-secondary text-sm leading-relaxed mb-6">{i.data.descrizione_breve}</p>
               <Divider class="mb-5" />
-              <div class="grid grid-cols-2 gap-3 text-sm">
+              <div class="grid grid-cols-2 gap-3 text-sm mb-6">
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-1">Data</p>
                   <p class="text-text-main">{formatData(i.data.data)}</p>
@@ -326,20 +329,14 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
                   </div>
                 )}
               </div>
-              <div class="mt-6">
-                <Button
-                  variant="primary"
-                  external={true}
-                  href={`https://wa.me/39${(i.data.telefono ?? '328 7675966').replace(/\s/g, '')}?text=${encodeURIComponent(
-                    i.data.prenotazione_obbligatoria
-                      ? `Ciao! Vorrei prenotare un posto per "${i.data.title}" del ${formatData(i.data.data)}.`
-                      : `Ciao! Vorrei informazioni su "${i.data.title}" del ${formatData(i.data.data)}.`
-                  )}`}
-                >
-                  {i.data.prenotazione_obbligatoria ? 'Prenota su WhatsApp' : 'Scrivici su WhatsApp'}
-                </Button>
+              <div class="mt-auto pt-5">
+                {i.data.pagina_dettaglio && (
+                  <span class="inline-flex items-center rounded-full bg-[#9c9a66] text-white font-semibold text-sm px-6 py-3">
+                    Scopri di più
+                  </span>
+                )}
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </Container>
@@ -400,6 +397,11 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
                         <p class="text-text-main font-medium">€{ws.data.prezzo_iscritti ?? ws.data.prezzo}</p>
                       </div>
                     )}
+                  </div>
+                  <div class="mt-5">
+                    <span class="inline-flex items-center rounded-full bg-[#9c9a66] text-white font-semibold text-sm px-6 py-3">
+                      Scopri di più
+                    </span>
                   </div>
                 </div>
               </a>
