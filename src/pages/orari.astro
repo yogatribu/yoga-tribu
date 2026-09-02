@@ -21,6 +21,7 @@ const STILE_TO_SLUG: Record<string, string> = {
   'teen': 'teen-yoga',
   'donna': 'salute-femminile',
   'workshop': 'workshop',
+  'kundalini': 'kundalini',
 };
 
 // Allineato al volantino orari (da settembre 2026). Flow e Teen Yoga non
@@ -54,6 +55,7 @@ const tutteLeLezioni = [
   // SABATO
   { giorno: 'sab', ora: '8:30',  stile: 'ashtanga', tipo: 'Mysore',    insegnante: 'Victor', durata: '60-90 min' },
   { giorno: 'sab', ora: '10:30', stile: 'flow',     tipo: 'Vinyasa',   insegnante: 'Giulia', durata: '~60 min' },
+  { giorno: 'sab', ora: '17:00', stile: 'kundalini', tipo: 'Meditazione e Respiro', insegnante: 'Giorgia', durata: '1 ora' },
   // DOMENICA
   { giorno: 'dom', ora: '9:00',  stile: 'workshop', tipo: 'Approfondimenti', insegnante: 'Glenda e Mattia', durata: '2h 30min' },
   { giorno: 'dom', ora: '17:30', stile: 'flow',     tipo: 'Vinyasa',   insegnante: 'Giulia', durata: '~60 min' },
@@ -68,6 +70,7 @@ const tuttiStiliLegenda = [
   { stile: 'flow',     label: 'Vinyasa',  color: '#b8a68e' },
   { stile: 'teen',     label: 'Teen Yoga', color: '#d4b5a0' },
   { stile: 'workshop', label: 'Approfondimenti', color: '#bf9d70' },
+  { stile: 'kundalini', label: 'Kundalini', color: '#8c7ba0' },
 ];
 const legendaAttiva = tuttiStiliLegenda.filter(s => PRATICHE_ATTIVE.includes(STILE_TO_SLUG[s.stile] ?? s.stile));
 ---

@@ -80,8 +80,18 @@ import Button from '../ui/Button.astro';
     workshop: '/eventi#workshop',
   };
 
+  // Stili senza pagina corso dedicata: il bottone del modale scrive direttamente
+  // su WhatsApp all'insegnante invece di linkare a "Scopri [stile]".
+  const stileWhatsapp: Record<string, { numero: string; testo: string; label: string }> = {
+    kundalini: {
+      numero: '393298877968',
+      testo: 'Ciao Giorgia! Vorrei prenotare la lezione di Kundalini · Meditazione e Respiro del sabato.',
+      label: 'Scrivi a Giorgia',
+    },
+  };
+
   const stileColors: Record<string, string> = {
-    iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0', workshop: '#bf9d70',
+    iyengar: '#9c9a66', ashtanga: '#7a6b5f', flow: '#b8a68e', teen: '#d4b5a0', workshop: '#bf9d70', kundalini: '#8c7ba0',
   };
 
   const descrizioni: Record<string, string> = {
@@ -97,6 +107,7 @@ import Button from '../ui/Button.astro';
     'flow-Vinyasa': 'Sequenza fluida, sempre diversa. Movimento, respiro, presenza.',
     'teen-Teen Yoga': 'Pratica pensata per ragazzi 12-17 anni. Postura, gestione dello stress, concentrazione.',
     'workshop-Approfondimenti': 'Una mattinata con più tempo del solito per entrare nel dettaglio delle posizioni e delle tecniche. Il tema viene comunicato a ridosso della data.',
+    'kundalini-Meditazione e Respiro': 'Meditazione, respirazione, bandha e sistema nervoso. Le intense pratiche meditative del Kundalini.',
   };
 
   function openModal(lezione: { giorno: string; ora: string; stile: string; tipo: string; insegnante: string; durata: string }) {
@@ -114,12 +125,21 @@ import Button from '../ui/Button.astro';
     (document.getElementById('modal-descrizione')!).textContent = descrizioni[key] ?? '';
 
     const linkEl = document.getElementById('modal-link-corso') as HTMLAnchorElement;
-    const href = stileLinks[lezione.stile] ?? '/pratiche';
-    linkEl.href = href;
-    const stileLabel = lezione.stile === 'workshop'
-      ? 'gli Approfondimenti'
-      : lezione.stile.charAt(0).toUpperCase() + lezione.stile.slice(1);
-    linkEl.textContent = `Scopri ${stileLabel}`;
+    const waOverride = stileWhatsapp[lezione.stile];
+    if (waOverride) {
+      linkEl.href = `https://wa.me/${waOverride.numero}?text=${encodeURIComponent(waOverride.testo)}`;
+      linkEl.target = '_blank';
+      linkEl.rel = 'noopener noreferrer';
+      linkEl.textContent = waOverride.label;
+    } else {
+      linkEl.removeAttribute('target');
+      linkEl.removeAttribute('rel');
+      linkEl.href = stileLinks[lezione.stile] ?? '/pratiche';
+      const stileLabel = lezione.stile === 'workshop'
+        ? 'gli Approfondimenti'
+        : lezione.stile.charAt(0).toUpperCase() + lezione.stile.slice(1);
+      linkEl.textContent = `Scopri ${stileLabel}`;
+    }
 
     modal!.classList.remove('hidden');
     modal!.classList.add('flex');
