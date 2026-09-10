@@ -5,7 +5,7 @@ date_fine: "2027-06-03"
 location: "Bab Zouina, Marrakesh (Marocco)"
 posti_totali: 20
 posti_disponibili: 20
-prezzo: 300
+prezzo: 350
 insegnanti: ["Glenda", "Mattia"]
 foto_hero: "/images/marocco/hero_marocco.webp"
 foto_hero_alt: "Atlante, Valle dell'Ourika · Marrakech"
