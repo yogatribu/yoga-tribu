@@ -114,7 +114,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
 
   <!-- Ritiri -->
   {ritiriConStato.length > 0 && (
-    <Section background="alt" id="ritiri">
+    <Section background="default" id="ritiri">
       <Container>
         <Tag class="mb-5">Ritiri</Tag>
         <Heading level={2} class="mb-4">Pratiche immersive.</Heading>
@@ -127,7 +127,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
               href={`/eventi/ritiri/${slug}`}
               class="block group h-full"
             >
-              <div class="h-full bg-background rounded-[22px] overflow-hidden border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200">
+              <div class="h-full bg-background-alt rounded-[22px] overflow-hidden border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200">
                 <div class="h-full grid grid-cols-1 md:grid-cols-[280px_1fr] gap-0">
                   {/* Su desktop l'immagine è fuori flusso: così è il contenuto a
                       determinare l'altezza della card, anche con foto verticali. */}
@@ -182,7 +182,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
 
   <!-- Seminari -->
   {seminariOrdinati.length > 0 && (
-    <Section background="default" id="seminari">
+    <Section background="alt" id="seminari">
       <Container>
         <Tag class="mb-5">Seminari</Tag>
         <Heading level={2} class="mb-4">Insegnanti ospiti.</Heading>
@@ -193,7 +193,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
           {seminariOrdinati.map((s) => (
             <a
               href={`/eventi/seminari/${s.slug}`}
-              class="group h-full flex flex-col bg-background-alt border border-border rounded-[22px] p-8 hover:border-primary/30 hover:shadow-md transition-all duration-200"
+              class="group h-full flex flex-col bg-background border border-border rounded-[22px] p-8 hover:border-primary/30 hover:shadow-md transition-all duration-200"
             >
               <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">
                 Con {s.data.ospite}
@@ -243,7 +243,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
 
   <!-- Incontri -->
   {incontriOrdinati.length > 0 && (
-    <Section background="alt" id="incontri">
+    <Section background="default" id="incontri">
       <Container>
         <Tag class="mb-5">Incontri</Tag>
         <Heading level={2} class="mb-4">Non solo tappetino.</Heading>
@@ -254,7 +254,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
           {incontriOrdinati.map((i) => (
             <a
               href={i.data.pagina_dettaglio ? `/eventi/incontri/${i.slug}` : '#'}
-              class={`bg-background border border-border rounded-[22px] p-6 flex flex-col transition-shadow hover:shadow-md ${i.data.pagina_dettaglio ? 'cursor-pointer' : 'cursor-default'}`}
+              class={`bg-background-alt border border-border rounded-[22px] p-6 flex flex-col transition-shadow hover:shadow-md ${i.data.pagina_dettaglio ? 'cursor-pointer' : 'cursor-default'}`}
             >
               <div class="flex items-start justify-between gap-3 mb-3">
                 <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">{i.data.tipo}</span>
@@ -306,7 +306,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
   )}
 
   <!-- Workshop -->
-  <Section background="default" id="workshop">
+  <Section background="alt" id="workshop">
     <Container>
       <Tag class="mb-5">Workshop</Tag>
       <Heading level={2} class="mb-4">Approfondimenti tematici.</Heading>
@@ -318,7 +318,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
           {workshopsConStato.map(({ entry: ws, slug, postiRimasti, esaurito, scarsita }) => (
             <a
               href={`/eventi/workshop/${slug}`}
-              class="group block bg-background-alt border border-border rounded-[22px] overflow-hidden hover:border-primary/30 hover:shadow-md transition-all duration-200"
+              class="group block bg-background border border-border rounded-[22px] overflow-hidden hover:border-primary/30 hover:shadow-md transition-all duration-200"
             >
               <div class="p-6">
                 <div class="flex items-start justify-between gap-3 mb-3">
@@ -381,7 +381,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
   </Section>
 
   <!-- Estate in Villa · rimando alla prossima edizione (2026 conclusa) -->
-  <Section background="default" size="compact">
+  <Section background="alt" size="compact">
     <Container size="narrow" class="text-center">
       <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">Torna nel 2027</span>
       <p class="font-serif text-[20px] text-text-main leading-tight mt-1 mb-3">Estate in Villa</p>
@@ -390,7 +390,7 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
   </Section>
 
   <!-- Newsletter / avviso -->
-  <Section background="alt">
+  <Section background="default">
     <Container size="narrow" class="text-center">
       <Tag class="mb-5">Vuoi essere avvisato?</Tag>
       <Heading level={3} class="mb-4">I nuovi eventi vengono comunicati prima sulla tribù.</Heading>
