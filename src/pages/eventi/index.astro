@@ -111,22 +111,6 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
     </div>
   </div>
 
-  <!-- Estate in Villa · rimando compatto (2026 conclusa, countdown alla prossima edizione) -->
-  <Section background="default" size="compact">
-    <Container>
-      <a
-        href="/eventi/estate-in-villa"
-        class="flex items-center justify-between gap-4 bg-white border border-border rounded-[18px] px-6 py-5 transition-all duration-200 hover:border-primary/30 hover:shadow-md"
-      >
-        <div>
-          <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">Torna nel 2027</span>
-          <p class="font-serif text-[20px] text-text-main leading-tight mt-1">Estate in Villa</p>
-        </div>
-        <span class="text-[#9c9a66] text-2xl leading-none">›</span>
-      </a>
-    </Container>
-  </Section>
-
   <!-- Ritiri -->
   {ritiriConStato.length > 0 && (
     <Section background="alt" id="ritiri">
@@ -392,6 +376,19 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
           </Button>
         </div>
       )}
+    </Container>
+  </Section>
+
+  <!-- Estate in Villa · rimando alla prossima edizione (2026 conclusa) -->
+  <Section background="default" size="compact">
+    <Container size="narrow">
+      <a
+        href="/eventi/estate-in-villa"
+        class="block text-center rounded-[18px] px-6 py-7 bg-[#faf6ef] hover:bg-[#f5efe3] transition-colors duration-200"
+      >
+        <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">Torna nel 2027</span>
+        <p class="font-serif text-[20px] text-text-main leading-tight mt-1">Estate in Villa</p>
+      </a>
     </Container>
   </Section>
 
