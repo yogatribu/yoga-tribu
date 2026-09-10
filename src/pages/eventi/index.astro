@@ -111,29 +111,19 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
     </div>
   </div>
 
-  <!-- Estate in Villa · teaser prossima edizione (2026 conclusa) -->
-  <Section background="default" size="large">
+  <!-- Estate in Villa · rimando compatto (2026 conclusa, countdown alla prossima edizione) -->
+  <Section background="default" size="compact">
     <Container>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div class="aspect-[4/3] rounded-[22px] overflow-hidden">
-          <img
-            src="/images/estate_in_villa.webp"
-            alt="Estate in Villa · Yoga Tribù"
-            class="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
+      <a
+        href="/eventi/estate-in-villa"
+        class="flex items-center justify-between gap-4 bg-white border border-border rounded-[18px] px-6 py-5 transition-all duration-200 hover:border-primary/30 hover:shadow-md"
+      >
         <div>
-          <Tag class="mb-5" color="iyengar">Torna nel 2027</Tag>
-          <Heading level={2} class="mb-4">Estate in Villa</Heading>
-          <p class="text-text-secondary text-base leading-relaxed mb-6">
-            Quest'estate abbiamo praticato all'aperto, sotto il portico di una villa a Rosà. L'edizione 2026 è conclusa: si torna la prossima estate.
-          </p>
-          <Button variant="secondary" size="md" href="https://wa.me/393287675966?text=Ciao%2C%20vorrei%20essere%20avvisato%2Fa%20quando%20riparte%20l%27Estate%20in%20Villa%20nel%202027." external={true}>
-            Fatti avvisare per il 2027
-          </Button>
+          <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">Torna nel 2027</span>
+          <p class="font-serif text-[20px] text-text-main leading-tight mt-1">Estate in Villa</p>
         </div>
-      </div>
+        <span class="text-[#9c9a66] text-2xl leading-none">›</span>
+      </a>
     </Container>
   </Section>
 
