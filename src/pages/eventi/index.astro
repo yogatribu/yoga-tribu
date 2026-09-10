@@ -7,7 +7,6 @@ import Container from '../../components/ui/Container.astro';
 import Tag from '../../components/ui/Tag.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Divider from '../../components/ui/Divider.astro';
-import LinkApple from '../../components/ui/LinkApple.astro';
 import { getCollection } from 'astro:content';
 
 const ritiri = await getCollection('ritiri');
@@ -381,16 +380,23 @@ const workshopsConStato = workshopsOrdinati.map((ws) => ({
   </Section>
 
   <!-- Estate in Villa · rimando alla prossima edizione (2026 conclusa) -->
-  <Section background="alt" size="compact">
-    <Container size="narrow" class="text-center">
-      <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">Torna nel 2027</span>
-      <p class="font-serif text-[20px] text-text-main leading-tight mt-1 mb-3">Estate in Villa</p>
-      <LinkApple href="/eventi/estate-in-villa">Scopri il countdown</LinkApple>
+  <Section background="default" size="compact">
+    <Container size="narrow">
+      <a
+        href="/eventi/estate-in-villa"
+        class="flex items-center justify-between gap-4 bg-white border border-border rounded-[18px] px-6 py-5 transition-all duration-200 hover:border-primary/30 hover:shadow-md"
+      >
+        <div>
+          <span class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66]">Torna nel 2027</span>
+          <p class="font-serif text-[20px] text-text-main leading-tight mt-1">Estate in Villa</p>
+        </div>
+        <span class="text-[#9c9a66] text-2xl leading-none">›</span>
+      </a>
     </Container>
   </Section>
 
   <!-- Newsletter / avviso -->
-  <Section background="default">
+  <Section background="alt">
     <Container size="narrow" class="text-center">
       <Tag class="mb-5">Vuoi essere avvisato?</Tag>
       <Heading level={3} class="mb-4">I nuovi eventi vengono comunicati prima sulla tribù.</Heading>
