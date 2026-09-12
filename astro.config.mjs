@@ -23,7 +23,7 @@ export default defineConfig({
       filter: (page) => !pagesExcludedFromSitemap.has(new URL(page).pathname),
     }),
   ],
-  site: 'https://yogatribu.it',
+  site: 'https://www.yogatribu.it',
   redirects: {
     '/quiz': '/trova-la-tua-pratica',
     '/pratiche/flow': '/pratiche/vinyasa',

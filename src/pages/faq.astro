@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Tag from '../components/ui/Tag.astro';
+import Heading from '../components/ui/Heading.astro';
+import FAQAccordion from '../components/content/FAQAccordion.astro';
+import CTAFinal from '../components/content/CTAFinal.astro';
+
+const faq = [
+  { question: 'Dove si trova Yoga Tribù?', answer: 'A San Giuseppe, frazione di Cassola (VI), in Via Giuseppe Mazzini 1, a pochi minuti da Bassano del Grappa.' },
+  { question: 'Posso provare prima di iscrivermi?', answer: 'Sì. La prima lezione di prova costa 10€: vieni, provi, e poi decidi con calma se e quale abbonamento fa per te.' },
+  { question: 'Devo per forza comprare un pacchetto?', answer: 'No. Puoi venire anche a singola lezione, a 20€. Se pratichi con continuità, i pacchetti diventano più convenienti.' },
+  { question: 'Devo essere flessibile per iniziare?', answer: 'No. La flessibilità è il risultato della pratica, non il prerequisito. I nostri allievi più rigidi diventano i più consapevoli del loro corpo nei primi mesi.' },
+  { question: 'Posso praticare se ho dolori fisici o problemi di salute?', answer: 'La maggior parte dei nostri allievi viene proprio per questo. L\'Iyengar Yoga nasce con applicazioni terapeutiche reali. Prima della lezione, parla con l\'insegnante delle tue condizioni: adatterà la pratica a te.' },
+  { question: 'Che differenza c\'è tra Iyengar e Ashtanga?', answer: 'Iyengar è precisione e allineamento: lavora su dolori reali con l\'uso di supporti come mattoncini e cinture. Ashtanga è una sequenza fissa che si ripete e costruisce disciplina, forza e silenzio interiore nel tempo.' },
+  { question: 'Dopo quanto tempo vedo i primi risultati?', answer: 'Dipende da cosa cerchi, ma prima di quanto pensi. Sulle tensioni quotidiane bastano 2-3 settimane di pratica regolare. Sui dolori cronici, come il mal di schiena, di solito servono 1-2 mesi. Sulla flessibilità e la trasformazione più profonda, dai 6 mesi in su.' },
+  { question: 'Cosa succede se non finisco le lezioni del pacchetto in tempo?', answer: 'I pacchetti hanno una scadenza, ma sappiamo che a volte capitano imprevisti. Se hai un problema serio, come un infortunio o una questione di salute, scrivici: troviamo insieme una soluzione.' },
+  { question: 'I workshop sono inclusi nell\'abbonamento?', answer: 'No, i workshop si pagano a parte. Con un abbonamento attivo, però, hai un prezzo riservato.' },
+  { question: 'Fate percorsi dedicati alla salute femminile?', answer: 'Sì. Con Sara, ostetrica, offriamo ginnastica pelvica, massaggio neonatale, accompagnamento alla nascita e Cerchi di Cura, per ogni fase della vita di una donna.' },
+  { question: 'Il massaggio neonatale è solo per mamme?', answer: 'No. I papà sono benvenuti, e spesso il massaggio diventa il loro spazio privilegiato per creare un legame fisico col bambino nelle prime settimane.' },
+  { question: 'Come prenoto una lezione o ricevo informazioni?', answer: 'Il modo più veloce è scriverci su WhatsApp. Rispondiamo di persona e ti aiutiamo a capire da dove iniziare.' },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faq.map(({ question, answer }) => ({
+    "@type": "Question",
+    "name": question,
+    "acceptedAnswer": { "@type": "Answer", "text": answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="Domande frequenti · Yoga Tribù"
+  description="Le domande più frequenti su Yoga Tribù: dove siamo, come iniziare, differenze tra Iyengar e Ashtanga, abbonamenti e salute femminile."
+  schemaJsonLd={faqSchema}
+>
+  <Section background="default" size="compact" class="!pt-16 !pb-12 md:!pt-24 md:!pb-16">
+    <Container size="narrow" class="text-center pt-6">
+      <Tag class="mb-5">Domande frequenti</Tag>
+      <Heading level={1} class="mb-5">
+        Le domande che ci fanno più spesso.
+      </Heading>
+      <p class="text-text-secondary text-base leading-relaxed max-w-[560px] mx-auto">
+        Se non trovi la risposta che cerchi, scrivici su WhatsApp: ti rispondiamo di persona.
+      </p>
+    </Container>
+  </Section>
+
+  <FAQAccordion items={faq} background="alt" title="" />
+
+  <CTAFinal
+    headline="Hai un'altra domanda?"
+    subtitle="Scrivici su WhatsApp, ti rispondiamo entro poche ore."
+    ctaLabel="Scrivici su WhatsApp"
+    ctaHref="https://wa.me/393287675966?text=Ciao!%20Ho%20una%20domanda%20su%20Yoga%20Trib%C3%B9."
+  />
+</BaseLayout>

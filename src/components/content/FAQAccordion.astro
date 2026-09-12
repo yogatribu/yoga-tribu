@@ -17,7 +17,7 @@ const { items, title = 'Domande frequenti.', background = 'default' } = Astro.pr
 
 <section class={`faq-section ${background === 'alt' ? 'faq-section--alt' : ''}`}>
   <div class="faq-container">
-    <h2 class="faq-title">{title}</h2>
+    {title && <h2 class="faq-title">{title}</h2>}
     <div class="faq-list">
       {items.map(({ question, answer }) => (
         <FAQItem question={question} answer={answer} />

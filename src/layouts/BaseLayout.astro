@@ -22,14 +22,15 @@ const {
   noindex = false,
 } = Astro.props;
 
-const siteUrl = 'https://yogatribu.it';
+const siteUrl = 'https://www.yogatribu.it';
 const canonical = canonicalUrl ?? `${siteUrl}${Astro.url.pathname}`;
 
 const localBusiness = {
   "@context": "https://schema.org",
+  "@id": "https://www.yogatribu.it/#business",
   "@type": ["LocalBusiness", "HealthClub"],
   "name": "Yoga Tribù",
-  "url": "https://yogatribu.it",
+  "url": "https://www.yogatribu.it",
   "telephone": "+393287675966",
   "email": "info@yogatribu.it",
   "address": {
@@ -40,6 +41,12 @@ const localBusiness = {
     "postalCode": "36022",
     "addressCountry": "IT"
   },
+  "containedInPlace": { "@type": "AdministrativeArea", "name": "Cassola" },
+  "areaServed": [
+    { "@type": "City", "name": "Bassano del Grappa" },
+    { "@type": "City", "name": "Cassola" },
+    { "@type": "City", "name": "Rosà" }
+  ],
   "openingHoursSpecification": [
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "07:00", "closes": "21:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "08:45", "closes": "20:30" },
@@ -56,6 +63,7 @@ const localBusiness = {
     "longitude": "11.7545503"
   },
   "hasMap": "https://www.google.com/maps/place/Yoga+Tribu/@45.7659897,11.7545503,17z/",
+  "founder": { "@type": "Person", "name": "Glenda", "jobTitle": "Fondatrice e insegnante Iyengar" },
   "sameAs": [
     "https://instagram.com/yoga__tribu",
     "https://www.facebook.com/people/Yoga-Trib%C3%B9/100028284085474/"
