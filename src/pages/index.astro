@@ -124,16 +124,17 @@ const siamoCards = [
       class="relative overflow-hidden group"
       style="min-height: 70vh;"
     >
+      <a href={tile.link} class="absolute inset-0 z-0" aria-label={tile.nome}></a>
       <img
         src={tile.foto}
         alt={altFor(tile.foto, `Pratica di ${tile.nome} allo studio Yoga Tribù`)}
-        class="absolute inset-0 w-full h-full object-cover"
+        class="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={tile.posizione ? `object-position: ${tile.posizione};` : undefined}
         loading="lazy"
       />
-      <div class="absolute inset-0" style={`background: ${tile.overlay};`}></div>
+      <div class="absolute inset-0 pointer-events-none" style={`background: ${tile.overlay};`}></div>
       <div
-        class="relative h-full flex items-center justify-center text-center"
+        class="relative h-full flex items-center justify-center text-center pointer-events-none"
         style="min-height: 70vh;"
       >
         <div class="container-default py-24">
@@ -148,7 +149,7 @@ const siamoCards = [
             <p class="text-white/75 text-base leading-relaxed mb-8 max-w-md mx-auto">
               {tile.sub}
             </p>
-            <div class="flex flex-wrap gap-4 items-center justify-center">
+            <div class="relative z-10 flex flex-wrap gap-4 items-center justify-center pointer-events-auto">
               <Button variant="primary" href={tile.link}>{tile.cta}</Button>
               <Button variant="secondary" href={tile.waMsg} external={true}>Prenota una lezione</Button>
             </div>
@@ -204,15 +205,16 @@ const siamoCards = [
     class="relative overflow-hidden group"
     style="min-height: 60vh;"
   >
+    <a href="/eventi/ritiri/marocco-2027" class="absolute inset-0 z-0" aria-label="Ritiro in Marocco"></a>
     <img
       src="/images/marocco/hero_marocco.webp"
       alt="Ritiro in Marocco · Yoga Tribù"
-      class="absolute inset-0 w-full h-full object-cover"
+      class="absolute inset-0 w-full h-full object-cover pointer-events-none"
       loading="lazy"
     />
-    <div class="absolute inset-0" style="background: rgba(0,0,0,0.42);"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background: rgba(0,0,0,0.42);"></div>
     <div
-      class="relative container-default flex items-center justify-center text-center"
+      class="relative container-default flex items-center justify-center text-center pointer-events-none"
       style="min-height: 60vh;"
     >
       <div class="max-w-[720px] mx-auto py-24">
@@ -226,7 +228,7 @@ const siamoCards = [
         <p class="text-white/70 text-sm mb-8">
           Un centro Iyengar immerso nel verde, a mezz'ora dalla città. Pratica al mattino, pomeriggi liberi tra escursioni e hammam.
         </p>
-        <div class="flex flex-wrap gap-4 items-center justify-center">
+        <div class="relative z-10 flex flex-wrap gap-4 items-center justify-center pointer-events-auto">
           <Button variant="primary" href="/eventi/ritiri/marocco-2027">Scopri il Ritiro in Marocco</Button>
           <Button variant="secondary" href="/eventi">Vedi tutti gli eventi</Button>
         </div>
