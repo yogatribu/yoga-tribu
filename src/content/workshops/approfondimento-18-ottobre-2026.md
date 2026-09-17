@@ -11,7 +11,7 @@ descrizione_breve: "Mattinata di approfondimento della pratica, Studio Pozzo del
 nota: "Il tema di questo approfondimento viene definito nei giorni precedenti e comunicato prima dell'iscrizione."
 ---
 
-## L'incontro
+## Di cosa si tratta.
 
 Una mattinata dedicata ad approfondire la pratica, con più tempo del solito
 per entrare nel dettaglio delle posizioni e delle tecniche.

@@ -11,8 +11,4 @@ pagina_dettaglio: true
 descrizione_breve: "Una conferenza sull'Ayurveda e la routine quotidiana, con Anita Torresan."
 ---
 
-## L'incontro
-
 Una conferenza sull'Ayurveda dedicata alla *dinacharya*: l'insieme delle pratiche di igiene e cura quotidiana che la tradizione ayurvedica suggerisce di seguire nel corso della giornata.
-
-Con Anita Torresan.
