@@ -17,6 +17,7 @@ const tuttiInsegnanti = [
     slug: 'glenda',
     nome: 'Glenda',
     tag: 'IYENGAR YOGA',
+    jobTitle: 'Yoga Teacher · Founder',
     foto: '/images/insegnanti/glenda.webp',
     alt: 'Glenda · Fondatrice e insegnante Iyengar',
     href: '/insegnanti/glenda',
@@ -42,6 +43,7 @@ const tuttiInsegnanti = [
     slug: 'victor',
     nome: 'Victor',
     tag: 'ASHTANGA YOGA',
+    jobTitle: 'Ashtanga Yoga Teacher',
     foto: '/images/insegnanti/victor.webp',
     alt: 'Victor · Ashtanga Yoga',
     href: '/insegnanti/victor',
@@ -58,6 +60,7 @@ const tuttiInsegnanti = [
     slug: 'sara',
     nome: 'Sara',
     tag: 'SALUTE FEMMINILE',
+    jobTitle: 'Ostetrica · Insegnante Salute Femminile',
     foto: '/images/insegnanti/sara.webp',
     alt: 'Sara Zampierin · Salute Femminile',
     href: '/insegnanti/sara',
@@ -68,11 +71,28 @@ const insegnantiAttivi = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(
 const nI = insegnantiAttivi.length;
 // Tailwind static strings rilevate da purge: 'md:grid-cols-1' 'md:grid-cols-2' 'md:grid-cols-3'
 const gridColsClass = nI === 1 ? 'md:grid-cols-1' : nI === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Chi Siamo · Yoga Tribù",
+  "url": "https://www.yogatribu.it/chi-siamo",
+  "mainEntity": {
+    "@id": "https://www.yogatribu.it/#business",
+    "employee": insegnantiAttivi.map((ins) => ({
+      "@type": "Person",
+      "name": ins.nome,
+      "jobTitle": ins.jobTitle,
+      "url": `https://www.yogatribu.it${ins.href}`,
+    })),
+  },
+};
 ---
 
 <BaseLayout
   title="Chi Siamo · Yoga Tribù"
   description="Yoga Tribù è uno studio di yoga professionale a Bassano del Grappa. Iyengar, Ashtanga e Salute Femminile insegnati da specialisti certificati."
+  schemaJsonLd={schema}
 >
   <!-- Hero -->
   <div
