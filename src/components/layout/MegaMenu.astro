@@ -26,10 +26,8 @@ const tuttiInsegnanti = [
 const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug));
 ---
 
-<!--
-  Il pannello è posizionato dall'header (#mega-container absolute top-full).
-  Qui gestiamo solo il contenuto visivo: sfondo, padding, griglia, link.
--->
+{/* Il pannello è posizionato dall'header (#mega-container absolute top-full).
+    Qui gestiamo solo il contenuto visivo: sfondo, padding, griglia, link. */}
 <div class="mega-panel-inner">
 
   {voce === 'pratiche' && (

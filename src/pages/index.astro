@@ -77,7 +77,7 @@ const siamoCards = [
   description="Studio di yoga a Bassano del Grappa. Iyengar, Ashtanga e Salute Femminile con insegnanti certificati. Risolvi dolori reali con pratica tradizionale."
 >
 
-  <!-- TILE 1 · Hero 95vh -->
+  {/* Hero */}
   <div
     data-hero
     class="relative overflow-hidden bg-[#1a1a1a]"
@@ -118,7 +118,7 @@ const siamoCards = [
     </div>
   </div>
 
-  <!-- TILE pratiche attive -->
+  {/* Pratiche attive */}
   {tilesAttivi.map((tile) => (
     <div
       class="relative overflow-hidden group"
@@ -159,7 +159,7 @@ const siamoCards = [
     </div>
   ))}
 
-  <!-- TILE 5 · Trova la tua pratica 60vh -->
+  {/* Trova la tua pratica */}
   <div class="bg-background flex items-center justify-center text-center" style="min-height: 60vh;">
     <div class="container-default py-24 w-full">
       <div class="max-w-[720px] mx-auto">
@@ -179,7 +179,7 @@ const siamoCards = [
     </div>
   </div>
 
-  <!-- TILE 6 · Perché sceglierci -->
+  {/* Perché sceglierci */}
   <div class="bg-background-alt flex items-center justify-center" style="min-height: 80vh;">
     <div class="container-default py-24 w-full text-center">
       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-6">PERCHÉ SCEGLIERCI</p>
@@ -199,8 +199,8 @@ const siamoCards = [
     </div>
   </div>
 
-  <!-- TILE EVENTO IN EVIDENZA: aggiorna manualmente quando cambia l'evento del momento
-       (Estate in Villa estate / Ritiro autunno / Workshop speciali / etc) -->
+  {/* Evento in evidenza: aggiorna manualmente quando cambia l'evento del momento
+      (Estate in Villa estate / Ritiro autunno / Workshop speciali / etc) */}
   <div
     class="relative overflow-hidden group"
     style="min-height: 60vh;"
@@ -236,7 +236,7 @@ const siamoCards = [
     </div>
   </div>
 
-  <!-- TILE 8 · Testimonianze carosello ibrido -->
+  {/* Testimonianze */}
   <TestimonialCarousel testimonials={testimonials} />
 
   <CTAFinal
