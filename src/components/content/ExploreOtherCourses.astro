@@ -3,20 +3,11 @@ import { PRATICHE_ATTIVE } from '../../config/visibilita.js';
 import { altFor } from '../../config/imageAlt.js';
 
 interface Props {
-  excludeStile: 'iyengar' | 'ashtanga' | 'flow' | 'teen' | 'donna';
+  excludeStile: 'iyengar' | 'ashtanga' | 'vinyasa' | 'teen-yoga' | 'salute-femminile';
   background?: 'default' | 'alt';
 }
 
 const { excludeStile, background = 'default' } = Astro.props;
-
-// Mappa id interno → slug in visibilita.js
-const ID_TO_SLUG: Record<string, string> = {
-  'iyengar': 'iyengar',
-  'ashtanga': 'ashtanga',
-  'flow': 'vinyasa',
-  'teen': 'teen-yoga',
-  'donna': 'salute-femminile',
-};
 
 const all = [
   {
@@ -38,7 +29,7 @@ const all = [
     overlay: 'rgba(0,0,0,0.38)',
   },
   {
-    id: 'flow',
+    id: 'vinyasa',
     stile: 'Vinyasa',
     tag: 'PRATICA COMPLEMENTARE',
     sub: 'Pratica fresca, sempre diversa. Movimento e respiro.',
@@ -47,7 +38,7 @@ const all = [
     overlay: 'rgba(0,0,0,0.28)',
   },
   {
-    id: 'teen',
+    id: 'teen-yoga',
     stile: 'Teen Yoga',
     tag: 'PRATICA COMPLEMENTARE',
     sub: 'Yoga per ragazzi tra i 12 e i 17 anni.',
@@ -56,7 +47,7 @@ const all = [
     overlay: 'rgba(0,0,0,0.32)',
   },
   {
-    id: 'donna',
+    id: 'salute-femminile',
     stile: 'Salute Femminile',
     tag: 'PRATICA COMPLEMENTARE',
     sub: 'Percorsi per la donna. In ogni fase.',
@@ -67,7 +58,7 @@ const all = [
 ];
 
 const shown = all
-  .filter(c => c.id !== excludeStile && PRATICHE_ATTIVE.includes(ID_TO_SLUG[c.id] ?? c.id))
+  .filter(c => c.id !== excludeStile && PRATICHE_ATTIVE.includes(c.id))
   .slice(0, 2);
 ---
 
