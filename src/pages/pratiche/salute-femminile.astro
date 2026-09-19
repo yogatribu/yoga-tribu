@@ -172,7 +172,7 @@ const tabs = [
       <!-- Segmented tab bar -->
       <div class="overflow-x-auto mb-12" id="dg-tab-bar">
         <SegmentedControl
-          scId="donna-tabs"
+          scId="salute-femminile-tabs"
           defaultValue={tabs[0]?.id}
           indicatorColor={COLOR}
           options={tabs.map(tab => ({ value: tab.id, label: tab.label }))}
@@ -374,7 +374,7 @@ const tabs = [
   // Il componente SegmentedControl gestisce già bottoni e indicatore animato;
   // qui basta ascoltare il suo evento per mostrare il pannello corrispondente.
   document.addEventListener('sc-change', ((e: CustomEvent<{ value: string; scId: string }>) => {
-    if (e.detail.scId !== 'donna-tabs') return;
+    if (e.detail.scId !== 'salute-femminile-tabs') return;
     document.querySelectorAll<HTMLElement>('.dg-panel').forEach(panel => {
       panel.style.display = panel.dataset.panel === e.detail.value ? '' : 'none';
     });

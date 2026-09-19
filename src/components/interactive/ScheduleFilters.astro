@@ -8,18 +8,17 @@ const FILTER_TO_SLUG: Record<string, string> = {
   'ashtanga': 'ashtanga',
   'flow': 'vinyasa',
   'teen': 'teen-yoga',
-  'donna': 'salute-femminile',
   'workshop': 'workshop',
 };
 
 const filterOptions = [
-  { value: 'tutti',    label: 'Tutti'    },
-  { value: 'iyengar',  label: 'Iyengar Yoga'  },
-  { value: 'ashtanga', label: 'Ashtanga Yoga' },
-  { value: 'flow',     label: 'Vinyasa'  },
-  { value: 'teen',     label: 'Teen'     },
-  { value: 'donna',    label: 'Salute Femminile' },
-  { value: 'workshop', label: 'Approfondimenti' },
+  { value: 'tutti',            label: 'Tutti'    },
+  { value: 'iyengar',          label: 'Iyengar Yoga'  },
+  { value: 'ashtanga',         label: 'Ashtanga Yoga' },
+  { value: 'flow',             label: 'Vinyasa'  },
+  { value: 'teen',             label: 'Teen'     },
+  { value: 'salute-femminile', label: 'Salute Femminile' },
+  { value: 'workshop',         label: 'Approfondimenti' },
 ].filter(o => o.value === 'tutti' || PRATICHE_ATTIVE.includes(FILTER_TO_SLUG[o.value] ?? o.value));
 
 const dayOptions = [
