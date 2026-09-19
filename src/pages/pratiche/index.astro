@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/ui/Button.astro';
-import LinkApple from '../../components/ui/LinkApple.astro';
+import ArrowLink from '../../components/ui/ArrowLink.astro';
 import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
 import Tag from '../../components/ui/Tag.astro';
@@ -167,7 +167,7 @@ const secondRowClass = n === 4 ? 'md:grid-cols-2' : 'md:grid-cols-3';
       <Button variant="primary" size="md" href="/trova-la-tua-pratica">Trova la tua pratica</Button>
       <p class="text-sm mt-5" style="color: #9b9b9b;">
         Oppure{' '}
-        <LinkApple href="https://wa.me/393287675966" external={true}>scrivici su WhatsApp</LinkApple>
+        <ArrowLink href="https://wa.me/393287675966" external={true}>scrivici su WhatsApp</ArrowLink>
       </p>
     </Container>
   </Section>

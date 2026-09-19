@@ -7,7 +7,7 @@ import Container from '../components/ui/Container.astro';
 import Tag from '../components/ui/Tag.astro';
 import Heading from '../components/ui/Heading.astro';
 import Divider from '../components/ui/Divider.astro';
-import LinkApple from '../components/ui/LinkApple.astro';
+import ArrowLink from '../components/ui/ArrowLink.astro';
 import { testimonials } from '../data/testimonials';
 import { INSEGNANTI_ATTIVI } from '../config/visibilita.js';
 import { altFor } from '../config/imageAlt.js';
@@ -209,7 +209,7 @@ const schema = {
         ))}
       </div>
       <div class="text-center mt-10">
-        <LinkApple href="/contatti" tone="ocra">Vieni a vedere lo studio</LinkApple>
+        <ArrowLink href="/contatti" tone="ocra">Vieni a vedere lo studio</ArrowLink>
       </div>
     </Container>
   </Section>

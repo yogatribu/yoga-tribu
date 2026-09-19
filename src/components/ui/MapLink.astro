@@ -33,18 +33,18 @@ const googleMapsUrl = "https://www.google.com/maps/place/Yoga+Tribu/@45.7659897,
     href={googleMapsUrl}
     target="_blank"
     rel="noopener noreferrer"
-    class={`map-link-apple ${className}`}
+    class={`map-link-arrow ${className}`}
     data-lat={lat}
     data-lng={lng}
     data-address={addressEncoded}
   >
     <span class="map-link-text"><slot /></span>
-    <span class="map-link-arrow" aria-hidden="true">›</span>
+    <span class="map-link-arrow-icon" aria-hidden="true">›</span>
   </a>
 )}
 
 <style>
-  .map-link-apple {
+  .map-link-arrow {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -54,11 +54,11 @@ const googleMapsUrl = "https://www.google.com/maps/place/Yoga+Tribu/@45.7659897,
     text-decoration: none;
     cursor: pointer;
   }
-  .map-link-apple:hover .map-link-text {
+  .map-link-arrow:hover .map-link-text {
     text-decoration: underline;
     text-underline-offset: 2px;
   }
-  .map-link-apple .map-link-arrow {
+  .map-link-arrow .map-link-arrow-icon {
     text-decoration: none !important;
     display: inline-block;
   }

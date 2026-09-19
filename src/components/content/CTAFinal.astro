@@ -1,6 +1,6 @@
 ---
 import Button from '../ui/Button.astro';
-import LinkApple from '../ui/LinkApple.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
 
 interface Props {
   headline: string;
@@ -38,7 +38,7 @@ const isExternal = ctaHref.startsWith('http');
     </Button>
     {linkLabel && linkHref && (
       <div class="mt-5">
-        <LinkApple href={linkHref} tone="light">{linkLabel}</LinkApple>
+        <ArrowLink href={linkHref} tone="light">{linkLabel}</ArrowLink>
       </div>
     )}
   </div>
