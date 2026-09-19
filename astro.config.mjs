@@ -8,6 +8,7 @@ const pagesExcludedFromSitemap = new Set([
   '/termini/',
   '/links/',
   '/quiz/',
+  '/recensione/',
   '/pratiche/flow/',
   '/pratiche/teen-yoga/',
   '/pratiche/vinyasa/',
