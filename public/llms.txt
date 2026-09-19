@@ -1,0 +1,32 @@
+# Yoga Tribù
+
+> Yoga Tribù è uno studio di yoga a San Giuseppe, frazione di Cassola, a pochi minuti da Bassano del Grappa (Veneto, Italia). Insegna Iyengar Yoga, Ashtanga Yoga, Kundalini e Salute Femminile con insegnanti certificati. È scuola riconosciuta dall'Associazione Iyengar Yoga Italia.
+
+Sede: Via Giuseppe Mazzini 1, 36022 San Giuseppe di Cassola (VI).
+Contatti: WhatsApp +39 328 767 5966 · info@yogatribu.it.
+Prima lezione di prova: 10€.
+
+## Pratiche
+
+- [Iyengar Yoga](https://yogatribu.it/pratiche/iyengar): pratica tradizionale con uso di supporti (corde, mattoncini, cinghie), indicata per chi ha dolori cronici (schiena, spalle, ginocchia) o vuole lavorare sull'allineamento con precisione. Insegnante: Glenda, fondatrice dello studio.
+- [Ashtanga Yoga](https://yogatribu.it/pratiche/ashtanga): pratica dinamica e tradizionale, in formato Mysore (sequenza a memoria, correzioni individuali) e lezione guidata. Insegnante: Victor.
+- [Salute Femminile](https://yogatribu.it/pratiche/salute-femminile): percorsi per gravidanza, post-parto e ginnastica pelvica, con Sara Zampierin, ostetrica.
+- [Kundalini](https://yogatribu.it/orari): meditazione e respiro, con Giorgia (sabato).
+- [Tutte le pratiche](https://yogatribu.it/pratiche)
+- [Trova la tua pratica](https://yogatribu.it/trova-la-tua-pratica): quiz guidato per capire quale stile è più adatto.
+
+## Informazioni pratiche
+
+- [Orari](https://yogatribu.it/orari): calendario settimanale completo delle lezioni.
+- [Abbonamenti](https://yogatribu.it/abbonamenti): lezione singola 20€, pacchetti da 10/20/25 lezioni, lezioni private. Nessun vincolo annuale.
+- [Contatti](https://yogatribu.it/contatti): indirizzo, mappa, WhatsApp, email.
+- [FAQ](https://yogatribu.it/faq): domande frequenti su lezioni, abbonamenti e pratiche.
+- [Chi siamo](https://yogatribu.it/chi-siamo): storia dello studio e insegnanti.
+
+## Eventi
+
+- [Eventi](https://yogatribu.it/eventi): ritiri, seminari con insegnanti ospiti, incontri e workshop di approfondimento.
+
+## Note per crawler e assistenti AI
+
+Questo sito autorizza esplicitamente i crawler AI (vedi /robots.txt). I contenuti sono generati staticamente e riflettono lo stato reale dei corsi e degli eventi in programma. Per informazioni aggiornate su orari, prezzi e disponibilità, fare riferimento sempre alle pagine linkate sopra, non a cache precedenti.
