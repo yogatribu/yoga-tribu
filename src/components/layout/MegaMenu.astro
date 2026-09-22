@@ -1,10 +1,17 @@
 ---
 import { PRATICHE_ATTIVE, INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+import { getCollection } from 'astro:content';
 
 interface Props {
-  voce: 'pratiche' | 'chi-siamo' | 'abbonamenti' | 'eventi';
+  voce: 'pratiche' | 'chi-siamo' | 'abbonamenti' | 'eventi' | 'blog';
 }
 const { voce } = Astro.props;
+
+const articoliRecenti = voce === 'blog'
+  ? (await getCollection('blog', ({ data }) => data.draft !== true))
+      .sort((a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime())
+      .slice(0, 4)
+  : [];
 
 const tuttePratiche = [
   { slug: 'iyengar',          label: 'Iyengar Yoga',       href: '/pratiche/iyengar' },
@@ -108,6 +115,18 @@ const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug
           <p class="mega-card-sub">29 maggio – 3 giugno 2027</p>
         </a>
       </div>
+    </div>
+  )}
+
+  {voce === 'blog' && (
+    <div class="mega-col">
+      <p class="mega-label">Blog</p>
+      <nav class="mega-nav">
+        <a href="/blog" class="mega-link">Tutti gli articoli</a>
+        {articoliRecenti.map(a => (
+          <a href={`/blog/${a.slug}`} class="mega-link">{a.data.title}</a>
+        ))}
+      </nav>
     </div>
   )}
 

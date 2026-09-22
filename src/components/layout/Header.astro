@@ -10,6 +10,7 @@ const navItems = [
   { label: 'Chi Siamo', voce: 'chi-siamo', href: '/chi-siamo' },
   { label: 'Abbonamenti', voce: 'abbonamenti', href: '/abbonamenti' },
   { label: 'Eventi', voce: 'eventi', href: '/eventi' },
+  { label: 'Blog', voce: 'blog', href: '/blog' },
 ] as const;
 ---
 
@@ -27,7 +28,7 @@ const navItems = [
     </a>
 
     <!-- Desktop nav -->
-    <nav class="hidden lg:flex items-center gap-8" aria-label="Navigazione principale">
+    <nav class="hidden lg:flex items-center gap-5 xl:gap-8" aria-label="Navigazione principale">
       {navItems.map(({ label, voce, href }) => (
         <div class="mega-trigger" data-voce={voce}>
           <a
@@ -80,6 +81,9 @@ const navItems = [
     </div>
     <div id="mega-eventi" class="mega-section">
       <MegaMenu voce="eventi" />
+    </div>
+    <div id="mega-blog" class="mega-section">
+      <MegaMenu voce="blog" />
     </div>
   </div>
 

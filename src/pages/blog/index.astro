@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Tag from '../../components/ui/Tag.astro';
+import Heading from '../../components/ui/Heading.astro';
+import { getCollection } from 'astro:content';
+
+const articoli = (await getCollection('blog', ({ data }) => data.draft !== true))
+  .sort((a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime());
+
+function formatData(dataStr: string) {
+  return new Date(dataStr).toLocaleDateString('it-IT', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="Blog · Yoga Tribù"
+  description="Riflessioni e approfondimenti su yoga, pratica e filosofia, dallo studio Yoga Tribù a Bassano del Grappa."
+>
+  <div class="bg-background pt-28 pb-16 md:pt-32 md:pb-20">
+    <Container size="narrow" class="text-center">
+      <Tag class="mb-5">Blog</Tag>
+      <Heading level={1} class="mb-5">
+        Pratica, metodo,<br/>qualche riflessione.
+      </Heading>
+      <p class="text-text-secondary text-base leading-relaxed max-w-[500px] mx-auto">
+        Gli stessi temi che trattiamo sui social, con più spazio per approfondirli.
+      </p>
+    </Container>
+  </div>
+
+  <Section background="alt">
+    <Container size="narrow">
+      {articoli.length === 0 ? (
+        <p class="text-text-secondary text-center">Il primo articolo arriva a breve.</p>
+      ) : (
+        <div class="space-y-6">
+          {articoli.map((articolo) => (
+            <a
+              href={`/blog/${articolo.slug}`}
+              class="group block bg-background border border-border rounded-[22px] p-8 hover:border-primary/30 hover:shadow-md transition-all duration-200"
+            >
+              <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-3">
+                {formatData(articolo.data.data)}
+              </p>
+              <h2 class="font-serif text-[26px] text-text-main leading-tight mb-3 group-hover:opacity-80 transition-opacity">
+                {articolo.data.title}
+              </h2>
+              <p class="text-text-secondary text-sm leading-relaxed">
+                {articolo.data.descrizione_breve}
+              </p>
+            </a>
+          ))}
+        </div>
+      )}
+    </Container>
+  </Section>
+</BaseLayout>

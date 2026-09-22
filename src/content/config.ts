@@ -119,9 +119,24 @@ const incontriCollection = defineCollection({
   }),
 });
 
+// Articoli del blog: stessi temi dei caroselli Instagram, sviluppati più a fondo.
+const blogCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    data: z.string(),
+    descrizione_breve: z.string(),
+    autore: z.string().optional(),
+    foto_hero: z.string().optional(),
+    foto_hero_alt: z.string().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 export const collections = {
   ritiri: ritiriCollection,
   workshops: workshopsCollection,
   seminari: seminariCollection,
   incontri: incontriCollection,
+  blog: blogCollection,
 };
