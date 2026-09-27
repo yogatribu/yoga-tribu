@@ -81,44 +81,18 @@ const parziali = (s.prezzi ?? []).filter((p) => p.prezzo !== s.prezzo);
   description={s.descrizione_breve}
   schemaJsonLd={eventSchema}
 >
-  <!-- Intestazione -->
-  {s.foto_hero ? (
-    <div
-      data-hero
-      class="relative flex items-end overflow-hidden bg-[#1a1a1a]"
-      style="min-height: 70vh;"
-    >
-      <img
-        src={s.foto_hero}
-        alt={`${s.ospite} · ${s.title}`}
-        class="absolute inset-0 w-full h-full object-cover opacity-65"
-        loading="eager"
-      />
-      <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);"></div>
-      <div class="relative container-default pb-16 pt-32">
-        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/70 mb-4">Seminario</p>
-        <h1 class="font-serif text-display-mobile md:text-display text-white leading-tight max-w-3xl mb-4">
-          {s.title}
-        </h1>
-        <p class="font-serif text-[26px] md:text-[32px] text-white/80 mb-6">con {s.ospite}</p>
-        <p class="text-white/80 text-lg max-w-xl leading-relaxed mb-8">{s.descrizione_breve}</p>
-        <Button variant="secondary-dark" size="lg" external={true} href={waHref}>
-          Scrivici su WhatsApp
-        </Button>
-      </div>
-    </div>
-  ) : (
-    <div class="bg-background pt-28 pb-12 md:pt-32 md:pb-14">
-      <Container>
-        <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Seminario</p>
-        <h1 class="font-serif text-h1-mobile md:text-display text-text-main leading-tight max-w-3xl mb-4">
-          {s.title}
-        </h1>
-        <p class="font-serif text-[26px] md:text-[32px] text-[#9c9a66] mb-6">con {s.ospite}</p>
-        <p class="text-text-secondary text-lg max-w-xl leading-relaxed">{s.descrizione_breve}</p>
-      </Container>
-    </div>
-  )}
+  <!-- Intestazione (senza foto: i seminari cambiano spesso e non abbiamo
+       una fotografia dell'ospite) -->
+  <div class="bg-background pt-28 pb-12 md:pt-32 md:pb-14">
+    <Container>
+      <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-4">Seminario</p>
+      <h1 class="font-serif text-h1-mobile md:text-display text-text-main leading-tight max-w-3xl mb-4">
+        {s.title}
+      </h1>
+      <p class="font-serif text-[26px] md:text-[32px] text-[#9c9a66] mb-6">con {s.ospite}</p>
+      <p class="text-text-secondary text-lg max-w-xl leading-relaxed">{s.descrizione_breve}</p>
+    </Container>
+  </div>
 
   <!-- Dettagli rapidi -->
   <Section background="alt" size="compact">
@@ -216,16 +190,6 @@ const parziali = (s.prezzi ?? []).filter((p) => p.prezzo !== s.prezzo);
               <h2 class="font-serif text-h2-mobile md:text-h2 text-[#2a2a2a] mb-6" style="font-family:'New York',serif;">
                 Chi è {s.ospite}.
               </h2>
-              {s.foto_secondaria && (
-                <div class="aspect-[4/3] rounded-[22px] overflow-hidden mb-6 max-w-[620px]">
-                  <img
-                    src={s.foto_secondaria}
-                    alt={`${s.ospite} in pratica`}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              )}
               {s.bio_ospite.map((p: string) => (
                 <p class="text-base text-[#2a2a2a] leading-[1.7] mb-6 max-w-[620px]">{p}</p>
               ))}

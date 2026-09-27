@@ -12,8 +12,7 @@ luogo: "Studio Yoga Tribù · Via Mazzini 1, San Giuseppe di Cassola (VI)"
 prezzo: 90
 telefono: "328 7675966"
 descrizione_breve: "Un fine settimana di pratica Iyengar general class con Rachele Di Fino."
-foto_hero: "/images/seminari/rachele-di-fino-pratica.webp"
-foto_secondaria: "/images/seminari/rachele-di-fino-hero.webp"
+foto_hero: "/images/studio.webp"
 occhiello: "Il seminario"
 titolo_sezione: "Un fine settimana di pratica completa."
 descrizione:
