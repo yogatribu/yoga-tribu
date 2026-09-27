@@ -1,6 +1,5 @@
 ---
 import { PRATICHE_ATTIVE, INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
-import { getCollection } from 'astro:content';
 
 const tuttePratiche = [
   { slug: 'iyengar',          label: 'Iyengar Yoga',     href: '/pratiche/iyengar' },
@@ -20,10 +19,6 @@ const tuttiInsegnanti = [
   { slug: 'sara',   label: 'Sara',   href: '/insegnanti/sara' },
 ];
 const insegnanti = tuttiInsegnanti.filter(i => INSEGNANTI_ATTIVI.includes(i.slug));
-
-const articoliRecenti = (await getCollection('blog', ({ data }) => data.draft !== true))
-  .sort((a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime())
-  .slice(0, 4);
 ---
 
 <div
@@ -79,9 +74,6 @@ const articoliRecenti = (await getCollection('blog', ({ data }) => data.draft !=
       <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="eventi" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
         Eventi
       </button>
-      <button class="mm-has-sub w-full text-left text-[#2a2a2a]" data-target="blog" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; background: none; border: none; cursor: pointer; display: block; width: 100%;">
-        Blog
-      </button>
       <a href="/orari" class="block text-[#2a2a2a]" style="padding: 16px 0; font-family: 'New York', Georgia, serif; font-size: 24px; font-weight: 400; text-decoration: none;">
         Orari
       </a>
@@ -136,15 +128,6 @@ const articoliRecenti = (await getCollection('blog', ({ data }) => data.draft !=
         <a href="/eventi#seminari" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Seminari</a>
         <a href="/eventi#incontri" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Incontri</a>
         <a href="/eventi#workshop" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Workshop</a>
-      </nav>
-
-      <!-- Sub-menu: Blog -->
-      <nav id="mm-sub-blog" class="mm-submenu px-6 pt-4" style="display: none;">
-        <p style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #9c9a66; margin-bottom: 16px;">BLOG</p>
-        <a href="/blog" class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">Tutti gli articoli</a>
-        {articoliRecenti.map(a => (
-          <a href={`/blog/${a.slug}`} class="block text-[#2a2a2a]" style="padding: 14px 0; font-family: 'New York', Georgia, serif; font-size: 20px; font-weight: 400; text-decoration: none;">{a.data.title}</a>
-        ))}
       </nav>
 
     </div>
