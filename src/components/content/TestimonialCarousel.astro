@@ -40,6 +40,7 @@ const {
     <div class="tc-track">
       {testimonials.map((t) => (
         <div class="tc-card" role="article">
+          <div class="tc-stars" aria-label="Valutazione 5 stelle su 5">★★★★★</div>
           <p class="tc-quote">“{t.quote}”</p>
           <div class="tc-footer">
             <p class="tc-name">{t.author}{t.age ? `, ${t.age}` : ''}</p>
@@ -151,6 +152,13 @@ const {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .tc-stars {
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    color: #9c9a66;
+    margin-bottom: 16px;
   }
 
   .tc-quote {
