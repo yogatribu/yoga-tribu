@@ -2,7 +2,6 @@
 interface Testimonial {
   quote: string;
   author: string;
-  age: string;
   meta: string;
 }
 
@@ -43,7 +42,7 @@ const {
           <div class="tc-stars" aria-label="Valutazione 5 stelle su 5">★★★★★</div>
           <p class="tc-quote">“{t.quote}”</p>
           <div class="tc-footer">
-            <p class="tc-name">{t.author}{t.age ? `, ${t.age}` : ''}</p>
+            <p class="tc-name">{t.author}</p>
             <span class="tc-meta">{t.meta}</span>
           </div>
         </div>
