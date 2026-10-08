@@ -213,7 +213,7 @@ yoga-tribu/
 
 - **Indirizzo:** Via Giuseppe Mazzini 1, 36022 Cassola Veneto, Italia
 - **Telefono / WhatsApp:** +39 328 767 5966
-- **Instagram:** @yoga__tribu
+- **Instagram:** @yogatribu.studio
 - **Facebook:** Yoga Tribù
 - **Intestazione legale:** Antico Glenda Francesca Romana
 - **P. IVA:** 04505320244
@@ -647,7 +647,7 @@ COL 1: BRAND          COL 2: NAVIGAZIONE    COL 3: PRATICA          COL 4: CONTA
 - Telefono (clickable `tel:+393287675966`): +39 328 767 5966
 - Email placeholder: info@yogatribu.it (da configurare)
 - Social links (icone 24px):
-  - Instagram → `https://instagram.com/yoga__tribu`
+  - Instagram → `https://www.instagram.com/yogatribu.studio/`
   - Facebook → `https://facebook.com/yogatribu` (verificare URL esatto)
   - WhatsApp → `https://wa.me/393287675966`
 
@@ -4844,10 +4844,10 @@ O semplicemente per dirci ciao.
 **BOX 4 — SOCIAL**
 - Icona: link/social
 - Heading: SEGUICI
-- Info: @yoga__tribu
+- Info: @yogatribu.studio
 - Description: Storie dello studio, contenuti utili, vita di tribù.
 - CTA: Vai su Instagram →
-- Link: `https://instagram.com/yoga__tribu`
+- Link: `https://www.instagram.com/yogatribu.studio/`
 
 #### 4.16.3 Mappa
 
@@ -5496,7 +5496,7 @@ corsi_che_tiene:
   ],
   "priceRange": "€€",
   "sameAs": [
-    "https://instagram.com/yoga__tribu",
+    "https://www.instagram.com/yogatribu.studio/",
     "https://facebook.com/yogatribu"
   ],
   "description": "Studio yoga professionale a Cassola Veneto. Iyengar, Ashtanga e Flow con insegnanti certificati e formati per anni nel metodo specifico."
