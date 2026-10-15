@@ -42,21 +42,13 @@ Non l'ho potuto provare contro un Redis reale: il test usa un finto Redis e cont
 
 ## Mappa di calore (Microsoft Clarity)
 
-Clarity (gratuito) mostra dove cliccano e fin dove scorrono i visitatori e registra le sessioni. È già predisposto ma **resta spento finché non c'è un ID**: senza ID non compare né nel banner né nelle informative.
+Clarity (gratuito) mostra dove cliccano e fin dove scorrono i visitatori e registra le sessioni. È **attivo** con l'ID di progetto `y83w7zc3at`, scritto in `src/lib/consent-config.ts` (l'ID è pubblico, compare nel codice di ogni pagina). Nel pannello Personalizza ha un interruttore proprio, separato da Google Analytics, e le informative lo citano da sole.
 
-Per attivarlo:
-
-1. Crea un progetto gratuito su clarity.microsoft.com e copia il **Project ID** (poche lettere e cifre).
-2. Su Vercel, Settings, Environment Variables: aggiungi `PUBLIC_CLARITY_PROJECT_ID` con quell'ID (ambiente Production) e rifai il deploy. Non serve cambiare il codice.
-3. Alla visita successiva tutti vedono di nuovo il banner (c'è un servizio nuovo): nel pannello Personalizza compare «Microsoft Clarity» con un interruttore proprio, separato da Google Analytics. Privacy e Cookie Policy si aggiornano da sole.
-
-Da sapere:
-
-- Clarity parte solo dopo il consenso e alla revoca si ferma e cancella i suoi cookie (`_clck`, `_clsk`, `CLID`). Per fermare del tutto gli script serve ricaricare la pagina.
-- Registra le sessioni: è più invasivo delle sole statistiche. Nelle impostazioni del progetto Clarity conviene scegliere il mascheramento **Strict** e controllare i tempi di conservazione. Il sito non ha moduli, quindi non finiscono dati scritti dalle persone.
-- Nell'informativa i tempi di conservazione di Clarity rimandano alle impostazioni del progetto: vanno confermati con chi segue la privacy, e vanno citati con il valore reale.
-- Per spegnerlo basta togliere la variabile e rifare il deploy.
-- Test: `npm run test:clarity` (costruisce il sito con un ID finto).
+- Parte solo dopo il consenso. Alla revoca si ferma e cancella i suoi cookie (`_clck`, `_clsk`, `CLID`); per fermare del tutto gli script serve ricaricare la pagina.
+- Per cambiare ID o spegnerlo: variabile `PUBLIC_CLARITY_PROJECT_ID` su Vercel (Settings, Environment Variables; vuota = spento) e nuovo deploy. Senza variabile vale l'ID nel codice.
+- Registra le sessioni, quindi è più invasivo delle sole statistiche. Nelle impostazioni del progetto Clarity conviene il mascheramento **Strict**. Il sito non ha moduli, quindi non finiscono dati scritti dalle persone.
+- Nell'informativa i tempi di conservazione di Clarity rimandano alle impostazioni del progetto: vanno confermati con chi segue la privacy e citati con il valore reale.
+- I test di base girano con Clarity spento (`PUBLIC_CLARITY_PROJECT_ID=` vuota); `npm run test:clarity` costruisce il sito con Clarity attivo e prova anche tutte le pagine senza consenso.
 
 ## Cosa c'è sul sito (scansione)
 
@@ -66,7 +58,7 @@ Fatta con ricerca nel codice e con `tests/crawl.test.mjs`, che apre tutte le pag
 |---|---|---|
 | Google Analytics 4 (`G-0GKQSD86CG`) | Statistiche | Bloccato fino al consenso |
 | Google Maps (iframe in `/contatti`) | Preferenze e contenuti esterni | Bloccato fino al consenso |
-| Microsoft Clarity (mappe di calore) | Statistiche | Predisposto, spento senza ID; con ID bloccato fino al consenso |
+| Microsoft Clarity (mappe di calore) | Statistiche | Attivo nel codice, bloccato fino al consenso |
 | Vercel Speed Insights | nessuna | Senza cookie, caricato sempre |
 | Google Tag Manager, Meta Pixel, YouTube, altri | n/d | **Non presenti** |
 

@@ -6,8 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test:consent": "astro build && node --test --test-concurrency=1 'tests/*.test.mjs'",
-    "test:consent:all": "astro build && for e in chromium firefox webkit; do echo \"== $e ==\"; ENGINE=$e node --test --test-concurrency=1 'tests/*.test.mjs' || exit 1; done; for e in chromium firefox webkit; do echo \"== clarity $e ==\"; PUBLIC_CLARITY_PROJECT_ID=test123 astro build && ENGINE=$e node --test --test-concurrency=1 'tests/with-clarity/*.test.mjs' || exit 1; done",
+    "test:consent": "PUBLIC_CLARITY_PROJECT_ID= astro build && node --test --test-concurrency=1 'tests/*.test.mjs'",
+    "test:consent:all": "PUBLIC_CLARITY_PROJECT_ID= astro build && for e in chromium firefox webkit; do echo \"== $e ==\"; ENGINE=$e node --test --test-concurrency=1 'tests/*.test.mjs' || exit 1; done; for e in chromium firefox webkit; do echo \"== clarity $e ==\"; PUBLIC_CLARITY_PROJECT_ID=test123 astro build && ENGINE=$e node --test --test-concurrency=1 'tests/with-clarity/*.test.mjs' || exit 1; done",
     "test:clarity": "PUBLIC_CLARITY_PROJECT_ID=test123 astro build && node --test --test-concurrency=1 'tests/with-clarity/*.test.mjs'"
   },
   "dependencies": {

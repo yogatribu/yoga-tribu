@@ -12,10 +12,13 @@ export const CONSENT_MAX_AGE_DAYS = 180;
 
 export const GA_MEASUREMENT_ID = 'G-0GKQSD86CG';
 
-// Microsoft Clarity (mappe di calore e registrazioni delle sessioni). Si attiva da solo
-// quando su Vercel (Settings > Environment Variables) esiste PUBLIC_CLARITY_PROJECT_ID
-// e si rifà il deploy: senza ID non compare né nel banner né nelle informative.
-export const CLARITY_PROJECT_ID: string = String(import.meta.env.PUBLIC_CLARITY_PROJECT_ID ?? '').trim();
+// Microsoft Clarity (mappe di calore e registrazioni delle sessioni). L'ID del progetto è pubblico
+// (compare nel codice di ogni pagina). Si può cambiare o spegnere con la variabile
+// PUBLIC_CLARITY_PROJECT_ID su Vercel (vuota = spento) e un nuovo deploy; se la variabile
+// non esiste vale l'ID qui sotto. Spento, non compare né nel banner né nelle informative.
+const CLARITY_DEFAULT_ID = 'y83w7zc3at';
+const clarityEnv = import.meta.env.PUBLIC_CLARITY_PROJECT_ID;
+export const CLARITY_PROJECT_ID: string = String(clarityEnv === undefined ? CLARITY_DEFAULT_ID : clarityEnv).trim();
 
 // Ogni scelta viene inviata (fetch) a questo endpoint, che la conserva come
 // prova del consenso: vedi api/consent.js. Vuoto = registro solo nel browser.
