@@ -40,6 +40,24 @@ Variabili facoltative: `CONSENT_RETENTION_DAYS` (predefinito 730; se lo cambi, a
 
 Non l'ho potuto provare contro un Redis reale: il test usa un finto Redis e controlla comandi e scadenza inviati.
 
+## Mappa di calore (Microsoft Clarity)
+
+Clarity (gratuito) mostra dove cliccano e fin dove scorrono i visitatori e registra le sessioni. È già predisposto ma **resta spento finché non c'è un ID**: senza ID non compare né nel banner né nelle informative.
+
+Per attivarlo:
+
+1. Crea un progetto gratuito su clarity.microsoft.com e copia il **Project ID** (poche lettere e cifre).
+2. Su Vercel, Settings, Environment Variables: aggiungi `PUBLIC_CLARITY_PROJECT_ID` con quell'ID (ambiente Production) e rifai il deploy. Non serve cambiare il codice.
+3. Alla visita successiva tutti vedono di nuovo il banner (c'è un servizio nuovo): nel pannello Personalizza compare «Microsoft Clarity» con un interruttore proprio, separato da Google Analytics. Privacy e Cookie Policy si aggiornano da sole.
+
+Da sapere:
+
+- Clarity parte solo dopo il consenso e alla revoca si ferma e cancella i suoi cookie (`_clck`, `_clsk`, `CLID`). Per fermare del tutto gli script serve ricaricare la pagina.
+- Registra le sessioni: è più invasivo delle sole statistiche. Nelle impostazioni del progetto Clarity conviene scegliere il mascheramento **Strict** e controllare i tempi di conservazione. Il sito non ha moduli, quindi non finiscono dati scritti dalle persone.
+- Nell'informativa i tempi di conservazione di Clarity rimandano alle impostazioni del progetto: vanno confermati con chi segue la privacy, e vanno citati con il valore reale.
+- Per spegnerlo basta togliere la variabile e rifare il deploy.
+- Test: `npm run test:clarity` (costruisce il sito con un ID finto).
+
 ## Cosa c'è sul sito (scansione)
 
 Fatta con ricerca nel codice e con `tests/crawl.test.mjs`, che apre tutte le pagine del build intercettando ogni richiesta esterna.
@@ -48,6 +66,7 @@ Fatta con ricerca nel codice e con `tests/crawl.test.mjs`, che apre tutte le pag
 |---|---|---|
 | Google Analytics 4 (`G-0GKQSD86CG`) | Statistiche | Bloccato fino al consenso |
 | Google Maps (iframe in `/contatti`) | Preferenze e contenuti esterni | Bloccato fino al consenso |
+| Microsoft Clarity (mappe di calore) | Statistiche | Predisposto, spento senza ID; con ID bloccato fino al consenso |
 | Vercel Speed Insights | nessuna | Senza cookie, caricato sempre |
 | Google Tag Manager, Meta Pixel, YouTube, altri | n/d | **Non presenti** |
 
@@ -66,7 +85,8 @@ La categoria «Marketing» esiste nel registro ma non compare nel banner perché
 
 ```bash
 npm run test:consent        # Chromium
-npm run test:consent:all    # Chromium, Firefox e WebKit (il motore di Safari)
+npm run test:consent:all    # Chromium, Firefox e WebKit (il motore di Safari), più Clarity
+npm run test:clarity        # solo Clarity (costruisce il sito con un ID finto)
 ```
 
 Costruisce il sito, lo serve in locale e lo prova con Playwright. Copre: rifiuto, X, accettazione, personalizzazione, consenso al singolo servizio, revoca, scadenza e dati manomessi o corrotti, Consent Mode, invio e reinvio al registro, richieste di rete prima e dopo il consenso, WhatsApp, e la scansione di **tutte** le pagine del build (nessuna richiesta esterna e nessun cookie senza consenso, nessuna eccezione). `tests/mobile.test.mjs` prova iPhone 13 (WebKit) e Pixel 7 (Chromium) con il tocco. `tests/consent-api.test.mjs` prova l'endpoint. Ogni richiesta esterna viene intercettata e bloccata: i test non toccano Google.

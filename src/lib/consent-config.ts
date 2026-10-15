@@ -12,6 +12,11 @@ export const CONSENT_MAX_AGE_DAYS = 180;
 
 export const GA_MEASUREMENT_ID = 'G-0GKQSD86CG';
 
+// Microsoft Clarity (mappe di calore e registrazioni delle sessioni). Si attiva da solo
+// quando su Vercel (Settings > Environment Variables) esiste PUBLIC_CLARITY_PROJECT_ID
+// e si rifà il deploy: senza ID non compare né nel banner né nelle informative.
+export const CLARITY_PROJECT_ID: string = String(import.meta.env.PUBLIC_CLARITY_PROJECT_ID ?? '').trim();
+
 // Ogni scelta viene inviata (fetch) a questo endpoint, che la conserva come
 // prova del consenso: vedi api/consent.js. Vuoto = registro solo nel browser.
 export const CONSENT_LOG_ENDPOINT = '/api/consent';
@@ -91,6 +96,23 @@ export const SERVICES: ServiceDef[] = [
     ],
     policyUrl: 'https://policies.google.com/privacy',
   },
+  ...(CLARITY_PROJECT_ID
+    ? [
+        {
+          id: 'clarity',
+          category: 'statistics' as const,
+          name: 'Microsoft Clarity',
+          provider: 'Microsoft Ireland Operations Limited',
+          purpose: 'Mappe di calore (clic e scorrimento) e registrazioni delle sessioni per capire come viene usato il sito. I campi di testo sono mascherati.',
+          cookies: [
+            { name: '_clck', purpose: 'Identificativo anonimo del visitatore', duration: '1 anno' },
+            { name: '_clsk', purpose: 'Collega le pagine viste in un\'unica sessione', duration: '1 giorno' },
+            { name: 'CLID, MUID e simili', purpose: 'Identificativi impostati da Microsoft per il funzionamento del servizio', duration: 'fino a 1 anno' },
+          ],
+          policyUrl: 'https://privacy.microsoft.com/it-it/privacystatement',
+        },
+      ]
+    : []),
 ];
 
 // Archiviazione tecnica propria del sito: non richiede consenso, ma va dichiarata.

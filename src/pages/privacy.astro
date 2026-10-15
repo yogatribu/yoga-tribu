@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Container from '../components/ui/Container.astro';
 import Heading from '../components/ui/Heading.astro';
-import { POLICY_VERSION, CONSENT_MAX_AGE_DAYS, CONSENT_LOG_RETENTION_DAYS } from '../lib/consent-config';
+import { POLICY_VERSION, CONSENT_MAX_AGE_DAYS, CONSENT_LOG_RETENTION_DAYS, SERVICES } from '../lib/consent-config';
+
+const hasClarity = SERVICES.some((s) => s.id === 'clarity');
 
 const updated = new Date(POLICY_VERSION + 'T12:00:00').toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
 const retentionYears = Math.round(CONSENT_LOG_RETENTION_DAYS / 365);
@@ -48,8 +50,11 @@ const a = 'text-[#9c9a66] underline underline-offset-2';
           <p class="mb-1 mt-4 text-text-main"><strong>b) Misurazione delle prestazioni.</strong></p>
           <p class="mb-3">Il Sito utilizza Vercel Speed Insights, che rileva dati tecnici aggregati sulla velocità di caricamento delle pagine, senza impiego di cookie e senza identificare l'utente. Finalità: monitorare e migliorare le prestazioni del Sito. Base giuridica: legittimo interesse del Titolare (art. 6, par. 1, lett. f, GDPR).</p>
 
-          <p class="mb-1 mt-4 text-text-main"><strong>c) Statistiche di utilizzo (Google Analytics 4).</strong></p>
+          <p class="mb-1 mt-4 text-text-main"><strong>c) Statistiche di utilizzo{hasClarity ? ' e mappe di calore' : ''} (Google Analytics 4{hasClarity ? ' e Microsoft Clarity' : ''}).</strong></p>
           <p class="mb-3">Solo previo consenso dell'utente, il Sito utilizza Google Analytics 4, servizio di Google Ireland Limited, che tratta dati di utilizzo (pagine visitate, durata e sessioni, clic sui pulsanti di contatto WhatsApp, tipo di dispositivo e dati approssimativi di provenienza) mediante cookie e identificativi. Finalità: analisi statistica dell'utilizzo del Sito. Base giuridica: consenso (art. 6, par. 1, lett. a, GDPR; art. 122 Codice Privacy). Il consenso è facoltativo e revocabile in qualsiasi momento secondo quanto indicato nella <a class={a} href="/cookie">Cookie Policy</a>.</p>
+          {hasClarity && (
+            <p class="mb-3">Sempre previo consenso, il Sito utilizza Microsoft Clarity, servizio di Microsoft Ireland Operations Limited, che rileva le interazioni con le pagine (clic, movimenti del cursore, scorrimento) al fine di produrre mappe di calore e registrazioni delle sessioni, con mascheramento dei campi di testo. Finalità: analizzare l'usabilità del Sito e migliorarlo. Base giuridica: consenso (art. 6, par. 1, lett. a, GDPR; art. 122 Codice Privacy). Il consenso è distinto da quello a Google Analytics 4 e può essere prestato o revocato separatamente.</p>
+          )}
 
           <p class="mb-1 mt-4 text-text-main"><strong>d) Mappa incorporata (Google Maps).</strong></p>
           <p class="mb-3">Solo previo consenso dell'utente, nella pagina "Contatti" il Sito incorpora una mappa fornita da Google Ireland Limited. Il caricamento della mappa comporta la trasmissione a Google di dati tecnici (tra cui indirizzo IP e informazioni sul browser) e può comportare l'impiego di cookie e identificativi da parte di Google. Finalità: mostrare la posizione dello Studio. Base giuridica: consenso (art. 6, par. 1, lett. a, GDPR; art. 122 Codice Privacy). In assenza di consenso la mappa non viene caricata e permane il collegamento "Apri in mappe", che rinvia al servizio di Google solo su iniziativa dell'utente.</p>
@@ -63,7 +68,7 @@ const a = 'text-[#9c9a66] underline underline-offset-2';
 
         <div>
           <h2 class={h2}>4. Natura del conferimento</h2>
-          <p>I dati di navigazione sono necessari per il funzionamento del Sito. Il conferimento dei dati di cui al punto e) è facoltativo, ma il loro mancato conferimento può rendere impossibile dare riscontro alla richiesta. La prestazione del consenso ai cookie statistici e alla mappa è facoltativa e il suo rifiuto non pregiudica la fruizione del Sito.</p>
+          <p>I dati di navigazione sono necessari per il funzionamento del Sito. Il conferimento dei dati di cui al punto e) è facoltativo, ma il loro mancato conferimento può rendere impossibile dare riscontro alla richiesta. La prestazione del consenso ai cookie statistici, alle mappe di calore e alla mappa è facoltativa e il suo rifiuto non pregiudica la fruizione del Sito.</p>
         </div>
 
         <div>
@@ -73,6 +78,7 @@ const a = 'text-[#9c9a66] underline underline-offset-2';
             <li>Vercel Inc., fornitore dei servizi di hosting del Sito, di misurazione delle prestazioni e di esecuzione delle funzioni tecniche del Sito;</li>
             <li>fornitori di servizi di infrastruttura e di archiviazione dei dati, per la conservazione del registro dei consensi;</li>
             <li>Google Ireland Limited, per i servizi Google Analytics 4 e Google Maps, esclusivamente in caso di consenso;</li>
+            {hasClarity && <li>Microsoft Ireland Operations Limited, per il servizio Microsoft Clarity, esclusivamente in caso di consenso;</li>}
             <li>WhatsApp, quando l'utente sceglie di contattare lo Studio con tale servizio;</li>
             <li>consulenti e professionisti incaricati dal Titolare, nei limiti di quanto necessario all'adempimento di obblighi di legge o alla tutela dei propri diritti, nonché le autorità competenti nei casi previsti dalla legge.</li>
           </ul>
@@ -89,6 +95,7 @@ const a = 'text-[#9c9a66] underline underline-offset-2';
           <ul class={ul}>
             <li><strong class="text-text-main">Dati di navigazione e di prestazione:</strong> per il tempo strettamente necessario alle finalità indicate, secondo i tempi tecnici stabiliti dal fornitore di hosting.</li>
             <li><strong class="text-text-main">Dati di Google Analytics 4:</strong> fino a 14 mesi, salvo diversa configurazione indicata nella <a class={a} href="/cookie">Cookie Policy</a>, e comunque fino alla revoca del consenso per quanto riguarda i cookie.</li>
+            {hasClarity && <li><strong class="text-text-main">Dati di Microsoft Clarity:</strong> secondo i tempi di conservazione impostati nel progetto Clarity del Titolare, e comunque per il tempo strettamente necessario all'analisi; i cookie hanno la durata indicata nella <a class={a} href="/cookie">Cookie Policy</a>.</li>}
             <li><strong class="text-text-main">Dati di Google Maps:</strong> i cookie impostati da Google hanno la durata indicata nella <a class={a} href="/cookie">Cookie Policy</a>; per ogni ulteriore trattamento si rinvia all'informativa di Google.</li>
             <li><strong class="text-text-main">Dati forniti volontariamente:</strong> per il tempo necessario a dare seguito alla richiesta e, ove segua un rapporto contrattuale, per la durata di questo e per i successivi termini previsti dalla legge, anche in materia fiscale e civile.</li>
             <li><strong class="text-text-main">Registro dei consensi:</strong> {retentionYears} anni dalla scelta, decorsi i quali i dati sono cancellati automaticamente.</li>

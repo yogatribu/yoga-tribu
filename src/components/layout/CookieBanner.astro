@@ -335,6 +335,7 @@ const categories = categoriesInUse();
     CONSENT_MAX_AGE_DAYS,
     CONSENT_LOG_ENDPOINT,
     GA_MEASUREMENT_ID,
+    CLARITY_PROJECT_ID,
     SERVICES,
     SERVICE_IDS,
     servicesOf,
@@ -507,6 +508,7 @@ const categories = categoriesInUse();
   // ---------- Loader dei servizi ----------
   // Per aggiungere un servizio: voce in SERVICES (consent-config.ts) + loader qui.
   let gaLoaded = false;
+  let clarityLoaded = false;
   const loaders: Record<string, { enable: () => void; disable: () => void }> = {
     ga4: {
       enable() {
@@ -528,6 +530,25 @@ const categories = categoriesInUse();
         w.gtag = undefined;
         deleteCookiesStartingWith('_ga');
         try { sessionStorage.removeItem('yt_rif'); } catch { /* ignora */ }
+      },
+    },
+    clarity: {
+      enable() {
+        if (!CLARITY_PROJECT_ID) return;
+        if (clarityLoaded) { w.clarity?.('consent', true); return; }
+        clarityLoaded = true;
+        // snippet ufficiale di Microsoft Clarity, eseguito solo dopo il consenso
+        w.clarity = w.clarity || function (...a: unknown[]) { (w.clarity.q = w.clarity.q || []).push(a); };
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = `https://www.clarity.ms/tag/${encodeURIComponent(CLARITY_PROJECT_ID)}`;
+        document.head.appendChild(s);
+      },
+      disable() {
+        try { w.clarity?.('consent', false); } catch { /* ignora */ } // ferma la registrazione e cancella i cookie
+        deleteCookiesStartingWith('_clck');
+        deleteCookiesStartingWith('_clsk');
+        deleteCookiesStartingWith('CLID');
       },
     },
     // La mappa si gestisce con gli embed (syncEmbeds): nessun cookie da cancellare lato nostro.
