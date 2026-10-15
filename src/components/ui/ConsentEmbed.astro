@@ -1,0 +1,33 @@
+---
+// Iframe di terze parti caricato solo dopo il consenso al singolo servizio.
+// Senza consenso mostra un segnaposto con un pulsante; il codice che lo
+// sblocca è in CookieBanner.astro (syncEmbeds).
+interface Props {
+  service: string;      // id in src/lib/consent-config.ts
+  src: string;
+  title: string;
+  message: string;
+  button: string;
+  referrerpolicy?: string;
+}
+const { service, src, title, message, button, referrerpolicy = 'no-referrer-when-downgrade' } = Astro.props;
+---
+
+<div data-consent-embed={service} class="h-full w-full">
+  <div class="ce-placeholder" data-consent-placeholder>
+    <p>{message}</p>
+    <button type="button" data-consent-grant={service}>{button}</button>
+  </div>
+  <iframe
+    data-src={src}
+    width="100%"
+    height="100%"
+    style="border: 0;"
+    class="block"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy={referrerpolicy}
+    title={title}
+    hidden
+  ></iframe>
+</div>

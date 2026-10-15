@@ -1,0 +1,692 @@
+---
+// Banner cookie e gestione del consenso. Vedi docs/consenso-cookie.md.
+// L'interfaccia è generata da src/lib/consent-config.ts: stessa fonte
+// del codice che blocca/sblocca i servizi e della tabella in /cookie.
+import {
+  categoriesInUse,
+  servicesOf,
+  NECESSARY_STORAGE,
+  POLICY_VERSION,
+} from '../../lib/consent-config';
+
+const categories = categoriesInUse();
+---
+
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-labelledby="cb-title"
+  aria-describedby="cb-desc"
+  data-policy={POLICY_VERSION}
+  hidden
+>
+  <div class="cb-card">
+    <div data-cb-view="main">
+      <button type="button" class="cb-close" data-cb="dismiss" aria-label="Chiudi e continua senza accettare" title="Chiudi e continua senza accettare">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+      </button>
+      <p id="cb-title" class="cb-title">Due parole sui cookie</p>
+      <p id="cb-desc" class="cb-text">
+        Usiamo cookie tecnici per far funzionare il sito. Con il tuo consenso possiamo caricare anche
+        strumenti di terze parti, come le statistiche e la mappa. Puoi rifiutare senza perdere nulla
+        e cambiare idea quando vuoi da «Gestisci cookie», in fondo a ogni pagina.
+        <a href="/privacy">Privacy Policy</a> · <a href="/cookie">Cookie Policy</a>
+      </p>
+      <div class="cb-actions">
+        <button type="button" class="cb-btn cb-btn-secondary" data-cb="customize">Personalizza</button>
+        <button type="button" class="cb-btn cb-btn-primary" data-cb="accept">Accetta tutti</button>
+      </div>
+    </div>
+
+    <div data-cb-view="prefs" hidden>
+      <p class="cb-title">Le tue preferenze</p>
+      <div class="cb-scroll">
+        {categories.map((cat) => {
+          const services = servicesOf(cat.id);
+          const perService = services.length > 1;
+          return (
+            <section class="cb-cat">
+              <div class="cb-row">
+                <div>
+                  <p class="cb-row-title">{cat.label}</p>
+                  <p class="cb-row-text">{cat.description}</p>
+                </div>
+                {cat.id === 'necessary'
+                  ? <input type="checkbox" class="cb-switch" checked disabled aria-label={`${cat.label}, sempre attivi`} />
+                  : <input type="checkbox" class="cb-switch" role="switch" data-cat={cat.id} aria-label={cat.label} />}
+              </div>
+
+              {cat.id === 'necessary' && (
+                <details class="cb-details">
+                  <summary>Dettagli</summary>
+                  <ul>
+                    {NECESSARY_STORAGE.map((c) => (
+                      <li><strong>{c.name}</strong>: {c.purpose}. Durata: {c.duration}.</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+
+              {services.map((s) => (
+                <details class="cb-details">
+                  <summary>
+                    {s.name}
+                    {perService && (
+                      <input type="checkbox" class="cb-switch cb-switch-sm" role="switch" data-service={s.id} aria-label={s.name} />
+                    )}
+                  </summary>
+                  <p>{s.purpose} Fornitore: {s.provider}.</p>
+                  <ul>
+                    {s.cookies.map((c) => (
+                      <li><strong>{c.name}</strong>: {c.purpose}. Durata: {c.duration}.</li>
+                    ))}
+                  </ul>
+                  <p><a href={s.policyUrl} target="_blank" rel="noopener noreferrer">Informativa del fornitore</a></p>
+                </details>
+              ))}
+            </section>
+          );
+        })}
+      </div>
+
+      <div class="cb-actions">
+        <button type="button" class="cb-btn cb-btn-secondary" data-cb="save">Salva scelte</button>
+        <button type="button" class="cb-btn cb-btn-primary" data-cb="accept">Accetta tutti</button>
+      </div>
+      <button type="button" class="cb-back" data-cb="back">
+        <span class="cb-back-arrow">&lsaquo;</span><span class="cb-back-text">Indietro</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  #cookie-banner {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 70;
+    width: min(460px, calc(100vw - 32px));
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  #cookie-banner[hidden],
+  #cookie-banner [hidden] { display: none !important; }
+
+  #cookie-banner .cb-card {
+    background: #fff;
+    border: 1px solid #e8e4df;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 12px 40px rgba(42, 42, 42, 0.12);
+    animation: cb-in 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  @keyframes cb-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #cookie-banner .cb-title {
+    font-family: 'New York', Georgia, serif;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #2a2a2a;
+    margin: 0 0 8px;
+  }
+  #cookie-banner .cb-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #6b6b6b;
+    margin: 0 0 18px;
+  }
+  #cookie-banner a {
+    color: #9c9a66;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  #cookie-banner .cb-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Accetta tutti più largo, a destra: il punto dove cade il pollice */
+    gap: 10px;
+  }
+  #cookie-banner .cb-btn {
+    font: 500 13px 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+    padding: 12px 10px;
+    min-height: 44px;
+    border-radius: 9999px;
+    border: 1.5px solid #9c9a66;
+    cursor: pointer;
+    transition: transform 100ms ease-out;
+  }
+  #cookie-banner .cb-btn:active { transform: scale(0.97); }
+  #cookie-banner .cb-btn-primary { background: #9c9a66; color: #fff; padding-top: 14px; padding-bottom: 14px; font-weight: 600; }
+  #cookie-banner .cb-btn-secondary { background: #fff; color: #9c9a66; }
+
+  /* Stesso stile di ArrowLink (ocra, sottolineatura solo in hover), con la freccia a sinistra */
+  #cookie-banner .cb-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 14px auto 0;
+    background: none;
+    border: 0;
+    padding: 2px 4px;
+    font: 400 14px 'Inter', sans-serif;
+    color: #9c9a66;
+    cursor: pointer;
+  }
+  #cookie-banner .cb-back-text {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 100ms ease-out;
+  }
+  #cookie-banner .cb-back:hover .cb-back-text { text-decoration-color: currentColor; }
+
+  /* X di chiusura: equivale a continuare senza accettare */
+  #cookie-banner .cb-card { position: relative; }
+  #cookie-banner .cb-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    color: #6b6b6b;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease;
+  }
+  #cookie-banner .cb-close:hover { background: #f3efe9; color: #2a2a2a; }
+  #cookie-banner [data-cb-view="main"] .cb-title { padding-right: 40px; }
+
+  #cookie-banner .cb-scroll {
+    max-height: min(46vh, 380px);
+    overflow-y: auto;
+    margin: 0 -6px 16px;
+    padding: 0 6px;
+  }
+  #cookie-banner .cb-cat { border-top: 1px solid #e8e4df; padding: 12px 0; }
+  #cookie-banner .cb-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  #cookie-banner .cb-row-title { font-size: 14px; font-weight: 600; color: #2a2a2a; margin: 0 0 2px; }
+  #cookie-banner .cb-row-text { font-size: 13px; line-height: 1.45; color: #6b6b6b; margin: 0; }
+
+  #cookie-banner .cb-details { margin-top: 8px; font-size: 12.5px; line-height: 1.5; color: #6b6b6b; }
+  #cookie-banner .cb-details summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2a2a2a;
+    padding: 4px 0;
+    list-style: none;
+  }
+  #cookie-banner .cb-details summary::-webkit-details-marker { display: none; }
+  #cookie-banner .cb-details summary::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid #9c9a66;
+    border-bottom: 1.5px solid #9c9a66;
+    transform: rotate(-45deg);
+    transition: transform 150ms ease;
+    flex-shrink: 0;
+  }
+  #cookie-banner .cb-details[open] summary::before { transform: rotate(45deg); }
+  #cookie-banner .cb-details summary .cb-switch { margin-left: auto; }
+  #cookie-banner .cb-details p { margin: 4px 0; }
+  #cookie-banner .cb-details ul { margin: 4px 0 4px 16px; padding: 0; list-style: disc; }
+
+  /* Interruttore */
+  #cookie-banner .cb-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 44px;
+    height: 26px;
+    border-radius: 9999px;
+    background: #d8d4cc;
+    position: relative;
+    cursor: pointer;
+    transition: background 150ms ease;
+    margin: 0;
+  }
+  #cookie-banner .cb-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 150ms ease;
+  }
+  #cookie-banner .cb-switch:checked { background: #9c9a66; }
+  #cookie-banner .cb-switch:checked::after { transform: translateX(18px); }
+  #cookie-banner .cb-switch:disabled { opacity: 0.55; cursor: not-allowed; }
+  #cookie-banner .cb-switch-sm { width: 38px; height: 22px; }
+  #cookie-banner .cb-switch-sm::after { width: 16px; height: 16px; }
+  #cookie-banner .cb-switch-sm:checked::after { transform: translateX(16px); }
+
+  #cookie-banner button:focus-visible,
+  #cookie-banner summary:focus-visible,
+  #cookie-banner .cb-switch:focus-visible,
+  #cookie-banner a:focus-visible {
+    outline: 2px solid #9c9a66;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 460px) {
+    #cookie-banner { left: 12px; right: 12px; bottom: 12px; width: auto; }
+    #cookie-banner .cb-card { padding: 20px; }
+    #cookie-banner .cb-actions { grid-template-columns: 1fr; }
+    /* Su telefono: Accetta tutti per ultimo, in basso (zona del pollice), a tutta larghezza e più alto */
+    #cookie-banner .cb-btn { padding: 12px 16px; min-height: 48px; }
+    #cookie-banner .cb-btn-primary { padding: 16px; font-size: 15px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #cookie-banner .cb-card { animation: none; }
+  }
+
+  /* Segnaposto degli embed di terze parti (es. mappa) */
+  [data-consent-embed] .ce-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    text-align: center;
+    padding: 24px;
+    height: 100%;
+    background: #faf8f5;
+    border: 1px solid #e8e4df;
+    border-radius: 18px;
+  }
+  [data-consent-embed] .ce-placeholder p { font-size: 14px; line-height: 1.5; color: #6b6b6b; max-width: 320px; margin: 0; }
+  [data-consent-embed] .ce-placeholder button {
+    font: 500 14px 'Inter', sans-serif;
+    padding: 10px 22px;
+    min-height: 44px;
+    border-radius: 9999px;
+    border: 1.5px solid #9c9a66;
+    background: #9c9a66;
+    color: #fff;
+    cursor: pointer;
+  }
+  [data-consent-embed] [hidden] { display: none !important; }
+</style>
+
+<script>
+  import {
+    POLICY_VERSION,
+    CONSENT_MAX_AGE_DAYS,
+    CONSENT_LOG_ENDPOINT,
+    GA_MEASUREMENT_ID,
+    SERVICES,
+    SERVICE_IDS,
+    servicesOf,
+  } from '../../lib/consent-config';
+
+  const KEY = 'yt_cookie_consent';
+  const LOG_KEY = 'yt_cookie_consent_log';
+  const PENDING_KEY = 'yt_cookie_consent_pending';
+  const MAX_AGE_MS = CONSENT_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const w = window as any;
+
+  type Action = 'accept_all' | 'reject_x' | 'custom' | 'grant_service';
+  type Services = Record<string, boolean>;
+  interface ConsentRecord {
+    v: 1;
+    policy: string;
+    id: string;
+    ts: string;
+    exp: number;
+    action: Action;
+    services: Services;
+  }
+
+  // ---------- Archiviazione e validazione ----------
+
+  let memory: ConsentRecord | null = null; // se lo storage è bloccato, la scelta vale per questa visita
+
+  function read(): ConsentRecord | null {
+    let raw: string | null;
+    try {
+      raw = localStorage.getItem(KEY);
+    } catch {
+      return memory;
+    }
+    if (!raw) return null;
+    try {
+      const r = JSON.parse(raw);
+      const valid =
+        r && r.v === 1 &&
+        r.policy === POLICY_VERSION &&
+        typeof r.id === 'string' &&
+        typeof r.ts === 'string' &&
+        typeof r.exp === 'number' &&
+        r.exp > Date.now() &&
+        r.exp - Date.now() <= MAX_AGE_MS + 60_000 &&
+        r.services && typeof r.services === 'object' &&
+        SERVICE_IDS.every((id) => typeof r.services[id] === 'boolean');
+      if (!valid) throw new Error('invalid');
+      const services: Services = {};
+      SERVICE_IDS.forEach((id) => (services[id] = r.services[id] === true)); // solo servizi noti
+      return { ...r, services };
+    } catch {
+      try { localStorage.removeItem(KEY); } catch { /* ignora */ }
+      return null;
+    }
+  }
+
+  function newId(): string {
+    return (crypto as any)?.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  function write(action: Action, services: Services): ConsentRecord {
+    const now = Date.now();
+    const rec: ConsentRecord = {
+      v: 1,
+      policy: POLICY_VERSION,
+      id: read()?.id ?? newId(),
+      ts: new Date(now).toISOString(),
+      exp: now + MAX_AGE_MS,
+      action,
+      services,
+    };
+    memory = rec;
+    try { localStorage.setItem(KEY, JSON.stringify(rec)); } catch { /* storage bloccato */ }
+    log(rec);
+    return rec;
+  }
+
+  // Registro delle scelte: data, versione dell'informativa, scelte, dati tecnici.
+  function log(rec: ConsentRecord) {
+    const entry = {
+      id: rec.id,
+      ts: rec.ts,
+      policy: rec.policy,
+      action: rec.action,
+      services: rec.services,
+      ua: navigator.userAgent,
+      lang: navigator.language,
+      page: location.pathname,
+    };
+    try {
+      const prev = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+      const list = Array.isArray(prev) ? prev : [];
+      list.push(entry);
+      localStorage.setItem(LOG_KEY, JSON.stringify(list.slice(-25)));
+    } catch { /* ignora */ }
+    if (CONSENT_LOG_ENDPOINT) {
+      try {
+        const prev = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]');
+        const list = Array.isArray(prev) ? prev : [];
+        list.push(entry);
+        localStorage.setItem(PENDING_KEY, JSON.stringify(list.slice(-25)));
+      } catch { /* ignora */ }
+      void flushPending();
+    }
+  }
+
+  // Invio al registro sul server. Una scelta resta in coda finché il server non la
+  // conferma, e si riprova a ogni pagina: un errore di rete non fa perdere la prova.
+  let flushing = false;
+  async function flushPending() {
+    if (!CONSENT_LOG_ENDPOINT || flushing) return;
+    flushing = true;
+    try {
+      let list: any[] = [];
+      try { list = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); } catch { /* ignora */ }
+      if (!Array.isArray(list) || !list.length) return;
+      const done = new Set<string>();
+      for (const e of list) {
+        try {
+          const r = await fetch(CONSENT_LOG_ENDPOINT, {
+            method: 'POST',
+            keepalive: true,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(e),
+          });
+          if (r.ok || (r.status >= 400 && r.status < 500)) done.add(e.id + e.ts); // 4xx: la riga non verrà mai accettata, si scarta
+        } catch { /* rete assente: riprova alla prossima pagina */ }
+      }
+      try {
+        const current = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]');
+        localStorage.setItem(PENDING_KEY, JSON.stringify(current.filter((e: any) => !done.has(e.id + e.ts))));
+      } catch { /* ignora */ }
+    } finally {
+      flushing = false;
+    }
+  }
+
+  // ---------- Google Consent Mode v2 ----------
+  // Stato iniziale: tutto negato. Nessuna richiesta di rete: gtag.js non viene
+  // nemmeno scaricato finché non c'è il consenso alle statistiche.
+  const dataLayer: unknown[] = (w.dataLayer = w.dataLayer || []);
+  function gt(..._args: unknown[]) {
+    // eslint-disable-next-line prefer-rest-params
+    dataLayer.push(arguments);
+  }
+  if (!w.__ytConsentInit) {
+    w.__ytConsentInit = true;
+    gt('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+    });
+  }
+
+  function deleteCookiesStartingWith(prefix: string) {
+    const host = location.hostname;
+    const parent = host.split('.').slice(-2).join('.');
+    const domains = [host, '.' + host, '.' + parent];
+    document.cookie.split(';').forEach((c) => {
+      const name = c.split('=')[0].trim();
+      if (!name.startsWith(prefix)) return;
+      const expired = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      document.cookie = expired;
+      domains.forEach((d) => (document.cookie = `${expired}; domain=${d}`));
+    });
+  }
+
+  // ---------- Loader dei servizi ----------
+  // Per aggiungere un servizio: voce in SERVICES (consent-config.ts) + loader qui.
+  let gaLoaded = false;
+  const loaders: Record<string, { enable: () => void; disable: () => void }> = {
+    ga4: {
+      enable() {
+        w[`ga-disable-${GA_MEASUREMENT_ID}`] = false;
+        gt('consent', 'update', { analytics_storage: 'granted' });
+        w.gtag = gt; // esposto solo con il consenso: i tracciamenti del sito lo controllano
+        if (gaLoaded) return;
+        gaLoaded = true;
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        document.head.appendChild(s);
+        gt('js', new Date());
+        gt('config', GA_MEASUREMENT_ID);
+      },
+      disable() {
+        w[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+        if (gaLoaded) gt('consent', 'update', { analytics_storage: 'denied' });
+        w.gtag = undefined;
+        deleteCookiesStartingWith('_ga');
+        try { sessionStorage.removeItem('yt_rif'); } catch { /* ignora */ }
+      },
+    },
+    // La mappa si gestisce con gli embed (syncEmbeds): nessun cookie da cancellare lato nostro.
+    'google-maps': { enable() {}, disable() {} },
+  };
+
+  function applyServices(rec: ConsentRecord | null) {
+    SERVICES.forEach((s) => {
+      const l = loaders[s.id];
+      if (!l) return;
+      if (rec?.services[s.id]) l.enable();
+      else if (rec) l.disable();
+    });
+    syncEmbeds(rec);
+  }
+
+  // Embed di terze parti (iframe) caricati solo con il consenso al singolo servizio.
+  function syncEmbeds(rec: ConsentRecord | null) {
+    document.querySelectorAll<HTMLElement>('[data-consent-embed]').forEach((box) => {
+      const on = !!rec?.services[box.dataset.consentEmbed ?? ''];
+      const iframe = box.querySelector<HTMLIFrameElement>('iframe');
+      const placeholder = box.querySelector<HTMLElement>('[data-consent-placeholder]');
+      if (!iframe || !placeholder) return;
+      if (on) {
+        if (!iframe.getAttribute('src')) iframe.setAttribute('src', iframe.dataset.src ?? '');
+      } else {
+        iframe.removeAttribute('src');
+      }
+      iframe.hidden = !on;
+      placeholder.hidden = on;
+    });
+  }
+
+  // ---------- Interfaccia ----------
+
+  const root = () => document.getElementById('cookie-banner') as HTMLElement | null;
+  const q = <T extends HTMLElement>(sel: string) => root()?.querySelector<T>(sel) ?? null;
+
+  function setView(name: 'main' | 'prefs') {
+    root()?.querySelectorAll<HTMLElement>('[data-cb-view]').forEach((el) => {
+      el.hidden = el.dataset.cbView !== name;
+    });
+  }
+
+  function writeUI(services: Services) {
+    SERVICES.forEach((s) => {
+      const sw = q<HTMLInputElement>(`[data-service="${s.id}"]`);
+      if (sw) sw.checked = !!services[s.id];
+    });
+    root()?.querySelectorAll<HTMLInputElement>('[data-cat]').forEach((cat) => {
+      const list = servicesOf(cat.dataset.cat as any);
+      cat.checked = list.length > 0 && list.every((s) => services[s.id]);
+    });
+  }
+
+  function readUI(): Services {
+    const out: Services = {};
+    SERVICES.forEach((s) => {
+      const perService = servicesOf(s.category).length > 1;
+      const el = perService
+        ? q<HTMLInputElement>(`[data-service="${s.id}"]`)
+        : q<HTMLInputElement>(`[data-cat="${s.category}"]`);
+      out[s.id] = !!el?.checked;
+    });
+    return out;
+  }
+
+  function open(view: 'main' | 'prefs', focus = false) {
+    const el = root();
+    if (!el) return;
+    const current = read();
+    const base: Services = {};
+    SERVICE_IDS.forEach((id) => (base[id] = !!current?.services[id])); // mai preselezionato
+    writeUI(base);
+    setView(view);
+    el.hidden = false;
+    if (focus) el.querySelector<HTMLElement>(`[data-cb-view="${view}"] button`)?.focus();
+  }
+
+  function close() {
+    const el = root();
+    if (el) el.hidden = true;
+  }
+
+  function decide(action: Action, services: Services) {
+    const rec = write(action, services);
+    applyServices(rec);
+    close();
+    document.dispatchEvent(new CustomEvent('yt:consent-change', { detail: rec }));
+  }
+
+  // Indietro e clic fuori dal banner: con una scelta già fatta chiude, altrimenti torna al primo livello
+  function goBack() {
+    if (read()) close();
+    else setView('main');
+  }
+
+  const all = (value: boolean): Services => Object.fromEntries(SERVICE_IDS.map((id) => [id, value]));
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+
+    if (t.closest('[data-cookie-open]')) {
+      e.preventDefault();
+      open('prefs', true);
+      return;
+    }
+
+    const grant = t.closest<HTMLElement>('[data-consent-grant]');
+    if (grant) {
+      const id = grant.dataset.consentGrant!;
+      const current = read();
+      decide('grant_service', { ...all(false), ...(current?.services ?? {}), [id]: true });
+      return;
+    }
+
+    // Clic fuori dal banner mentre sono aperte le preferenze = Indietro (mai un consenso)
+    const el = root();
+    if (el && !el.hidden && !t.closest('#cookie-banner') && el.querySelector<HTMLElement>('[data-cb-view="prefs"]')?.hidden === false) {
+      goBack();
+      return;
+    }
+
+    const action = t.closest<HTMLElement>('[data-cb]')?.dataset.cb;
+    if (!action) return;
+    if (action === 'accept') decide('accept_all', all(true));
+    else if (action === 'dismiss') decide('reject_x', all(false));
+    else if (action === 'save') decide('custom', readUI());
+    else if (action === 'customize') { setView('prefs'); q('[data-cb-view="prefs"] button')?.focus(); }
+    else if (action === 'back') goBack();
+  });
+
+  // Interruttori: la categoria e i suoi servizi restano coerenti
+  document.addEventListener('change', (e) => {
+    const t = e.target as HTMLInputElement;
+    if (!root()?.contains(t)) return;
+    if (t.dataset.cat) {
+      servicesOf(t.dataset.cat as any).forEach((s) => {
+        const sw = q<HTMLInputElement>(`[data-service="${s.id}"]`);
+        if (sw) sw.checked = t.checked;
+      });
+    } else if (t.dataset.service) {
+      const svc = SERVICES.find((s) => s.id === t.dataset.service);
+      const cat = svc && q<HTMLInputElement>(`[data-cat="${svc.category}"]`);
+      if (svc && cat) cat.checked = servicesOf(svc.category).every((s) => q<HTMLInputElement>(`[data-service="${s.id}"]`)?.checked);
+    }
+  });
+
+  // Esc chiude solo se una scelta esiste già: chiudere senza scegliere non è un consenso
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && root() && !root()!.hidden && read()) close();
+  });
+
+  // A ogni caricamento di pagina, comprese le view transitions di Astro
+  document.addEventListener('astro:page-load', () => {
+    void flushPending();
+    const rec = read();
+    applyServices(rec);
+    if (!rec) open('main');
+    else close();
+  });
+</script>

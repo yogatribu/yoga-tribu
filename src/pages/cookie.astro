@@ -3,22 +3,131 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Container from '../components/ui/Container.astro';
 import Heading from '../components/ui/Heading.astro';
-import ArrowLink from '../components/ui/ArrowLink.astro';
+import {
+  SERVICES,
+  CATEGORIES,
+  NECESSARY_STORAGE,
+  COOKIELESS_NOTES,
+  POLICY_VERSION,
+  CONSENT_MAX_AGE_DAYS,
+  CONSENT_LOG_RETENTION_DAYS,
+} from '../lib/consent-config';
+
+const categoryLabel = (id: string) => CATEGORIES.find((c) => c.id === id)?.label ?? id;
+const updated = new Date(POLICY_VERSION + 'T12:00:00').toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+const retentionYears = Math.round(CONSENT_LOG_RETENTION_DAYS / 365);
+const months = Math.round(CONSENT_MAX_AGE_DAYS / 30);
+const h2 = 'font-serif text-h3 text-text-main mb-3';
+const ul = 'list-disc ml-5 space-y-1.5 mb-3';
+const a = 'text-[#9c9a66] underline underline-offset-2';
 ---
 
 <BaseLayout
   title="Cookie Policy · Yoga Tribù"
-  description="Informativa sull'uso dei cookie su yogatribu.it."
+  description="Informativa estesa sull'uso di cookie e strumenti di tracciamento sul sito yogatribu.it."
   noindex={true}
 >
   <Section background="default" size="large">
-    <Container size="narrow" class="text-center">
+    <Container size="narrow">
       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-6">Legale</p>
-      <Heading level={1} class="mb-8">Cookie Policy</Heading>
+      <Heading level={1} class="mb-4">Cookie Policy</Heading>
+      <p class="text-sm text-text-secondary mb-2">Ultimo aggiornamento: {updated}</p>
+      <p class="text-sm text-text-secondary mb-12">Informativa estesa resa ai sensi dell'art. 13 del Regolamento (UE) 2016/679, dell'art. 122 del D.Lgs. 30 giugno 2003, n. 196 e delle "Linee guida cookie e altri strumenti di tracciamento" del Garante per la protezione dei dati personali del 10 giugno 2021.</p>
 
-      <p class="text-base text-[#6b6b6b] leading-relaxed max-w-[600px] mx-auto mb-6">La nostra Cookie Policy è redatta e ospitata su Iubenda, un servizio certificato per la conformità al GDPR. Puoi leggerla integralmente al link qui sotto.</p>
-      <ArrowLink href="https://www.iubenda.com/privacy-policy/76220455/cookie-policy" external tone="ocra">Leggi la Cookie Policy</ArrowLink>
-      <script type="text/javascript">{`(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);`}</script>
+      <div class="space-y-10 text-base text-text-secondary leading-relaxed">
+
+        <div>
+          <h2 class={h2}>1. Titolare del trattamento</h2>
+          <p>Titolare del trattamento è Yoga Tribù di Antico Glenda Francesca Romana, P. IVA 04505320244, con sede in Via Giuseppe Mazzini 1, 36022 San Giuseppe (VI). Nel seguito, "lo Studio" o "il Titolare". È contattabile all'indirizzo <a class={a} href="mailto:info@yogatribu.it">info@yogatribu.it</a>. Per ogni altro trattamento di dati personali si rinvia alla <a class={a} href="/privacy">Privacy Policy</a>, di cui la presente informativa costituisce parte integrante.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>2. Definizioni</h2>
+          <p class="mb-3">Ai fini della presente informativa, per "cookie" si intendono le stringhe di testo che il sito yogatribu.it (nel seguito, "il Sito") salva nel dispositivo dell'utente; per "strumenti di tracciamento" si intendono i cookie e ogni altra tecnologia che consenta di archiviare informazioni nel dispositivo o di accedere a quelle già archiviate (ad esempio, lo spazio di archiviazione locale del browser, c.d. <em>localStorage</em>).</p>
+          <ul class={ul}>
+            <li><strong class="text-text-main">Strumenti tecnici:</strong> necessari al funzionamento del Sito o a fornire il servizio richiesto dall'utente. Ai sensi dell'art. 122, comma 1, del Codice Privacy non richiedono il consenso.</li>
+            <li><strong class="text-text-main">Strumenti analitici e di terze parti:</strong> utilizzati per elaborare statistiche o per incorporare contenuti di soggetti terzi. Richiedono il preventivo consenso dell'utente.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class={h2}>3. Modalità di prestazione e di revoca del consenso</h2>
+          <ul class={ul}>
+            <li>Alla prima visita viene mostrato un banner. Fino a quando l'utente non effettua una scelta, il Sito non carica alcuno strumento di terze parti e non memorizza strumenti di tracciamento diversi da quelli tecnici.</li>
+            <li>L'utente può prestare il consenso a tutti gli strumenti ("Accetta tutti"), scegliere singolarmente categorie e servizi ("Personalizza", con tutte le opzioni non necessarie inizialmente disattivate) oppure chiudere il banner mediante il simbolo "X" e proseguire la navigazione senza prestare alcun consenso.</li>
+            <li>La prosecuzione della navigazione, lo scorrimento della pagina o la chiusura della finestra del browser non costituiscono, in alcun caso, manifestazione di consenso.</li>
+            <li>Il consenso può essere modificato o revocato in qualsiasi momento, con la stessa facilità con cui è stato prestato, mediante il collegamento "Gestisci cookie" presente in calce a ogni pagina del Sito o il pulsante riportato di seguito. La revoca comporta la cessazione dell'utilizzo dello strumento e la cancellazione dei relativi cookie, senza pregiudizio per la liceità del trattamento effettuato prima della revoca.</li>
+            <li>La scelta ha validità di {months} mesi ed è richiesta nuovamente alla scadenza, nonché in caso di modifica degli strumenti utilizzati o della presente informativa. La scelta è memorizzata nel browser utilizzato: la cancellazione dei dati di navigazione, l'impiego di un diverso browser o dispositivo o della navigazione privata comportano la nuova visualizzazione del banner. Il browser Safari cancella autonomamente i dati dei siti non visitati per sette giorni.</li>
+          </ul>
+          <p class="mt-4">
+            <button type="button" data-cookie-open class="inline-flex items-center justify-center rounded-full border-[1.5px] border-[#9c9a66] bg-[#9c9a66] px-7 py-3 text-[15px] font-medium text-white">
+              Gestisci cookie
+            </button>
+          </p>
+        </div>
+
+        <div>
+          <h2 class={h2}>4. Strumenti tecnici utilizzati</h2>
+          <p class="mb-3">Il Sito utilizza i seguenti strumenti tecnici, sempre attivi e non soggetti a consenso:</p>
+          <ul class={ul}>
+            {NECESSARY_STORAGE.map((c) => <li><strong class="text-text-main">{c.name}</strong>: {c.purpose}. Durata: {c.duration}.</li>)}
+          </ul>
+          <p>Il Sito utilizza inoltre, per finalità tecniche, il <em>sessionStorage</em> del browser, che viene cancellato alla chiusura della scheda; in assenza di consenso alle statistiche esso non è utilizzato per identificare l'utente.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>5. Strumenti soggetti a consenso</h2>
+          <p class="mb-4">L'elenco seguente è generato dagli strumenti effettivamente configurati sul Sito. Ciascun fornitore agisce secondo la propria informativa, alla quale si rinvia per ogni ulteriore dettaglio.</p>
+          {SERVICES.map((s) => (
+            <div class="mb-5">
+              <p class="text-text-main font-medium mb-1">{s.name}</p>
+              <ul class={ul}>
+                <li><strong class="text-text-main">Categoria:</strong> {categoryLabel(s.category)}.</li>
+                <li><strong class="text-text-main">Fornitore:</strong> {s.provider}.</li>
+                <li><strong class="text-text-main">Finalità:</strong> {s.purpose}</li>
+                <li><strong class="text-text-main">Base giuridica:</strong> consenso dell'interessato (art. 6, par. 1, lett. a, GDPR; art. 122 Codice Privacy).</li>
+                {s.cookies.map((c) => <li><strong class="text-text-main">{c.name}</strong>: {c.purpose}. Durata: {c.duration}.</li>)}
+                <li><strong class="text-text-main">Informativa del fornitore:</strong> <a class={a} href={s.policyUrl} target="_blank" rel="noopener noreferrer">{s.policyUrl.replace('https://', '')}</a></li>
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <h2 class={h2}>6. Servizi che non utilizzano cookie</h2>
+          <ul class={ul}>
+            {COOKIELESS_NOTES.map((n) => <li>{n}</li>)}
+          </ul>
+        </div>
+
+        <div>
+          <h2 class={h2}>7. Registro dei consensi</h2>
+          <p class="mb-3">Al fine di poter dimostrare le scelte espresse dall'utente (artt. 5, par. 2, e 7, par. 1, GDPR), il Titolare conserva un registro contenente un codice casuale non direttamente identificativo, la data e l'ora della scelta, la versione della presente informativa, le scelte espresse, il tipo di browser, la lingua e la pagina in cui la scelta è stata effettuata. L'indirizzo IP non è conservato.</p>
+          <p>Base giuridica del trattamento sono l'adempimento di un obbligo legale e il legittimo interesse del Titolare alla difesa dei propri diritti (art. 6, par. 1, lett. c e f, GDPR). Il registro è conservato per {retentionYears} anni dalla scelta ed è successivamente cancellato in modo automatico.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>8. Gestione dei cookie tramite il browser</h2>
+          <p class="mb-3">L'utente può inoltre bloccare o cancellare i cookie mediante le impostazioni del proprio browser, con possibile compromissione di alcune funzionalità del Sito. Istruzioni per i principali browser:</p>
+          <ul class={ul}>
+            <li><a class={a} href="https://support.google.com/chrome/answer/95647?hl=it" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+            <li><a class={a} href="https://support.mozilla.org/it/kb/Gestione%20dei%20cookie" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+            <li><a class={a} href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
+            <li><a class={a} href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class={h2}>9. Diritti dell'interessato</h2>
+          <p>L'interessato può esercitare i diritti di cui agli artt. 15-22 GDPR, nonché revocare il consenso, scrivendo a <a class={a} href="mailto:info@yogatribu.it">info@yogatribu.it</a>; per ritrovare la propria voce nel registro dei consensi è necessario indicare il codice casuale memorizzato nel proprio browser. È fatto salvo il diritto di proporre reclamo al Garante per la protezione dei dati personali (<a class={a} href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">www.garanteprivacy.it</a>). Per le modalità di esercizio dei diritti si rinvia alla <a class={a} href="/privacy">Privacy Policy</a>.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>10. Modifiche alla presente informativa</h2>
+          <p>Il Titolare si riserva di modificare la presente informativa in qualsiasi momento. La versione pubblicata su questa pagina è quella in vigore (versione {POLICY_VERSION}). In caso di modifiche rilevanti il consenso viene richiesto nuovamente.</p>
+        </div>
+
+      </div>
     </Container>
   </Section>
 </BaseLayout>

@@ -3,22 +3,146 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Container from '../components/ui/Container.astro';
 import Heading from '../components/ui/Heading.astro';
-import ArrowLink from '../components/ui/ArrowLink.astro';
+import { POLICY_VERSION, CONSENT_MAX_AGE_DAYS, CONSENT_LOG_RETENTION_DAYS } from '../lib/consent-config';
+
+const updated = new Date(POLICY_VERSION + 'T12:00:00').toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+const retentionYears = Math.round(CONSENT_LOG_RETENTION_DAYS / 365);
+const h2 = 'font-serif text-h3 text-text-main mb-3';
+const ul = 'list-disc ml-5 space-y-1.5 mb-3';
+const a = 'text-[#9c9a66] underline underline-offset-2';
 ---
 
 <BaseLayout
   title="Privacy Policy · Yoga Tribù"
-  description="Informativa sul trattamento dei dati personali di Yoga Tribù, Bassano del Grappa."
+  description="Informativa sul trattamento dei dati personali degli utenti del sito yogatribu.it."
   noindex={true}
 >
   <Section background="default" size="large">
-    <Container size="narrow" class="text-center">
+    <Container size="narrow">
       <p class="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#9c9a66] mb-6">Legale</p>
-      <Heading level={1} class="mb-8">Privacy Policy</Heading>
+      <Heading level={1} class="mb-4">Privacy Policy</Heading>
+      <p class="text-sm text-text-secondary mb-2">Ultimo aggiornamento: {updated}</p>
+      <p class="text-sm text-text-secondary mb-12">Informativa resa ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 (nel seguito, "GDPR") e del D.Lgs. 30 giugno 2003, n. 196 (nel seguito, "Codice Privacy").</p>
 
-      <p class="text-base text-[#6b6b6b] leading-relaxed max-w-[600px] mx-auto mb-6">La nostra Privacy Policy è redatta e ospitata su Iubenda, un servizio certificato per la conformità al GDPR. Puoi leggerla integralmente al link qui sotto.</p>
-      <ArrowLink href="https://www.iubenda.com/privacy-policy/76220455" external tone="ocra">Leggi la Privacy Policy</ArrowLink>
-      <script type="text/javascript">{`(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);`}</script>
+      <div class="space-y-10 text-base text-text-secondary leading-relaxed">
+
+        <div>
+          <h2 class={h2}>1. Titolare del trattamento</h2>
+          <p class="mb-3">Titolare del trattamento è Yoga Tribù di Antico Glenda Francesca Romana, P. IVA 04505320244, con sede in Via Giuseppe Mazzini 1, 36022 San Giuseppe (VI). Nel seguito, "lo Studio" o "il Titolare".</p>
+          <p>Recapiti: e-mail <a class={a} href="mailto:info@yogatribu.it">info@yogatribu.it</a>; telefono +39 328 767 5966. Il Titolare non ha designato un Responsabile della protezione dei dati (DPO).</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>2. Ambito della presente informativa</h2>
+          <p class="mb-3">La presente informativa descrive il trattamento dei dati personali degli utenti che consultano il sito web yogatribu.it (nel seguito, "il Sito") o che contattano lo Studio attraverso i recapiti ivi indicati. Essa non riguarda i trattamenti effettuati da soggetti terzi ai quali il Sito rinvia mediante collegamenti ipertestuali (a titolo esemplificativo, Instagram, Facebook, WhatsApp, Google Maps), i quali operano quali autonomi titolari secondo le rispettive informative.</p>
+          <p>I dati personali raccolti al di fuori del Sito, nell'ambito dell'iscrizione e della partecipazione alle attività dello Studio, sono trattati secondo l'informativa resa al momento della loro raccolta.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>3. Categorie di dati, finalità e basi giuridiche</h2>
+          <p class="mb-3">Il Sito non richiede la registrazione di un account e non contiene moduli di raccolta dati. I trattamenti effettuati sono i seguenti.</p>
+
+          <p class="mb-1 mt-4 text-text-main"><strong>a) Dati di navigazione.</strong></p>
+          <p class="mb-3">I sistemi informatici preposti al funzionamento del Sito, gestiti dal fornitore di hosting, acquisiscono nel corso del normale esercizio alcuni dati la cui trasmissione è implicita nell'uso dei protocolli di comunicazione di Internet: indirizzo IP, data e ora della richiesta, indirizzo (URL) della risorsa richiesta, metodo utilizzato, esito della richiesta, tipo di browser e di sistema operativo. Finalità: assicurare il funzionamento e la sicurezza del Sito e prevenire abusi. Base giuridica: legittimo interesse del Titolare (art. 6, par. 1, lett. f, GDPR).</p>
+
+          <p class="mb-1 mt-4 text-text-main"><strong>b) Misurazione delle prestazioni.</strong></p>
+          <p class="mb-3">Il Sito utilizza Vercel Speed Insights, che rileva dati tecnici aggregati sulla velocità di caricamento delle pagine, senza impiego di cookie e senza identificare l'utente. Finalità: monitorare e migliorare le prestazioni del Sito. Base giuridica: legittimo interesse del Titolare (art. 6, par. 1, lett. f, GDPR).</p>
+
+          <p class="mb-1 mt-4 text-text-main"><strong>c) Statistiche di utilizzo (Google Analytics 4).</strong></p>
+          <p class="mb-3">Solo previo consenso dell'utente, il Sito utilizza Google Analytics 4, servizio di Google Ireland Limited, che tratta dati di utilizzo (pagine visitate, durata e sessioni, clic sui pulsanti di contatto WhatsApp, tipo di dispositivo e dati approssimativi di provenienza) mediante cookie e identificativi. Finalità: analisi statistica dell'utilizzo del Sito. Base giuridica: consenso (art. 6, par. 1, lett. a, GDPR; art. 122 Codice Privacy). Il consenso è facoltativo e revocabile in qualsiasi momento secondo quanto indicato nella <a class={a} href="/cookie">Cookie Policy</a>.</p>
+
+          <p class="mb-1 mt-4 text-text-main"><strong>d) Mappa incorporata (Google Maps).</strong></p>
+          <p class="mb-3">Solo previo consenso dell'utente, nella pagina "Contatti" il Sito incorpora una mappa fornita da Google Ireland Limited. Il caricamento della mappa comporta la trasmissione a Google di dati tecnici (tra cui indirizzo IP e informazioni sul browser) e può comportare l'impiego di cookie e identificativi da parte di Google. Finalità: mostrare la posizione dello Studio. Base giuridica: consenso (art. 6, par. 1, lett. a, GDPR; art. 122 Codice Privacy). In assenza di consenso la mappa non viene caricata e permane il collegamento "Apri in mappe", che rinvia al servizio di Google solo su iniziativa dell'utente.</p>
+
+          <p class="mb-1 mt-4 text-text-main"><strong>e) Dati forniti volontariamente.</strong></p>
+          <p class="mb-3">Se l'utente contatta lo Studio tramite WhatsApp, telefono o posta elettronica, il Titolare tratta i dati che l'utente stesso comunica (a titolo esemplificativo, nome, recapito e contenuto della richiesta) per rispondere alla richiesta e dare seguito a eventuali attività preliminari alla conclusione di un contratto. Base giuridica: esecuzione di misure precontrattuali adottate su richiesta dell'interessato (art. 6, par. 1, lett. b, GDPR) e, ove segua un rapporto contrattuale, esecuzione del contratto e adempimento di obblighi di legge (art. 6, par. 1, lett. b e c, GDPR). Quando l'utente sceglie di scrivere tramite WhatsApp, la conversazione è altresì soggetta alle condizioni e all'informativa di WhatsApp, che agisce quale autonomo titolare per il proprio servizio.</p>
+
+          <p class="mb-1 mt-4 text-text-main"><strong>f) Registro dei consensi.</strong></p>
+          <p>Per poter dimostrare le scelte espresse mediante il banner dei cookie, come richiesto dagli artt. 5, par. 2, e 7, par. 1, GDPR, il Titolare conserva un registro contenente: un codice casuale che non identifica direttamente l'utente, data e ora della scelta, versione dell'informativa, scelte espresse, tipo di browser (<em>user agent</em>), lingua e pagina in cui la scelta è stata effettuata. L'indirizzo IP non è conservato. Base giuridica: adempimento di un obbligo legale (art. 6, par. 1, lett. c, GDPR) e legittimo interesse del Titolare alla difesa dei propri diritti (art. 6, par. 1, lett. f, GDPR).</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>4. Natura del conferimento</h2>
+          <p>I dati di navigazione sono necessari per il funzionamento del Sito. Il conferimento dei dati di cui al punto e) è facoltativo, ma il loro mancato conferimento può rendere impossibile dare riscontro alla richiesta. La prestazione del consenso ai cookie statistici e alla mappa è facoltativa e il suo rifiuto non pregiudica la fruizione del Sito.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>5. Destinatari dei dati</h2>
+          <p class="mb-3">I dati possono essere trattati, in qualità di responsabili del trattamento o di autonomi titolari, dai seguenti soggetti:</p>
+          <ul class={ul}>
+            <li>Vercel Inc., fornitore dei servizi di hosting del Sito, di misurazione delle prestazioni e di esecuzione delle funzioni tecniche del Sito;</li>
+            <li>fornitori di servizi di infrastruttura e di archiviazione dei dati, per la conservazione del registro dei consensi;</li>
+            <li>Google Ireland Limited, per i servizi Google Analytics 4 e Google Maps, esclusivamente in caso di consenso;</li>
+            <li>WhatsApp, quando l'utente sceglie di contattare lo Studio con tale servizio;</li>
+            <li>consulenti e professionisti incaricati dal Titolare, nei limiti di quanto necessario all'adempimento di obblighi di legge o alla tutela dei propri diritti, nonché le autorità competenti nei casi previsti dalla legge.</li>
+          </ul>
+          <p>I dati non sono oggetto di diffusione né di vendita. L'elenco aggiornato dei responsabili del trattamento può essere richiesto al Titolare.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>6. Trasferimento di dati verso paesi extra SEE</h2>
+          <p>Alcuni dei fornitori indicati hanno sede, o si avvalgono di infrastrutture, in paesi al di fuori dello Spazio Economico Europeo, in particolare negli Stati Uniti d'America. Tali trasferimenti avvengono sulla base di una decisione di adeguatezza della Commissione europea (art. 45 GDPR) ovvero di garanzie adeguate, quali le clausole contrattuali tipo (art. 46 GDPR). L'interessato può ottenere informazioni sulle garanzie adottate scrivendo al Titolare.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>7. Periodo di conservazione</h2>
+          <ul class={ul}>
+            <li><strong class="text-text-main">Dati di navigazione e di prestazione:</strong> per il tempo strettamente necessario alle finalità indicate, secondo i tempi tecnici stabiliti dal fornitore di hosting.</li>
+            <li><strong class="text-text-main">Dati di Google Analytics 4:</strong> fino a 14 mesi, salvo diversa configurazione indicata nella <a class={a} href="/cookie">Cookie Policy</a>, e comunque fino alla revoca del consenso per quanto riguarda i cookie.</li>
+            <li><strong class="text-text-main">Dati di Google Maps:</strong> i cookie impostati da Google hanno la durata indicata nella <a class={a} href="/cookie">Cookie Policy</a>; per ogni ulteriore trattamento si rinvia all'informativa di Google.</li>
+            <li><strong class="text-text-main">Dati forniti volontariamente:</strong> per il tempo necessario a dare seguito alla richiesta e, ove segua un rapporto contrattuale, per la durata di questo e per i successivi termini previsti dalla legge, anche in materia fiscale e civile.</li>
+            <li><strong class="text-text-main">Registro dei consensi:</strong> {retentionYears} anni dalla scelta, decorsi i quali i dati sono cancellati automaticamente.</li>
+          </ul>
+          <p>Al termine dei periodi indicati i dati sono cancellati o resi anonimi, salvo che la loro ulteriore conservazione sia necessaria per adempiere un obbligo di legge o per accertare, esercitare o difendere un diritto in sede giudiziaria.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>8. Processi decisionali automatizzati</h2>
+          <p>Il Titolare non adotta processi decisionali automatizzati, compresa la profilazione, di cui all'art. 22 GDPR.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>9. Cookie e strumenti di tracciamento</h2>
+          <p>Il Sito utilizza cookie e strumenti analoghi nei termini descritti nella <a class={a} href="/cookie">Cookie Policy</a>, che costituisce parte integrante della presente informativa. La scelta può essere modificata in qualsiasi momento tramite il collegamento "Gestisci cookie" presente in calce a ogni pagina.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>10. Diritti dell'interessato</h2>
+          <p class="mb-3">Ai sensi degli artt. 15 e seguenti GDPR, l'interessato ha il diritto di:</p>
+          <ul class={ul}>
+            <li>ottenere la conferma dell'esistenza o meno di dati che lo riguardano e l'accesso agli stessi (art. 15);</li>
+            <li>ottenere la rettifica dei dati inesatti e l'integrazione di quelli incompleti (art. 16);</li>
+            <li>ottenere la cancellazione dei dati nei casi previsti (art. 17);</li>
+            <li>ottenere la limitazione del trattamento nei casi previsti (art. 18);</li>
+            <li>ricevere i dati in un formato strutturato, di uso comune e leggibile da dispositivo automatico, e trasmetterli ad altro titolare (art. 20);</li>
+            <li>opporsi in qualsiasi momento, per motivi connessi alla propria situazione particolare, al trattamento fondato sul legittimo interesse (art. 21);</li>
+            <li>revocare in qualsiasi momento il consenso prestato, senza pregiudizio per la liceità del trattamento basata sul consenso prima della revoca (art. 7, par. 3).</li>
+          </ul>
+          <p class="mb-3">Le richieste possono essere rivolte al Titolare ai recapiti indicati al punto 1. Il Titolare fornisce riscontro senza ingiustificato ritardo e, comunque, entro un mese dal ricevimento della richiesta, termine prorogabile di due mesi in caso di particolare complessità (art. 12, par. 3, GDPR). Per ritrovare la voce relativa al registro dei consensi è necessario indicare il codice casuale memorizzato nel proprio browser.</p>
+          <p>L'interessato che ritenga violati i propri diritti ha inoltre il diritto di proporre reclamo al Garante per la protezione dei dati personali (<a class={a} href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">www.garanteprivacy.it</a>) o di adire l'autorità giudiziaria.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>11. Sicurezza</h2>
+          <p>Il Titolare adotta misure tecniche e organizzative adeguate a garantire un livello di sicurezza proporzionato al rischio (art. 32 GDPR), tra cui la trasmissione cifrata dei dati mediante protocollo HTTPS e la convalida dei dati ricevuti dai propri sistemi.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>12. Minori</h2>
+          <p>Il Sito non è rivolto a minori di quattordici anni e non raccoglie intenzionalmente dati di minori. I contatti riguardanti minori devono essere effettuati da chi ne esercita la responsabilità genitoriale.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>13. Modifiche alla presente informativa</h2>
+          <p>Il Titolare si riserva di modificare la presente informativa in qualsiasi momento, dandone evidenza su questa pagina. La versione pubblicata è quella in vigore e reca la data di ultimo aggiornamento. Qualora le modifiche incidano sui trattamenti fondati sul consenso, il consenso sarà richiesto nuovamente, entro e non oltre {Math.round(CONSENT_MAX_AGE_DAYS / 30)} mesi dalla scelta precedente o alla prima visita successiva alla modifica.</p>
+        </div>
+
+        <div>
+          <h2 class={h2}>14. Contatti</h2>
+          <p>Per qualsiasi chiarimento relativo al trattamento dei dati personali è possibile scrivere a <a class={a} href="mailto:info@yogatribu.it">info@yogatribu.it</a>.</p>
+        </div>
+
+      </div>
     </Container>
   </Section>
 </BaseLayout>

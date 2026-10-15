@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:consent": "astro build && node --test --test-concurrency=1 'tests/*.test.mjs'",
+    "test:consent:all": "astro build && for e in chromium firefox webkit; do echo \"== $e ==\"; ENGINE=$e node --test --test-concurrency=1 'tests/*.test.mjs' || exit 1; done"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.1.0",

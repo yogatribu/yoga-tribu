@@ -4,6 +4,7 @@ import { ViewTransitions } from 'astro:transitions';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import CookieBanner from '../components/layout/CookieBanner.astro';
 
 interface Props {
   title: string;
@@ -83,17 +84,6 @@ if (schemaJsonLd) {
 <!doctype html>
 <html lang="it">
   <head>
-    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/b08dcb14-11d1-4566-b1a6-16621b119ceb.js" defer></script>
-
-    <!-- Google Analytics 4 · attivato solo dopo consenso Iubenda -->
-    <script type="text/plain" class="_iub_cs_activate" async src="https://www.googletagmanager.com/gtag/js?id=G-0GKQSD86CG"></script>
-    <script type="text/plain" class="_iub_cs_activate">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-0GKQSD86CG');
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
@@ -144,6 +134,7 @@ if (schemaJsonLd) {
       <slot />
     </main>
     <Footer />
+    <CookieBanner />
     <SpeedInsights />
   </body>
 </html>
@@ -215,8 +206,15 @@ if (schemaJsonLd) {
     const link = (e.target as HTMLElement).closest('a[href*="wa.me"], a[href*="api.whatsapp"]');
     if (!link) return;
     const label = (link.getAttribute('aria-label') || link.textContent || '').trim().slice(0, 80);
-    const payload = { link_label: label, page_path: location.pathname, rif_code: getRifCode() };
-    if (typeof (window as any).gtag === 'function') (window as any).gtag('event', 'whatsapp_click', payload);
+    // window.gtag esiste solo con il consenso alle statistiche: senza, nessun
+    // identificativo di sessione viene creato né inviato.
+    const hasStatsConsent = typeof (window as any).gtag === 'function';
+    const payload = {
+      link_label: label,
+      page_path: location.pathname,
+      ...(hasStatsConsent ? { rif_code: getRifCode() } : {}),
+    };
+    if (hasStatsConsent) (window as any).gtag('event', 'whatsapp_click', payload);
     if (typeof (window as any).va === 'function') (window as any).va('event', { name: 'whatsapp_click', ...payload });
   });
 
