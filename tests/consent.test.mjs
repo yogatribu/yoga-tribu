@@ -395,3 +395,19 @@ test('Privacy e Cookie Policy sono ospitate sul sito (nessun rimando a iubenda),
   assert.deepEqual(external, []);
   await context.close();
 });
+
+test('le pagine legali sono visibili subito, anche su telefono e senza scorrere (niente dissolvenza legata allo scroll)', async () => {
+  const { context, page } = await session({ width: 375, height: 667 });
+  for (const path of ['/privacy', '/cookie', '/termini']) {
+    await page.goto(BASE + path);
+    await page.waitForTimeout(150);
+    const info = await page.evaluate(() => {
+      const s = document.querySelector('main section');
+      return { reveal: s.hasAttribute('data-reveal'), opacity: getComputedStyle(s).opacity, h1: getComputedStyle(document.querySelector('main h1')).opacity, height: s.getBoundingClientRect().height, vh: innerHeight };
+    });
+    assert.equal(info.reveal, false, `${path}: senza data-reveal`);
+    assert.equal(info.opacity, '1', `${path}: sezione opaca subito`);
+    if (path !== '/termini') assert.ok(info.height / info.vh > 8, `${path}: su telefono la sezione è lunghissima (${Math.round(info.height)}px), per questo la dissolvenza non scattava`);
+  }
+  await context.close();
+});

@@ -4,6 +4,9 @@ interface Props {
   size?: 'compact' | 'standard' | 'large';
   class?: string;
   id?: string;
+  // La dissolvenza all'ingresso scatta quando il 12% della sezione è visibile: su sezioni molto
+  // lunghe (pagine legali) non scatta mai e il contenuto resta invisibile. Lì va disattivata.
+  reveal?: boolean;
 }
 
 const {
@@ -11,6 +14,7 @@ const {
   size = 'standard',
   class: className = '',
   id,
+  reveal = true,
 } = Astro.props;
 
 const bgClasses = {
@@ -29,6 +33,6 @@ const sizeClasses = {
 const classes = `${bgClasses[background]} ${sizeClasses[size]} ${className}`;
 ---
 
-<section class={classes} id={id} data-reveal>
+<section class={classes} id={id} data-reveal={reveal ? '' : undefined}>
   <slot />
 </section>
