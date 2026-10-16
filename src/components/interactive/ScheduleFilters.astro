@@ -115,7 +115,13 @@ const defaultDay = giorni[dayMap[today]] ?? 'lun';
     // Desktop: SegmentedControl emette sc-change
     document.addEventListener('sc-change', (e: Event) => {
       const detail = (e as CustomEvent).detail;
-      if (detail.scId === 'schedule-filters') applyFilter(detail.value);
+      if (detail.scId !== 'schedule-filters') return;
+      // Salute Femminile non ha lezioni a calendario: porta ai percorsi attivi.
+      if (detail.value === 'salute-femminile') {
+        window.location.href = '/pratiche/salute-femminile#percorsi';
+        return;
+      }
+      applyFilter(detail.value);
     });
 
     // ── MOBILE: griglia giorni ───────────────────────────

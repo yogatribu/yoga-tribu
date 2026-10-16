@@ -282,7 +282,7 @@ const tabs = [
 
   <!-- Percorsi attivi -->
   {percorsiAttivi.length > 0 ? (
-    <Section background="default">
+    <Section background="default" id="percorsi" class="scroll-mt-16">
       <Container>
         <Tag class="mb-5" style={`color: ${COLOR};`}>Come funziona</Tag>
         <Heading level={2} class="mb-4">I percorsi attivi in questo momento.</Heading>
@@ -328,7 +328,7 @@ const tabs = [
       </Container>
     </Section>
   ) : (
-    <Section background="default">
+    <Section background="default" id="percorsi" class="scroll-mt-16">
       <Container size="narrow" class="text-center">
         <Tag class="mb-5 inline-block" style={`color: ${COLOR};`}>Come funziona</Tag>
         <Heading level={2} class="mb-6">I percorsi partono a gruppi.</Heading>
