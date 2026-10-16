@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Container from '../components/ui/Container.astro';
 import Heading from '../components/ui/Heading.astro';
+
+const a = 'text-[#9c9a66] underline underline-offset-2';
 ---
 
 <BaseLayout
@@ -57,7 +59,7 @@ import Heading from '../components/ui/Heading.astro';
 
         <div>
           <h2 class="font-serif text-h3 text-text-main mb-3">8. Contatti</h2>
-          <p>Per qualsiasi chiarimento è possibile scrivere a info@yogatribu.it.</p>
+          <p>Per qualsiasi chiarimento è possibile scrivere a <a class={a} href="mailto:info@yogatribu.it">info@yogatribu.it</a>.</p>
         </div>
 
       </div>
