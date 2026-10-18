@@ -114,10 +114,12 @@
     .card-evidenza {
       background: white;
       border-radius: 22px;
-      padding: 24px;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
       margin-bottom: 16px;
-      display: block;
       width: 100%;
       text-decoration: none;
       color: inherit;
@@ -128,6 +130,24 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     }
+
+    .card-thumb {
+      flex: 0 0 128px;
+      width: 128px;
+      order: 2;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-foto {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-body { flex: 1; min-width: 0; padding: 22px 20px 22px 24px; order: 1; }
+    .card-body .card-desc { margin-bottom: 0; }
 
     .card-tag {
       font-family: Inter, system-ui, sans-serif;
@@ -315,9 +335,12 @@
 
     <!-- ── CARD IN EVIDENZA ── -->
     <a href="/eventi/ritiri/marocco-2027" class="card-evidenza" data-reveal>
-      <p class="card-tag">In evidenza</p>
-      <p class="card-title">Ritiro in Marocco</p>
-      <p class="card-desc">29 maggio – 3 giugno 2027 · Bab Zouina, Marrakesh. Iyengar immerso nel verde, a mezz'ora dalla città.</p>
+      <div class="card-thumb"><img src="/images/marocco/hero_marocco-thumb.webp" alt="Atlante, Valle dell'Ourika · Marrakech" class="card-foto" width="160" height="160" loading="eager" /></div>
+      <div class="card-body">
+        <p class="card-tag">In evidenza</p>
+        <p class="card-title">Ritiro in Marocco</p>
+        <p class="card-desc">29 maggio - 3 giugno 2027 · Bab Zouina, Marrakesh. Iyengar immerso nel verde, a mezz'ora dalla città.</p>
+      </div>
     </a>
 
     <!-- ── 4 LINK PRINCIPALI ── -->

@@ -6,7 +6,7 @@ durata: 150
 prezzo: 40
 prezzo_iscritti: 30
 insegnante: "Glenda e Mattia"
-luogo: "Studio Pozzo dell'Eternità · Via Manni Domenico 10, Colico (LC)"
+luogo: "Studio Pozzo dell'Eternità · Via Pontile 10, Colico (LC)"
 descrizione_breve: "Mattinata di approfondimento della pratica, Studio Pozzo dell'Eternità."
 nota: "Il tema di questo approfondimento viene definito nei giorni precedenti e comunicato prima dell'iscrizione."
 ---
