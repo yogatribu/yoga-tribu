@@ -1,0 +1,43 @@
+/* Barra in basso della vista studio su telefono: stessa barra "di vetro" dell'app allievo (.phone .tabs del prototipo).
+   Nel prototipo la vista studio usa una barra piatta a tutta larghezza: qui seguiamo quella degli allievi. */
+/* su computer l'indicatore e la sfumatura non servono */
+.snav .tp, .bfade { display: none; }
+
+@media (max-width: 760px) {
+  .snav .tp, .bfade { display: block; }
+  .snav {
+    position: fixed; left: 12px; right: 12px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 40;
+    width: auto; max-width: none; margin: 0; overflow: visible;
+    display: flex; gap: 0; padding: 5px;
+    border: 1px solid rgba(255, 255, 255, .75); border-radius: 999px;
+    background: rgba(255, 255, 255, .58);
+    -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
+    box-shadow: 0 12px 30px -10px rgba(60, 50, 30, .32), inset 0 1px 0 rgba(255, 255, 255, .85);
+  }
+  .snav button {
+    position: relative; z-index: 1; flex: 1 1 auto; min-width: 0; padding: 7px 7px 6px; border-radius: 22px;
+    font-size: 10px; letter-spacing: -.01em; white-space: nowrap; color: #6f6f6f;
+    transition: color .2s ease;
+  }
+  .snav button.on { background: transparent; box-shadow: none; color: var(--t-pdd); font-weight: 600; }
+  /* indicatore che scorre tra le voci (come .phone .tabs .tp) */
+  .snav .tp {
+    position: absolute; top: 5px; bottom: 5px; left: 0; width: 0; z-index: 0; border-radius: 22px;
+    background: rgba(var(--t-p-rgb), .24); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); pointer-events: none;
+    transition: left .42s cubic-bezier(.3, 1.3, .4, 1), width .42s cubic-bezier(.3, 1.3, .4, 1);
+  }
+  @media (prefers-reduced-motion: reduce) { .snav .tp { transition: none; } }
+  /* sfumatura sotto la barra: il contenuto non si vede più passare dietro, e l'ultima scheda non resta coperta */
+  .bfade { position: fixed; left: 0; right: 0; bottom: 0; height: 124px; background: linear-gradient(rgba(var(--t-bg-rgb), 0), var(--t-bg) 64%); pointer-events: none; z-index: 39; }
+  .studio { padding-bottom: 116px; }
+}
+
+/* Righe con titolo, dettagli e un'etichetta (Posti degli eventi, Percorsi): su telefono il testo prende tutta la riga
+   con interlinea stretta, e l'etichetta va sotto, invece di restare schiacciata a destra. */
+@media (max-width: 760px) {
+  .pc-m b { line-height: 1.3; }
+  .pc-m small { display: block; line-height: 1.4; margin-top: 2px; }
+  .pc-pe { align-items: flex-start; row-gap: 8px; }
+  .pc-pe .pc-m { flex: 1 1 100%; }
+  .pc-pe .pc-az { margin-left: 0; }
+}
