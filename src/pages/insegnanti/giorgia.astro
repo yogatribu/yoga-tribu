@@ -1,0 +1,58 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+const lezioni = [
+  { giorno: 'Sabato', ora: '17:00', tipo: 'Meditazione e Respiro', durata: '1 ora' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Giorgia",
+  "jobTitle": "Kundalini Yoga Teacher",
+  "worksFor": { "@id": "https://www.yogatribu.it/#business" },
+  "knowsAbout": ["Kundalini Yoga", "Meditazione", "Naad Yoga", "Sat Nam Rasayan"],
+};
+---
+
+<TeacherLayout
+  title="Giorgia · Insegnante Kundalini · Yoga Tribù"
+  description="Giorgia insegna Kundalini Yoga a Yoga Tribù: meditazione e respiro il sabato alle 17:00. Insegnante di 1° livello (KRI / IKYTA), uno yoga autentico e senza scorciatoie."
+  schema={schema}
+  noindex={!INSEGNANTI_ATTIVI.includes('giorgia')}
+  nome="Giorgia"
+  ruolo="Insegnante"
+  pratica="Kundalini Yoga"
+  coloreAccento="#8c7ba0"
+  fotoHero="/images/insegnanti/giorgia.webp"
+  fotoSidebar="/images/insegnanti/giorgia.webp"
+  citazioneBio="Dove c'è amore, non c'è dubbio."
+  autoreCitazione="Yogi Bhajan"
+  formazione={[
+    'Insegnante di Kundalini Yoga di 1° livello, KRI / IKYTA (2021)',
+    'Lead Trainer: Sangeet Kaur',
+    'Studio del Sat Nam Rasayan in corso',
+  ]}
+  sezioniStoria={[
+    {
+      titolo: 'Come ho incontrato lo yoga',
+      paragrafi: ["Ho praticato per la prima volta il Kundalini Yoga nel 2011, mentre ero in Erasmus in Spagna. L'interesse per la pratica e la meditazione è cresciuto insieme a me, nutrito anche dagli studi artistici che sono sempre stati per me una grande fonte di ispirazione."],
+    },
+    {
+      titolo: 'Perché il Kundalini',
+      paragrafi: ["Per me è stato l'unico strumento capace di agire davvero quando nient'altro riusciva a placare le fluttuazioni emotive e le energie altalenanti. Cercavo una pratica potente che scendesse in profondità, un vero reset per tutto il sistema. L'ho scelto perché questa tecnologia mi ha avvicinata a me stessa con solidità, restituendomi quello spazio interiore che ciascuno di noi ha il diritto di abitare."],
+    },
+    {
+      titolo: 'La formazione',
+      paragrafi: ["Nel 2021 sono diventata insegnante di Kundalini Yoga di 1° livello secondo gli insegnamenti di Yogi Bhajan (certificazione KRI / IKYTA), sotto la guida della storica Lead Trainer Sangeet Kaur. Un intenso percorso che abbraccia anatomia yogica, scienza dei mantra (Naad Yoga), meditazione e tecniche di auto-ascolto, per portare equilibrio nella vita di tutti i giorni e nell'insegnamento. A questo cammino sto affiancando lo studio del Sat Nam Rasayan, arte di cura meditativa basata sulla coltivazione dello stato di Shuniya, il silenzio neutrale della mente."],
+    },
+    {
+      titolo: 'Il mio approccio',
+      paragrafi: ["Credo in uno yoga autentico, lontano dalle mode e privo di scorciatoie. Per me lo yoga è prima di tutto un cammino di consapevolezza, di scoperta di sé e di profonda connessione tra corpo, mente e spirito. In un mondo che ci spinge costantemente a guardare all'esterno, il mio obiettivo è guidare chi pratica a rivolgere lo sguardo verso l'interno, con naturalezza e senza alcun giudizio, offrendo un percorso concreto per ritrovare l'essenza della disciplina e integrarla nella vita quotidiana."],
+    },
+  ]}
+  introLezioni="Una lezione di meditazione e respiro, ogni sabato alle 17:00."
+  lezioni={lezioni}
+  lezioniContainerClass="grid grid-cols-1 gap-4 max-w-[360px] mx-auto text-left"
+/>

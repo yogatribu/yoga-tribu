@@ -5,60 +5,72 @@ import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
 const schema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Mattia",
+  "name": "Mattia dall'Alba",
   "jobTitle": "Iyengar Yoga Teacher",
   "worksFor": { "@id": "https://www.yogatribu.it/#business" },
   "knowsAbout": ["Iyengar Yoga", "Ritiri di Yoga"],
+  "alumniOf": { "@type": "Organization", "name": "Ramamani Iyengar Memorial Yoga Institute, Pune" },
 };
 ---
 
 <TeacherLayout
-  title="Mattia · Iyengar Yoga · Yoga Tribù"
-  description="Mattia è insegnante Iyengar certificato livello 1. Co-conduce i ritiri di Yoga Tribù insieme a Glenda."
+  title="Mattia · Insegnante Iyengar · Yoga Tribù"
+  description="Mattia dall'Alba, insegnante Iyengar Yoga con diploma Level 1 al RIMYI di Pune, formato da David Meloni. Co-conduce ritiri e approfondimenti di Yoga Tribù insieme a Glenda."
   schema={schema}
   noindex={!INSEGNANTI_ATTIVI.includes('mattia')}
   nome="Mattia"
   ruolo="Insegnante"
   pratica="Iyengar Yoga"
   coloreAccento="#9c9a66"
-  fotoHero="/images/stock/1472099645785-5658abf4ff4e-1600.webp"
-  fotoSidebar="/images/stock/1472099645785-5658abf4ff4e-800.webp"
-  sottotitoloHero="Iyengar Yoga, certificato livello 1. Co-conduce i ritiri di Yoga Tribù insieme a Glenda."
+  fotoHero="/images/insegnanti/mattia.webp"
+  fotoSidebar="/images/insegnanti/mattia.webp"
+  sottotitoloHero="Iyengar Yoga, diploma Level 1 al RIMYI di Pune. Co-conduce i ritiri e gli approfondimenti di Yoga Tribù insieme a Glenda."
+  labelFormazione="Certificazioni"
   formazione={[
-    'Certified Iyengar Yoga Teacher, Livello 1',
+    'Diploma Iyengar Yoga Level 1 rilasciato da Prashant Iyengar - RIMYI, Pune (India)',
+    'Percorso completo: 3 anni di pratica + 3 anni di formazione sotto la guida di David Meloni',
+    'Seminari e approfondimenti con Gabriella Giubilaro, Christian Pisano, Barbara Abeles e Usha Devi',
+    'Studi a Pune, al RIMYI, con i discendenti di Iyengar',
+    'Specializzato in Iyengar Yoga',
   ]}
+  citazioneBio="Ogni postura è uno studio approfondito di sé."
   sezioniStoria={[
     {
       titolo: 'Chi è Mattia',
-      paragrafi: ['[DA COMPLETARE · formazione, percorso nello yoga, anni di pratica. Mattia ha un proprio studio di yoga e collabora con Glenda nella conduzione dei ritiri di Yoga Tribù.]'],
+      paragrafi: [
+        "Mattia dall'Alba insegna Iyengar Yoga. Ha il diploma di Level 1, rilasciato da Prashant Iyengar al RIMYI di Pune, in India, dopo sei anni di percorso: tre di pratica da studente e tre di formazione, sotto la guida di David Meloni.",
+        `È anche il founder di <a href="https://www.pozzodelleternita.it" target="_blank" rel="noopener" class="text-[#9c9a66] underline underline-offset-2">Pozzo dell'Eternità</a>, lo studio di yoga di Colico dove insegna ogni settimana.`,
+      ],
     },
     {
-      titolo: 'Il suo ruolo nei ritiri',
-      paragrafi: ['[DA COMPLETARE · perché co-conduce i ritiri con Glenda, cosa porta all\'esperienza del ritiro.]'],
+      titolo: 'Come ha incontrato lo yoga',
+      paragrafi: [
+        "Mattia ha cominciato a praticare alla ricerca di una disciplina che lavorasse sul corpo e sulla mente insieme, e ne è rimasto affascinato da subito. Ha iniziato a praticare con regolarità e, poco alla volta, a trasmettere quello che imparava agli amici.",
+        "Finché ha sentito il bisogno di una formazione più completa. Da lì è cominciato il percorso di mentorship con David Meloni.",
+      ],
     },
     {
-      titolo: 'Cosa vedono i partecipanti',
-      paragrafi: ['[DA COMPLETARE · cosa cambia per chi partecipa ai ritiri con Mattia e Glenda.]'],
+      titolo: 'Il suo ruolo a Yoga Tribù',
+      paragrafi: [
+        "Mattia co-conduce i ritiri e gli approfondimenti della domenica di Yoga Tribù insieme a Glenda: più tempo, più dettaglio, e lo sguardo di un secondo insegnante sulla stessa pratica.",
+        "Continua a studiare con regolarità: segue seminari e approfondimenti con altri maestri e torna a Pune per studiare direttamente con i discendenti di Iyengar.",
+      ],
     },
     {
-      titolo: 'Il suo principio',
-      paragrafi: ['[DA COMPLETARE · una frase guida.]'],
+      titolo: 'Come insegna',
+      paragrafi: [
+        "Trasmette gli insegnamenti ricevuti e la sua ricerca con precisione e semplicità, per stimolare la comprensione e la concentrazione di chi pratica.",
+      ],
     },
   ]}
-  filosofiaSinistra={[
-    '[DA COMPLETARE · primo blocco filosofia/approccio all\'insegnamento.]',
-  ]}
-  filosofiaDestra={[
-    '[DA COMPLETARE · secondo blocco filosofia/approccio all\'insegnamento.]',
-  ]}
-  tagLezioni="Ritiri"
+  tagLezioni="Ritiri e approfondimenti"
   titoloLezioni="Dove trovarmi."
-  introLezioni="Mattia non tiene lezioni regolari in studio. Lo trovi ai ritiri di Yoga Tribù, che co-conduce insieme a Glenda."
+  introLezioni="Mattia non tiene lezioni regolari in studio. Lo trovi ai ritiri e agli approfondimenti di Yoga Tribù, che co-conduce insieme a Glenda."
   lezioni={[]}
   ctaHeadline="Vuoi vivere un ritiro con noi?"
-  ctaLinkLabel="Scopri i prossimi ritiri"
-  ctaLinkHref="/eventi#ritiri"
-  waTestoCustom="Ciao! Sono interessato ai ritiri di Yoga Tribù con Mattia e Glenda."
+  ctaLinkLabel="Scopri i prossimi eventi"
+  ctaLinkHref="/eventi"
+  waTestoCustom="Ciao! Sono interessato ai ritiri e agli approfondimenti di Yoga Tribù con Mattia e Glenda."
 >
   <div slot="lezioni-content" class="max-w-[600px] mx-auto text-center">
     <a

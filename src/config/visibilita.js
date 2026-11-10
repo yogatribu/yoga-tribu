@@ -2,8 +2,8 @@
 // I file delle pagine restano intatti: cambiano solo visibilità e noindex.
 //
 // Slug pratiche validi: 'iyengar' | 'ashtanga' | 'vinyasa' | 'teen-yoga' | 'salute-femminile' | 'workshop' | 'kundalini'
-// Slug insegnanti validi: 'glenda' | 'victor' | 'sara' | 'giulia' | 'asia' | 'mattia'
+// Slug insegnanti validi: 'glenda' | 'victor' | 'sara' | 'giulia' | 'asia' | 'mattia' | 'giorgia'
 
 export const PRATICHE_ATTIVE = ['iyengar', 'ashtanga', 'salute-femminile', 'workshop', 'kundalini'];
 
-export const INSEGNANTI_ATTIVI = ['glenda', 'victor', 'sara'];
+export const INSEGNANTI_ATTIVI = ['glenda', 'mattia', 'victor', 'sara', 'giorgia'];

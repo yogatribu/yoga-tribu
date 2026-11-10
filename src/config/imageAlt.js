@@ -7,7 +7,9 @@ export const IMAGE_ALT = {
   '/images/ashtanga.webp': 'Pratica di Ashtanga Yoga nello studio Yoga Tribù',
   '/images/salute_femminile.webp': 'Sessione di Salute Femminile con una donna in gravidanza, Yoga Tribù',
 
-  '/images/insegnanti/glenda.webp': 'Glenda - Insegnante di Iyengar Yoga e fondatrice di Yoga Tribù',
+  '/images/insegnanti/glenda.webp': 'Glenda - Insegnante di Iyengar Yoga e founder di Yoga Tribù',
+  '/images/insegnanti/mattia.webp': 'Mattia - Insegnante di Iyengar Yoga, co-conduce ritiri e approfondimenti',
+  '/images/insegnanti/giorgia.webp': 'Giorgia - Insegnante di Kundalini Yoga',
   '/images/insegnanti/victor.webp': 'Victor - Insegnante di Ashtanga Yoga',
   '/images/insegnanti/sara.webp': 'Sara - Insegnante di Salute Femminile',
 };
