@@ -10,6 +10,7 @@ export const IMAGE_ALT = {
   '/images/insegnanti/glenda.webp': 'Glenda - Insegnante di Iyengar Yoga e founder di Yoga Tribù',
   '/images/insegnanti/mattia.webp': 'Mattia - Insegnante di Iyengar Yoga, co-conduce ritiri e approfondimenti',
   '/images/insegnanti/giorgia.webp': 'Giorgia - Insegnante di Kundalini Yoga',
+  '/images/insegnanti/daniela.webp': 'Daniela - Insegnante di Ashtanga Yoga',
   '/images/insegnanti/victor.webp': 'Victor - Insegnante di Ashtanga Yoga',
   '/images/insegnanti/sara.webp': 'Sara - Insegnante di Salute Femminile',
 };

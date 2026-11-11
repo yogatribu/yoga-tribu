@@ -1,0 +1,57 @@
+---
+import TeacherLayout from '../../layouts/TeacherLayout.astro';
+import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
+
+// Testo scritto dagli appunti di Daniela.
+const lezioni = [
+  { giorno: 'Giovedì', ora: '7:00', tipo: 'Respiro & Movimento', durata: '~60 min' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Daniela",
+  "jobTitle": "Ashtanga Yoga Teacher",
+  "worksFor": { "@id": "https://www.yogatribu.it/#business" },
+  "knowsAbout": ["Ashtanga Yoga", "Iyengar Yoga", "Pranayama"],
+};
+---
+
+<TeacherLayout
+  title="Daniela · Insegnante Ashtanga · Yoga Tribù"
+  description="Daniela insegna Ashtanga a Yoga Tribù: Respiro & Movimento il giovedì alle 7:00, pranayama e le prime sette posture della Prima Serie, per entrare nella pratica in punta di piedi. Autorizzata da Lino Miele."
+  schema={schema}
+  noindex={!INSEGNANTI_ATTIVI.includes('daniela')}
+  nome="Daniela"
+  ruolo="Insegnante"
+  pratica="Ashtanga Yoga"
+  coloreAccento="#7a6b5f"
+  fotoHero="/images/insegnanti/daniela.webp"
+  fotoSidebar="/images/insegnanti/daniela.webp"
+  formazione={[
+    'Autorizzata a insegnare Ashtanga Yoga da Lino Miele',
+    'In pratica da più di 10 anni, Iyengar e Ashtanga',
+    'Da 5 anni nei ritiri di Lino Miele',
+  ]}
+  sezioniStoria={[
+    {
+      titolo: 'Come ho incontrato lo yoga',
+      paragrafi: ["Pratico yoga da più di dieci anni, tra Iyengar e Ashtanga. Sono due modi di stare sul tappetino molto diversi: uno fatto di precisione e attenzione ai dettagli, l'altro di respiro e ripetizione. Per anni li ho portati avanti uno accanto all'altro, e con il tempo mi sono appassionata sempre di più all'Ashtanga."],
+    },
+    {
+      titolo: 'Perché l\'Ashtanga',
+      paragrafi: ["Da cinque anni seguo Lino Miele nei suoi ritiri, ed è lì che l'Ashtanga è diventata una vera passione. Mi ha dato tanto fin da subito. Ma, come succede a molti, sono caduta subito anche nell'ego e nella prestazione delle posture: la postura da fare bene, la serie da portare a casa. Ho dovuto imparare a rallentare e a restare nel respiro, ed è ancora oggi quello che la pratica mi insegna di più."],
+    },
+    {
+      titolo: 'La formazione',
+      paragrafi: ["Sono autorizzata a insegnare Ashtanga Yoga da Lino Miele, che seguo da cinque anni nei suoi ritiri: è con lui che ho approfondito la pratica ed è da lui che è arrivata l'autorizzazione a insegnarla. Alle spalle ho più di dieci anni di pratica Iyengar e Ashtanga."],
+    },
+    {
+      titolo: 'Il mio approccio',
+      paragrafi: ["Insegno Ashtanga di mattina, con il desiderio di avvicinare più persone a una pratica che all'inizio può sembrare molto impegnativa, per la serie da imparare a memoria e per le posture. Il mio Respiro & Movimento è pensato per tutti e per entrare in punta di piedi, senza sentirsi travolti: nella prima parte facciamo pranayama, nella seconda le prime sette posture della Prima Serie, guidate se serve. È un'ora in cui si impara a rallentare, a respirare e a muoversi con coscienza. Mi sta a cuore ricordare che la pratica non è venire in studio una volta a settimana: può entrare nella vita di ogni giorno, anche solo per pochi minuti, per prendersi del tempo, rallentare e riconnettersi."],
+    },
+  ]}
+  introLezioni="Una lezione di Respiro & Movimento, ogni giovedì alle 7:00."
+  lezioni={lezioni}
+  lezioniContainerClass="grid grid-cols-1 gap-4 max-w-[360px] mx-auto text-left"
+/>
