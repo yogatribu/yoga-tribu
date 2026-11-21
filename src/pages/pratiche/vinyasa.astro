@@ -184,9 +184,8 @@ const courseSchema = {
       <Heading level={2} class="mb-16">Quando praticare Vinyasa.</Heading>
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[780px] mx-auto text-left">
         {[
-          { tag: 'VINYASA', orario: 'Mercoledì 7:30' },
-          { tag: 'VINYASA', orario: 'Sabato 10:30' },
-          { tag: 'VINYASA', orario: 'Domenica 17:30' },
+          { tag: 'VINYASA', orario: 'Mercoledì 7:15' },
+          { tag: 'VINYASA', orario: 'Sabato 10:00' },
         ].map(({ tag, orario }) => (
           <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
             <p class="text-tiny uppercase tracking-widest" style={`color: ${COLOR};`}>{tag}</p>

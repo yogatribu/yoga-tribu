@@ -3,9 +3,8 @@ import TeacherLayout from '../../layouts/TeacherLayout.astro';
 import { INSEGNANTI_ATTIVI } from '../../config/visibilita.js';
 
 const lezioni = [
-  { giorno: 'Mercoledì', ora: '7:30',  tipo: 'Vinyasa', durata: '~60 min' },
-  { giorno: 'Sabato',    ora: '10:30', tipo: 'Vinyasa', durata: '~60 min' },
-  { giorno: 'Domenica',  ora: '17:30', tipo: 'Vinyasa', durata: '~60 min' },
+  { giorno: 'Mercoledì', ora: '7:15',  tipo: 'Vinyasa', durata: '~60 min' },
+  { giorno: 'Sabato',    ora: '10:00', tipo: 'Vinyasa', durata: '~60 min' },
 ];
 
 const schema = {
@@ -57,9 +56,8 @@ const schema = {
 >
   <div slot="lezioni-content" class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-[780px] mx-auto text-left">
     {[
-      { tag: 'FLOW', orario: 'Mercoledì 7:30' },
-      { tag: 'FLOW', orario: 'Sabato 10:30' },
-      { tag: 'FLOW', orario: 'Domenica 17:30' },
+      { tag: 'FLOW', orario: 'Mercoledì 7:15' },
+      { tag: 'FLOW', orario: 'Sabato 10:00' },
     ].map(({ tag, orario }) => (
       <div class="bg-white border border-[#e8e4df] rounded-[18px] px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-[250ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)] cursor-default" style="min-height: 112px; display: flex; flex-direction: column; gap: 8px;">
         <p class="text-tiny uppercase tracking-widest" style="color: #b8a68e;">{tag}</p>
