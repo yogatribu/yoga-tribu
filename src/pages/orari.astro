@@ -56,7 +56,6 @@ const tutteLeLezioni = [
   { giorno: 'sab', ora: '10:00', stile: 'flow',     tipo: 'Vinyasa',   insegnante: 'Giulia', durata: '~60 min' },
   { giorno: 'sab', ora: '17:00', stile: 'kundalini', tipo: 'Meditazione e Respiro', insegnante: 'Giorgia', durata: '1 ora' },
   // DOMENICA
-  { giorno: 'dom', ora: '9:00',  stile: 'workshop', tipo: 'Approfondimenti', insegnante: 'Glenda e Mattia', durata: '2h 30min' },
 ];
 
 const lezioni = tutteLeLezioni.filter(l => PRATICHE_ATTIVE.includes(STILE_TO_SLUG[l.stile] ?? l.stile));
@@ -67,7 +66,6 @@ const tuttiStiliLegenda = [
   { stile: 'ashtanga', label: 'Ashtanga', color: '#7a6b5f' },
   { stile: 'flow',     label: 'Vinyasa',  color: '#b8a68e' },
   { stile: 'teen',     label: 'Teen Yoga', color: '#d4b5a0' },
-  { stile: 'workshop', label: 'Approfondimenti', color: '#bf9d70' },
   { stile: 'kundalini', label: 'Kundalini', color: '#8c7ba0' },
 ];
 const legendaAttiva = tuttiStiliLegenda.filter(s => PRATICHE_ATTIVE.includes(STILE_TO_SLUG[s.stile] ?? s.stile));
